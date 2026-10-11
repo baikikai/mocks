@@ -130,6 +130,23 @@ html[lang="zh-Hans"]{--display:'Shippori Mincho','PingFang SC','Songti SC',serif
 .split.dt.solo{grid-template-columns:minmax(0,1fr)}
 .dt .others .row{min-height:44px}
 .dt .others .rl{font-size:17px}
+/* demonstration modal */
+.demo-open{align-self:flex-start;margin:6px 0 10px}
+.dm{position:fixed;inset:0;z-index:100;visibility:hidden;pointer-events:none;background:rgba(8,10,13,0);transition:background-color .35s cubic-bezier(.2,.7,.2,1),visibility 0s linear .35s}
+.dm.open{visibility:visible;pointer-events:auto;background:rgba(8,10,13,.72);transition:background-color .35s cubic-bezier(.2,.7,.2,1),visibility 0s}
+.dm-card{position:absolute;inset:5vmin;display:flex;flex-direction:column;gap:16px;padding:24px;background:var(--ink2);color:var(--paper);border:1px solid var(--rule-d);opacity:0;transform:translateY(40px);transition:opacity .35s cubic-bezier(.2,.7,.2,1),transform .35s cubic-bezier(.2,.7,.2,1);overflow:auto}
+.dm.open .dm-card{opacity:1;transform:none}
+.dm.out .dm-card{transform:translateY(-40px)}
+.dm-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.dm-head .big{font-family:var(--display);font-size:clamp(26px,3.2vw,40px);line-height:1.1}
+.dm-x{flex:none;border:1px solid var(--paper);padding:8px 16px;font-size:13px;font-family:var(--body);color:var(--paper);background:transparent}
+.dm-x:hover{background:var(--paper);color:var(--ink)}
+.dm-card .seg{margin:0}
+.dm-card .seg button{border-color:var(--paper)}
+.dm-card .seg button.on{background:var(--paper);color:var(--ink)}
+.dm-card .video{flex:1;min-height:0;aspect-ratio:auto}
+@media (max-width:900px){.dm-card{padding:16px;gap:12px}.dm-card .video{flex:none;aspect-ratio:16/9}}
+@media (prefers-reduced-motion:reduce){.dm,.dm-card{transition:none}}
 .crumbs{padding-inline:var(--pad)}
 .ft{view-transition-name:site-footer;margin-top:0}
 #view{flex:1;min-height:620px;display:flex;background:var(--ink2)}
@@ -176,7 +193,7 @@ WAZA_JS = '''  function wazaView() {
     var w = state.waza;
     var back = '<button type="button" class="link" data-act="back">Back to Results</button>';
     if (w.weapon) {
-      $view.innerHTML = '<div class="split dt solo"><div class="left"><span class="label" style="color:var(--lilac)">Introduced at ' + RANKS[w.rank] + '</span><div class="big">' + esc(w.name) + '</div><div class="video"><button type="button" class="play" data-act="play">Play Demonstration</button></div><button type="button" class="link" data-act="back">Back</button></div></div>';
+      $view.innerHTML = '<div class="split dt solo"><div class="left"><span class="label" style="color:var(--lilac)">Introduced at ' + RANKS[w.rank] + '</span><div class="big">' + esc(w.name) + '</div><button type="button" class="play demo-open" data-act="demo">View Demonstration</button><button type="button" class="link" data-act="back">Back</button></div></div>';
       return;
     }
     var others = R.filter(function (x) { return x.t === w.t && x.s === w.s && x.id !== w.id; });
@@ -185,10 +202,48 @@ WAZA_JS = '''  function wazaView() {
     }).join('');
     var lp2 = '<div class="left"><span class="label" style="color:var(--lilac)">Introduced at ' + RANKS[w.r] + '</span><div class="big">' + esc(wazaName(w)) + '</div>' +
       '<div class="seg"><button type="button" data-act="omote" data-v="Omote" class="' + (state.omote === 'Omote' ? 'on' : '') + '">Omote</button><button type="button" data-act="omote" data-v="Ura" class="' + (state.omote === 'Ura' ? 'on' : '') + '">Ura</button></div>' +
-      '<div class="video"><button type="button" class="play" data-act="play">Play Demonstration</button></div>' + back + '</div>';
+      '<button type="button" class="play demo-open" data-act="demo">View Demonstration</button>' + back + '</div>';
     var rt = others.length ? '<div class="right"><div class="rbody"><div class="others"><div class="otitle">Other Attacks, ' + esc(TECH[w.t][0]) + ' from ' + esc(ST[w.s][0]) + '</div>' + oh + '</div></div></div>' : '';
     $view.innerHTML = '<div class="split dt' + (others.length ? '' : ' solo') + '">' + lp2 + rt + '</div>';
   }
+'''
+
+
+DEMO_JS = '''
+(function () {
+  var dm = null, last = null, om = 'Omote';
+  function build(name) {
+    dm = document.createElement('div'); dm.className = 'dm'; dm.setAttribute('role', 'dialog'); dm.setAttribute('aria-modal', 'true');
+    dm.innerHTML = '<div class="dm-card"><div class="dm-head"><div class="big"></div><button type="button" class="dm-x" data-dm="close">Close</button></div>' +
+      '<div class="seg"><button type="button" data-dm="Omote">Omote</button><button type="button" data-dm="Ura">Ura</button></div>' +
+      '<div class="video"><button type="button" class="play">Play Demonstration</button></div></div>';
+    document.body.appendChild(dm);
+    dm.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-dm]');
+      if (e.target === dm || (b && b.getAttribute('data-dm') === 'close')) { close(); return; }
+      if (b) { om = b.getAttribute('data-dm'); mark(); }
+    });
+  }
+  function mark() { [].forEach.call(dm.querySelectorAll('.seg button'), function (b) { b.classList.toggle('on', b.getAttribute('data-dm') === om); }); }
+  function open(from) {
+    last = from; if (!dm) build();
+    var big = document.querySelector('#view .left .big');
+    dm.querySelector('.big').textContent = big ? big.textContent : '';
+    dm.classList.remove('out'); mark();
+    if (window.__xl) window.__xl(dm);
+    void dm.offsetWidth; dm.classList.add('open');
+    document.documentElement.style.overflow = 'hidden';
+    dm.querySelector('.dm-x').focus();
+  }
+  function close() {
+    if (!dm || !dm.classList.contains('open')) return;
+    dm.classList.add('out'); dm.classList.remove('open');
+    document.documentElement.style.overflow = '';
+    if (last && document.contains(last)) last.focus();
+  }
+  document.addEventListener('click', function (e) { var b = e.target.closest('[data-act="demo"]'); if (b) open(b); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+})();
 '''
 
 def app_js():
@@ -273,7 +328,7 @@ TECHD = {
  'All Waza': ('Todos los Waza', '全部技法'), 'Weapon': ('Arma', '武器'), 'Standard': ('Estándar', '标准'), 'Grouped by rank': ('Agrupado por rango', '按级别分组'),
  'Open the List': ('Abrir la Lista', '打开列表'), 'Any Stance': ('Cualquier Postura', '任意姿势'), 'Any Attack': ('Cualquier Ataque', '任意攻击'), 'Any Technique': ('Cualquier Técnica', '任意技法'),
  'Any Rank': ('Cualquier Rango', '任意级别'), 'Any Variant': ('Cualquier Variante', '任意变体'), 'Technique Database': ('Base de Datos de Técnicas', '技法数据库'),
- 'Omote': ('Omote', '表'), 'Ura': ('Ura', '裏'),
+ 'View Demonstration': ('Ver Demostración', '观看演示'), 'Close': ('Cerrar', '关闭'), 'Omote': ('Omote', '表'), 'Ura': ('Ura', '裏'),
  '5th kyu': ('5.º kyu', '5级'), '4th kyu': ('4.º kyu', '4级'), '3rd kyu': ('3.º kyu', '3级'), '2nd kyu': ('2.º kyu', '2级'), '1st kyu': ('1.º kyu', '1级'),
  'Shodan': ('Shodan', '初段'), 'Nidan': ('Nidan', '二段'), 'Sandan': ('Sandan', '三段'),
 }
@@ -348,7 +403,7 @@ def build(mobile):
     page_css = appcss + THEME + css
     if mobile: page_css = page_css.replace('@media (max-width:900px){', '@media all{')
     html_ = (f'<meta charset="utf-8">\n<title>{title}</title>\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">\n'
-             f'<style>\n{page_css}\n</style>\n{markup(mobile)}\n<script>\n{app_js()}\n</script>\n<script>\n{LANGJS}\n{TECH_JS}\n</script>\n')
+             f'<style>\n{page_css}\n</style>\n{markup(mobile)}\n<script>\n{app_js()}\n</script>\n<script>\n{DEMO_JS}\n</script>\n<script>\n{LANGJS}\n{TECH_JS}\n</script>\n')
     return B.finish(html_)
 
 if __name__ == '__main__':

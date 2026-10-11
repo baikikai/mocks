@@ -19,6 +19,11 @@ def ph(label, ratio='16/9', video=False):
         return f'<figure class="ph vid" style="aspect-ratio:{ratio}">{PLAY}<span class="bar" aria-hidden="true"><i></i></span><figcaption>{html.escape(label)}</figcaption></figure>'
     return f'<figure class="ph" style="aspect-ratio:{ratio}"><figcaption>{html.escape(label)}</figcaption></figure>'
 
+def photo(name, alt, ratio, cls=''):
+    import base64
+    src = 'data:image/jpeg;base64,' + base64.b64encode(open('img/' + name, 'rb').read()).decode()
+    return f'<figure class="ph pimg{(" " + cls) if cls else ""}" style="aspect-ratio:{ratio}"><img src="{src}" alt="{html.escape(alt)}" loading="lazy"></figure>'
+
 def curly(t):
     out=[];o=True
     for ch in t:
@@ -81,7 +86,8 @@ def curriculum():
     for g in groups:
         b = ''; q = ''
         for it in g['items']:
-            if it['type'] == 'img': b += ph('Photo: ' + it['alt'], '16/9'); continue
+            if it['type'] == 'img':
+                b += photo('koshi.jpg', it['alt'], '1960/1096') if it['alt'].startswith('A koshinage') else ph('Photo: ' + it['alt'], '16/9'); continue
             t = it['text']
             if g['h'] == 'Weapons' and t.startswith('"The sword'):
                 b += quote(t, '', True); continue

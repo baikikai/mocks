@@ -82,6 +82,7 @@ def build():
             cls = 'tp' if hit else ''
             if cls: h = h.replace('<p>', '<p class="tp">', 1)
             sn = '<div class="sns">' + ''.join(note(*x) for x in hit) + '</div>' if hit else ''
+            if t.startswith('In 2004, my student Ian Witter'): out += B.photo('Beginnings-1.jpg', 'Brooklyn Aikikai in its early years', '964/646', 'fb')
             drop = ' drop' if pi == 0 and n == 1 else ''
             out += f'<div class="pn{drop}">{h}{sn}</div>'
             if n in at: out += at[n]
