@@ -129,9 +129,11 @@ html[lang="zh-Hans"]{--display:'Shippori Mincho','PingFang SC','Songti SC',serif
 .dt .left .seg button.on{background:var(--paper);color:var(--ink)}
 .split.dt.solo{grid-template-columns:minmax(0,1fr)}
 .dt .others .row{min-height:44px}
+.onone{color:var(--stone);font-family:var(--body);font-size:15px;padding:12px 0}
 .dt .others .rl{font-size:17px}
 /* demonstration modal */
-.demo-open{align-self:flex-start;margin:6px 0 10px}
+.left .video[data-act=demo]{cursor:pointer}
+.left .video[data-act=demo]:hover .play{background:var(--paper);color:var(--ink)}
 .dm{position:fixed;inset:0;z-index:100;visibility:hidden;pointer-events:none;background:rgba(8,10,13,0);transition:background-color .35s cubic-bezier(.2,.7,.2,1),visibility 0s linear .35s}
 .dm.open{visibility:visible;pointer-events:auto;background:rgba(8,10,13,.72);transition:background-color .35s cubic-bezier(.2,.7,.2,1),visibility 0s}
 .dm-card{position:absolute;inset:5vmin;display:flex;flex-direction:column;gap:16px;padding:24px;background:var(--ink2);color:var(--paper);border:1px solid var(--rule-d);opacity:0;transform:translateY(40px);transition:opacity .35s cubic-bezier(.2,.7,.2,1),transform .35s cubic-bezier(.2,.7,.2,1);overflow:auto}
@@ -193,7 +195,7 @@ WAZA_JS = '''  function wazaView() {
     var w = state.waza;
     var back = '<button type="button" class="link" data-act="back">Back to Results</button>';
     if (w.weapon) {
-      $view.innerHTML = '<div class="split dt solo"><div class="left"><span class="label" style="color:var(--lilac)">Introduced at ' + RANKS[w.rank] + '</span><div class="big">' + esc(w.name) + '</div><button type="button" class="play demo-open" data-act="demo">View Demonstration</button><button type="button" class="link" data-act="back">Back</button></div></div>';
+      $view.innerHTML = '<div class="split dt solo"><div class="left"><span class="label" style="color:var(--lilac)">Introduced at ' + RANKS[w.rank] + '</span><div class="big">' + esc(w.name) + '</div><div class="video" data-act="demo"><button type="button" class="play">View Demonstration</button></div><button type="button" class="link" data-act="back">Back</button></div></div>';
       return;
     }
     var others = R.filter(function (x) { return x.t === w.t && x.s === w.s && x.id !== w.id; });
@@ -202,9 +204,9 @@ WAZA_JS = '''  function wazaView() {
     }).join('');
     var lp2 = '<div class="left"><span class="label" style="color:var(--lilac)">Introduced at ' + RANKS[w.r] + '</span><div class="big">' + esc(wazaName(w)) + '</div>' +
       '<div class="seg"><button type="button" data-act="omote" data-v="Omote" class="' + (state.omote === 'Omote' ? 'on' : '') + '">Omote</button><button type="button" data-act="omote" data-v="Ura" class="' + (state.omote === 'Ura' ? 'on' : '') + '">Ura</button></div>' +
-      '<button type="button" class="play demo-open" data-act="demo">View Demonstration</button>' + back + '</div>';
-    var rt = others.length ? '<div class="right"><div class="rbody"><div class="others"><div class="otitle">Other Attacks, ' + esc(TECH[w.t][0]) + ' from ' + esc(ST[w.s][0]) + '</div>' + oh + '</div></div></div>' : '';
-    $view.innerHTML = '<div class="split dt' + (others.length ? '' : ' solo') + '">' + lp2 + rt + '</div>';
+      '<div class="video" data-act="demo"><button type="button" class="play">View Demonstration</button></div>' + back + '</div>';
+    var rt = '<div class="right"><div class="rbody"><div class="others"><div class="otitle">Other Attacks, ' + esc(TECH[w.t][0]) + ' from ' + esc(ST[w.s][0]) + '</div>' + (others.length ? oh : '<div class="onone">None Recorded</div>') + '</div></div></div>';
+    $view.innerHTML = '<div class="split dt">' + lp2 + rt + '</div>';
   }
 '''
 
@@ -241,7 +243,7 @@ DEMO_JS = '''
     document.documentElement.style.overflow = '';
     if (last && document.contains(last)) last.focus();
   }
-  document.addEventListener('click', function (e) { var b = e.target.closest('[data-act="demo"]'); if (b) open(b); });
+  document.addEventListener('click', function (e) { var b = e.target.closest('[data-act="demo"]'); if (b) open(b.querySelector('button') || b); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
 })();
 '''
@@ -328,7 +330,7 @@ TECHD = {
  'All Waza': ('Todos los Waza', '全部技法'), 'Weapon': ('Arma', '武器'), 'Standard': ('Estándar', '标准'), 'Grouped by rank': ('Agrupado por rango', '按级别分组'),
  'Open the List': ('Abrir la Lista', '打开列表'), 'Any Stance': ('Cualquier Postura', '任意姿势'), 'Any Attack': ('Cualquier Ataque', '任意攻击'), 'Any Technique': ('Cualquier Técnica', '任意技法'),
  'Any Rank': ('Cualquier Rango', '任意级别'), 'Any Variant': ('Cualquier Variante', '任意变体'), 'Technique Database': ('Base de Datos de Técnicas', '技法数据库'),
- 'View Demonstration': ('Ver Demostración', '观看演示'), 'Close': ('Cerrar', '关闭'), 'Omote': ('Omote', '表'), 'Ura': ('Ura', '裏'),
+ 'View Demonstration': ('Ver Demostración', '观看演示'), 'Close': ('Cerrar', '关闭'), 'None Recorded': ('Ninguno Registrado', '暂无记录'), 'Omote': ('Omote', '表'), 'Ura': ('Ura', '裏'),
  '5th kyu': ('5.º kyu', '5级'), '4th kyu': ('4.º kyu', '4级'), '3rd kyu': ('3.º kyu', '3级'), '2nd kyu': ('2.º kyu', '2级'), '1st kyu': ('1.º kyu', '1级'),
  'Shodan': ('Shodan', '初段'), 'Nidan': ('Nidan', '二段'), 'Sandan': ('Sandan', '三段'),
 }
