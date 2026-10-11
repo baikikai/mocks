@@ -342,3 +342,12 @@ html,body{overflow-anchor:none}
 .pc.v.pr .play{opacity:0}
 .sm a.pr i{transform:translateX(5px)}
 .nv a.pr,.sj a.pr,.ft a.pr,.lb.pr,.tg.pr{color:var(--gold)}
+
+/* a chosen menu item holds the arrow and the accent, then everything leaves in a stagger: top bar, items, message */
+.si.chosen span{transform:translateX(1.5em);color:var(--gold)}
+.si.chosen::before{opacity:1;transform:none}
+.sbar>*,.sfoot>*{transition:opacity .35s cubic-bezier(.2,.7,.2,1),transform .35s cubic-bezier(.2,.7,.2,1)}
+#sheet.closing .sbar>*{opacity:0;transform:translateY(-14px)}
+#sheet.closing .sbar>:nth-child(2){transition-delay:60ms}
+#sheet.closing .si{transition-delay:calc(var(--i)*60ms + 60ms)}
+#sheet.closing .sfoot>*{opacity:0;transform:translateY(-14px);transition-delay:calc(var(--i)*60ms + 60ms)}

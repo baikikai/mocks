@@ -97,14 +97,19 @@
     opener = btn; sheet.hidden = false; root.style.overflow = 'hidden'; root.classList.add('sheet-on');
     requestAnimationFrame(function () { sheet.classList.add('open'); var x = sheet.querySelector('.sx'); if (x) x.focus({ preventScroll: true }); });
   }
-  function closeSheet() {
-    if (!sheet || sheet.hidden || sheet.classList.contains('closing')) return;
-    sheet.classList.add('closing');
+  function closeSheet(pre) {
+    if (!sheet || sheet.hidden || sheet.classList.contains('closing') || sheet._leaving) return;
+    sheet._leaving = true;
     setTimeout(function () {
-      sheet.classList.remove('open', 'closing'); root.style.overflow = ''; root.classList.remove('sheet-on');
-      setTimeout(function () { sheet.hidden = true; }, 650);
-      if (opener && opener.focus) opener.focus({ preventScroll: true });
-    }, 380);
+      sheet.classList.add('closing');
+      setTimeout(function () {
+        sheet.classList.remove('open', 'closing'); root.style.overflow = ''; root.classList.remove('sheet-on');
+        [].forEach.call(sheet.querySelectorAll('.chosen'), function (c) { c.classList.remove('chosen'); });
+        sheet._leaving = false;
+        setTimeout(function () { sheet.hidden = true; }, 650);
+        if (opener && opener.focus) opener.focus({ preventScroll: true });
+      }, 520);
+    }, pre || 0);
   }
   document.addEventListener('click', function (e) {
     var t = e.target;
@@ -117,7 +122,7 @@
       var k = g.getAttribute('data-go');
       go(k, g.getAttribute('data-sec'));
       try { history.replaceState(null, '', '#' + k); } catch (x) {}
-      if (sheet && !sheet.hidden) closeSheet();
+      if (sheet && !sheet.hidden) { if (g.closest('#sheet')) g.classList.add('chosen'); closeSheet(g.closest('#sheet') ? 260 : 0); }
       return;
     }
     var d = t.closest('[data-dead]');
