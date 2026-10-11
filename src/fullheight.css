@@ -1,0 +1,4 @@
+/* Live-site build only: heroes fill what is visible (svh is the real viewport here). With a jump nav, the nav sits on the hero's bottom edge. */
+html{--hsub:0px}
+html.hs{--hsub:var(--sub-h)}
+.hr:not([data-hero="home"]){height:calc(100vh - env(safe-area-inset-top,0px) - var(--ah-h) - var(--hsub));height:calc(100svh - env(safe-area-inset-top,0px) - var(--ah-h) - var(--hsub));min-height:340px}

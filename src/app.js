@@ -33,6 +33,7 @@
       });
     });
     if (main) main.classList.toggle('has-sub', showSub);
+    root.classList.toggle('hs', showSub);
     [].forEach.call(document.querySelectorAll('.sub:not([hidden]) .sj'), function (s) {
       var on = s.querySelector('.on');
       if (on && s.scrollWidth > s.clientWidth) s.scrollTo({ left: on.offsetLeft - (s.clientWidth - on.offsetWidth) / 2, behavior: started ? 'smooth' : 'auto' });

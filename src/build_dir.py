@@ -44,7 +44,7 @@ def sys2():
 S2 = sys2()
 
 def css_for(var, mobile):
-    tail = S2 + open('heroes2.css').read() + BA.HOMECSS + open(f'dir{var}.css').read()
+    tail = S2 + open('heroes2.css').read() + BA.HOMECSS + open(f'dir{var}.css').read() + BA.FULLH
     if mobile:
         css = (B.CSS + open('ext.css').read() + open('mobile.css').read() + open('sched.css').read() + open('sched-m.css').read()
                + open('events.css').read() + open('events-m.css').read() + open('rev16.css').read() + open('rev16-m.css').read()

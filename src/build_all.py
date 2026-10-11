@@ -102,6 +102,8 @@ FIX = '''/* merged document: each page keeps its own spacing */
 '''
 
 HOMECSS = f':root{{--hposter:url({HOMEPOSTER})}}\n'
+import os as _os
+FULLH = open('fullheight.css').read() if _os.environ.get('MOCKS_LOCAL') == '1' else ''
 
 def _tc_html(h):
     t = TCm.tc
@@ -130,14 +132,14 @@ def build(mobile):
     if mobile:
         css = (B.CSS + open('ext.css').read() + open('mobile.css').read() + open('sched.css').read() + open('sched-m.css').read()
                + open('events.css').read() + open('events-m.css').read() + open('rev16.css').read() + open('rev16-m.css').read()
-               + open('join.css').read() + open('join-m.css').read() + FIX + B.SYS(True) + open('system2.css').read() + open('heroes.css').read() + HOMECSS)
+               + open('join.css').read() + open('join-m.css').read() + FIX + B.SYS(True) + open('system2.css').read() + open('heroes.css').read() + HOMECSS + FULLH)
     else:
         narrow = (open('mobile.css').read() + open('sched-m.css').read() + open('events-m.css').read() + open('rev16-m.css').read() + open('join-m.css').read()
                   + '.wkd{display:none}.wkm{display:block}')
         css = (B.CSS + open('ext.css').read() + open('desktop.css').read() + open('sheet.css').read()
                + open('sched.css').read() + open('sched-d.css').read() + open('events.css').read() + open('events-d.css').read()
                + open('rev16.css').read() + open('rev16-d.css').read() + open('join.css').read() + '.wkm{display:none}\n'
-               + '@media (max-width:900px){\n' + narrow + '\n}\n' + FIX + B.SYS(False) + open('system2.css').read() + open('heroes.css').read() + HOMECSS)
+               + '@media (max-width:900px){\n' + narrow + '\n}\n' + FIX + B.SYS(False) + open('system2.css').read() + open('heroes.css').read() + HOMECSS + FULLH)
     first = FIRST
     hero = (f'<header class="hr" data-hero="{first[4]}"><video class="hv" muted loop playsinline aria-hidden="true" src="{R.VIDEO}"></video><video class="hv hvh" muted loop playsinline aria-hidden="true" poster="{HOMEPOSTER}" src="{HOMEVID}"></video><i class="shade"></i><i class="hp"></i>'
             f'{nav(mobile)}<div class="hh"><span class="ey hero">Brooklyn Aikikai</span><h1>{html.escape(first[1])}</h1><p class="au"></p></div><span class="pl">Hero image placeholder</span></header>')
