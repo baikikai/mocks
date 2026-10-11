@@ -104,7 +104,7 @@ HOMECSS = f':root{{--hposter:url({HOMEPOSTER})}}\n'
 import os as _os
 SYS2_FILE = 'system2.css'
 GLOSS = open('glossary.css').read()
-FULLH = open('fullheight.css').read() if _os.environ.get('MOCKS_FULLHEIGHT', '1') == '1' else ''
+FULLH = open('fullheight.css').read() if _os.environ.get('MOCKS_FULLHEIGHT', '0') == '1' else ''
 REV16_NAME, REV16_KEY = 'rev16', 'rev16'
 
 def _tc_html(h):

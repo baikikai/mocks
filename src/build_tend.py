@@ -2,22 +2,22 @@
 import html, re
 import build as B
 
-# Margin notes: term, kanji, short definition in terms of practice at Tendokan.
+# Margin notes: term, kanji, short definition in terms of practice.
 # PLACEHOLDER COPY: written for the comp; the chief instructor should replace it. Kanji to be checked by a Japanese reader.
 NOTES = [
-    ('Budo', '武道', 'The martial path. At Tendokan, practice is a way of refining character, not only technique. Every class is meant to polish the spirit as much as the body.'),
-    ('Shogaku', '初学', 'A first-stage misogi initiation. At Tendokan it is an intensive training where students meet their limits and go past them, the doorway into serious practice.'),
-    ('Shihan', '師範', 'A senior teacher who embodies the art. At Tendokan, a shihan carries the teaching forward and trains students until they can teach for themselves.'),
-    ('Uchideshi', '内弟子', 'A live-in student. At Tendokan, an uchideshi gives a period of life to the dojo, training and caring for it daily, to learn the way from the inside.'),
-    ('Kenshushei', '研修生', 'A dedicated trainee who studies deeply while living outside the dojo. At Tendokan it is the path for those preparing to teach while keeping a life beyond the mat.'),
-    ('Iaido', '居合道', 'The art of drawing the sword. At Tendokan it sharpens attention and clarity, and shows students where the movements of aikido come from.'),
-    ('Samu', '作務', 'Work practice. At Tendokan, cleaning, cooking and repairing the dojo are training in themselves, a way to practise attention and service in ordinary tasks.'),
-    ('Karma', '業', 'The pattern of action and consequence that shapes a life. At Tendokan it points to how each person’s history and habits show up in the way they practise.'),
-    ('Zazen', '坐禅', 'Seated meditation. At Tendokan it steadies the mind and brings students back to the present, the ground for everything done on the mat.'),
-    ('Misogi', '禊', 'Purification practice. At Tendokan it is demanding training meant to strip away self-defences and bring students closer to the root of their being.'),
-    ('Shodan', '初段', 'First degree black belt. At Tendokan it marks the beginning of real study, not its end, the point from which deeper practice opens.'),
-    ('Shugyo', '修行', 'Austere training. At Tendokan it is the heart of the dojo, a rigorous path of practice meant to loosen the grip of the self.'),
-    ('Dharma', '法', 'The teaching and the way things are. At Tendokan it is what keeps being revealed through study, whoever comes and goes.'),
+    ('Budo', '武道', 'The martial path. Practice is a way of refining character, not only technique. Every class is meant to polish the spirit as much as the body.'),
+    ('Shogaku', '初学', 'A first-stage misogi initiation. It is an intensive training where students meet their limits and go past them, the doorway into serious practice.'),
+    ('Shihan', '師範', 'A senior teacher who embodies the art. A shihan carries the teaching forward and trains students until they can teach for themselves.'),
+    ('Uchideshi', '内弟子', 'A live-in student. An uchideshi gives a period of life to the dojo, training and caring for it daily, to learn the way from the inside.'),
+    ('Kenshushei', '研修生', 'A dedicated trainee who studies deeply while living outside the dojo. It is the path for those preparing to teach while keeping a life beyond the mat.'),
+    ('Iaido', '居合道', 'The art of drawing the sword. It sharpens attention and clarity, and shows students where the movements of aikido come from.'),
+    ('Samu', '作務', 'Work practice. Cleaning, cooking and repairing the dojo are training in themselves, a way to practise attention and service in ordinary tasks.'),
+    ('Karma', '業', 'The pattern of action and consequence that shapes a life. It points to how each person’s history and habits show up in the way they practise.'),
+    ('Zazen', '坐禅', 'Seated meditation. It steadies the mind and brings students back to the present, the ground for everything done on the mat.'),
+    ('Misogi', '禊', 'Purification practice. It is demanding training meant to strip away self-defences and bring students closer to the root of their being.'),
+    ('Shodan', '初段', 'First degree black belt. It marks the beginning of real study, not its end, the point from which deeper practice opens.'),
+    ('Shugyo', '修行', 'Austere training. It is the heart of the dojo, a rigorous path of practice meant to loosen the grip of the self.'),
+    ('Dharma', '法', 'The teaching and the way things are. It is what keeps being revealed through study, whoever comes and goes.'),
 ]
 
 def note(term, kanji, text):
