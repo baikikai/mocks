@@ -5,7 +5,7 @@
   --sp-1:8px;--sp-2:16px;--sp-3:24px;--sp-4:32px;--sp-5:48px;--sp-6:72px;
   --sec-y:56px;--col-gap:48px;--stack:20px;--row-y:16px;--head-gap:24px;--block-gap:48px;--grid-gap:16px;--grid-gap-lg:32px;
   --mn-top:72px;--hero-h:620px;
-  --ah-h:40px;--sub-h:56px;--lab-top:32px;--col-label:150px;--col-date:170px;--col-term:220px;
+  --ah-h:48px;--sub-h:56px;--lab-top:32px;--col-label:150px;--col-date:170px;--col-term:220px;
 }
 .mo{grid-template-columns:var(--col-label) minmax(0,1fr)}
 @media (max-width:900px){.mo{grid-template-columns:minmax(0,1fr)}.mo h3{padding-top:0!important}}
@@ -13,5 +13,5 @@
   --fs-display:44px;--fs-h2:28px;--fs-h3:24px;--fs-h4:19px;--fs-lead:23px;
   --fs-body:17px;--fs-small:15px;--fs-meta:13px;--fs-logo:21px;
   --sec-y:32px;--col-gap:20px;--stack:18px;--row-y:14px;--head-gap:8px;--block-gap:36px;--grid-gap:8px;--grid-gap-lg:16px;
-  --mn-top:24px;--hero-h:380px;--ah-h:44px;--sub-h:52px;--lab-top:0px;--col-label:minmax(0,1fr);--col-date:116px;--col-term:minmax(0,1fr);
+  --mn-top:24px;--hero-h:380px;--ah-h:52px;--sub-h:52px;--lab-top:0px;--col-label:minmax(0,1fr);--col-date:116px;--col-term:minmax(0,1fr);
 }}
