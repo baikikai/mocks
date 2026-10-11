@@ -90,3 +90,6 @@ body,.ev p,.info p,.zero,.opt,.f .opt,.mc-t p,.who .txt p,.notes li{line-height:
 
 /* the revisions pill sits on the right so it never covers the rail's language and theme controls */
 @media (min-width:901px){#rv{left:auto;right:12px}#rvl{left:auto;right:0}}
+
+/* the rail never fades */
+@media (min-width:901px){.nv,.nv.fx,.nv.fx.in{opacity:1;pointer-events:auto}}

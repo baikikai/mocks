@@ -280,3 +280,8 @@
 
 /* schedule: the day names stay under the nav while the week scrolls */
 .wkh{top:calc(env(safe-area-inset-top,0px) + var(--stick,0px));transition:top .3s ease}
+
+/* the returning nav fades in and out; it does not slide */
+.nv.fx{transform:none;opacity:0;pointer-events:none;transition:opacity .2s ease}
+.nv.fx.in{opacity:1;pointer-events:auto}
+.sheet-on .nv.fx{transform:none;opacity:0;pointer-events:none}
