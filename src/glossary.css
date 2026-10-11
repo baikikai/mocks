@@ -21,3 +21,5 @@
 .sx,.nc-x,.dr-x{display:flex;align-items:center;justify-content:center}
 :where(.si) .ar{position:absolute;left:0;top:50%;width:0;height:0;opacity:0;overflow:hidden}
 .ft .fm a.lk .ra,.sfoot .sm a.lk .ra{flex:none}
+
+.nv nav a.don:hover,.nv nav a.don.on:hover{background:var(--gold);border-color:var(--gold);color:#14171C}

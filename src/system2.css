@@ -364,3 +364,6 @@ html,body{overflow-anchor:none}
 .sub,.lab,.lab-wrap,.wkh{transition:none}
 /* a skirt under the bar so a late frame can never show page content between the two bars */
 .sub::before{content:"";position:absolute;left:0;right:0;top:-16px;height:16px;background:var(--bg);pointer-events:none}
+
+/* Donate in the nav: gold fill with dark text on hover, press and focus (the nav link hover colour was turning the label gold on gold) */
+.nv nav a.don:hover,.nv nav a.don.on:hover,.nv nav a.don:focus-visible,.nv nav a.don:active,.nv nav a.don.pr,.nv.fx nav a.don:hover,.nv.fx nav a.don.on:hover{background:var(--gold);border-color:var(--gold);color:#14171C}
