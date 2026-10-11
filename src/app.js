@@ -264,3 +264,16 @@
   function ft() { var f = document.querySelector('.ft'); if (f) root.style.setProperty('--ft-h', f.offsetHeight + 'px'); }
   ft(); window.addEventListener('resize', ft); window.addEventListener('load', ft);
 })();
+
+
+/* iOS only applies :active (and ignores :hover) for touch if a touch handler exists; this gives every pressable the same pressed state */
+(function () {
+  var cur = null;
+  function on(e) {
+    var t = e.target.closest && e.target.closest('.si,.pc.v,.cb,.sdon,.sm a,.sj a,.nv a,.ft a,.lb,.mb,.tg,button,a');
+    if (t) { cur = t; t.classList.add('pr'); }
+  }
+  function off() { if (cur) { cur.classList.remove('pr'); cur = null; } }
+  document.addEventListener('touchstart', on, { passive: true });
+  ['touchend', 'touchcancel', 'touchmove'].forEach(function (n) { document.addEventListener(n, off, { passive: true }); });
+})();

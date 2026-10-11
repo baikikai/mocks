@@ -315,7 +315,7 @@ html,body{overflow-anchor:none}
 .si:active span,.si:focus-visible span{transform:translateX(1.5em);color:var(--gold)}
 .si:active::before,.si:focus-visible::before{opacity:1;transform:none}
 @media (hover:hover){.si:hover span{transform:translateX(1.5em)}.si:hover::before{opacity:1;transform:none}}
-#sheet.closing .si{opacity:0;transform:translateY(-14px);transition-delay:calc(var(--i)*45ms)}
+#sheet.closing .si,#sheet.closing .sfoot>*{opacity:0;transform:translateY(-14px);transition-delay:calc(var(--i)*45ms)}
 
 /* testimonial tiles: the name waits for hover or press; on narrow screens first and last stack */
 @media (max-width:900px),(hover:none){
@@ -334,3 +334,11 @@ html,body{overflow-anchor:none}
 @media (min-width:901px){.mo:has(.ev)>h3{align-self:first baseline;padding-top:0!important}.mo:has(.ev)>ul{align-self:first baseline}}
 .sec:not(.cl):not(.ctr):not(.ns)>.lab-wrap .lab::after{left:0;right:0}
 @media (max-width:900px){.sec.ctr>.bd{padding-top:var(--sp-4)}}
+
+/* the pressed state (set from touch on iOS) mirrors :active */
+.si.pr span{transform:translateX(1.5em);color:var(--gold)}
+.si.pr::before{opacity:1;transform:none}
+.pc.v.pr .pi{opacity:1}
+.pc.v.pr .play{opacity:0}
+.sm a.pr i{transform:translateX(5px)}
+.nv a.pr,.sj a.pr,.ft a.pr,.lb.pr,.tg.pr{color:var(--gold)}

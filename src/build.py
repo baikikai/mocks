@@ -193,7 +193,7 @@ def article(mobile, key, title, subline, label, fn):
             f'<header class="hr">{chrome_nav(mobile)}<div class="hh"><h1>{html.escape(title)}</h1>{('<p>' + html.escape(subline) + '</p>') if subline else ''}</div><span class="pl">Hero image placeholder</span></header>'
             f'<main class="mn">{subnav(key)}{fn()}</main></article>')
 
-FOOT = ('<footer class="ft"><p class="fm"><span>Our 25th Anniversary Fundraiser is underway!</span><a class="lk" href="#donate" data-go="donate">Donate <i aria-hidden="true">\u2192</i></a></p><nav aria-label="Footer"><a class="lk" href="#" data-dead>Contact</a><a class="lk" href="#" data-dead>Accessibility</a><a class="lk sc" href="#" data-dead>Site Credits</a>'
+FOOT = ('<footer class="ft"><nav aria-label="Footer"><a class="lk" href="#" data-dead>Contact</a><a class="lk" href="#" data-dead>Accessibility</a><a class="lk sc" href="#" data-dead>Site Credits</a>'
         '<a class="lk" href="https://www.instagram.com/baikikai/" target="_blank" rel="noopener">Instagram</a></nav>'
         '<div class="lg"><span>\u00a9 2026 Brooklyn Aikikai</span>'
         '<span>Brooklyn Aikikai is a 501(c)(3) <a class="lk" href="https://www.guidestar.org/profile/26-1693436" target="_blank" rel="noopener">EIN: 26-1693436</a></span></div></footer>')
@@ -201,7 +201,7 @@ FOOT = ('<footer class="ft"><p class="fm"><span>Our 25th Anniversary Fundraiser 
 SHEET = ('<div id="sheet" role="dialog" aria-modal="true" aria-label="Menu" hidden><div class="sbar"><a class="slogo" href="#mission" data-go="mission">Brooklyn Aikikai</a>'
          '<button type="button" class="mb sx" data-close aria-label="Close menu"><i></i><i></i></button></div><nav class="snav" aria-label="Menu">'
          + ''.join(f'<a class="si" href="#{"mission" if i == 0 else ""}" {"data-go=mission" if i == 0 else "data-dead"} style="--i:{i}"><span>{n}</span></a>' for i, (n, _) in enumerate(NAV))
-         + '</nav></div>')
+         + '</nav><div class="sfoot"><p class="sm" style="--i:5"><span>Our 25th Anniversary Fundraiser is underway!</span><a class="lk" href="#donate" data-go="donate">Donate <i aria-hidden="true">\u2192</i></a></p></div></div>')
 
 CSS = open('style.css').read()
 
