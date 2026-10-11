@@ -2,14 +2,13 @@
 """Build every mock into dist/. Python 3.12 or newer, standard library only.
 
     python3 make.py          build everything
-    python3 make.py rev16    build one (rev16, rev17, rev18, rev19, technique)
+    python3 make.py rev16    build one (rev16, rev16-baseline, rev17, rev18, rev19, technique)
 """
 import contextlib, io, os, shutil, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 SRC, DIST = ROOT / 'src', ROOT / 'dist'
-os.environ['MOCKS_LOCAL'] = '1'          # the pickers and logos link to these pages, not to claude.ai
 os.chdir(SRC)
 sys.path.insert(0, str(SRC))
 with contextlib.redirect_stdout(io.StringIO()):   # the legacy page builders print as they import
@@ -17,8 +16,23 @@ with contextlib.redirect_stdout(io.StringIO()):   # the legacy page builders pri
     import build_dir as BD
     import build_tech as BT
 
+def rev16_viewport(m):
+    BA.REV16_NAME, BA.REV16_KEY = 'rev16 Viewport', 'rev16v'
+    return BA.build(m)
+
+def rev16_baseline(m):
+    """The clean baseline: fixed hero heights, nothing sized from the viewport."""
+    saved = BA.FULLH
+    BA.FULLH = ''
+    BA.REV16_NAME, BA.REV16_KEY = 'rev16 Baseline', 'rev16'
+    try:
+        return BA.build(m)
+    finally:
+        BA.FULLH = saved
+
 JOBS = {
-    'rev16': lambda m: BA.build(m),
+    'rev16': rev16_viewport,
+    'rev16-baseline': rev16_baseline,
     'rev17': lambda m: BD.build('A', m),
     'rev18': lambda m: BD.build('B', m),
     'rev19': lambda m: BD.build('C', m),

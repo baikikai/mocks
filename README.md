@@ -36,8 +36,10 @@ dist/
 
 Every duration and easing in a direction is rewritten to that direction's tokens in `build_dir.py` (`norm_motion`).
 
+## Baseline
+
+See `BASELINE.md` for what rev 16 contains and what is deliberately left out.
+
 ## Deploy
 
 Netlify runs `python3 make.py` and publishes `dist/` (see `netlify.toml`, `PYTHON_VERSION = 3.12`). Pages are marked `noindex`.
-
-Older revisions (1 to 15), the directions proposal and the earlier prototypes live on claude.ai; the index links to them.

@@ -103,7 +103,8 @@ FIX = '''/* merged document: each page keeps its own spacing */
 
 HOMECSS = f':root{{--hposter:url({HOMEPOSTER})}}\n'
 import os as _os
-FULLH = open('fullheight.css').read() if _os.environ.get('MOCKS_LOCAL') == '1' else ''
+FULLH = open('fullheight.css').read() if _os.environ.get('MOCKS_FULLHEIGHT', '1') == '1' else ''
+REV16_NAME, REV16_KEY = 'rev16', 'rev16'
 
 def _tc_html(h):
     t = TCm.tc
@@ -128,7 +129,7 @@ def _i18n():
     return js[:a] + _json.dumps(D, ensure_ascii=False) + js[b:]
 
 def build(mobile):
-    title = 'Brooklyn Aikikai Website rev16 ' + ('Mobile' if mobile else 'Desktop')
+    title = f'Brooklyn Aikikai Website {REV16_NAME} ' + ('Mobile' if mobile else 'Desktop')
     if mobile:
         css = (B.CSS + open('ext.css').read() + open('mobile.css').read() + open('sched.css').read() + open('sched-m.css').read()
                + open('events.css').read() + open('events-m.css').read() + open('rev16.css').read() + open('rev16-m.css').read()
@@ -149,7 +150,7 @@ def build(mobile):
     js = (B.JS + '\n' + open('sched.scoped.js').read() + '\n' + open('events.scoped.js').read() + '\n' + _i18n() + '\n' + open('extras.js').read()
           + "\n(function(){[].forEach.call(document.querySelectorAll('form'),function(f){f.addEventListener('submit',function(e){e.preventDefault();});});})();")
     out = (f'<meta charset="utf-8">\n<title>{title}</title>\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">\n'
-           f'<style>\n{css}\n</style>\n<div class="site">{B.chrome_ah(mobile)}{hero}{main}{B.FOOT}</div>\n{sheet()}\n{TD.card()}\n{E.drawer()}\n<script>\n{js}\n</script>\n{REV.block(mobile, 'rev16')}')
+           f'<style>\n{css}\n</style>\n<div class="site">{B.chrome_ah(mobile)}{hero}{main}{B.FOOT}</div>\n{sheet()}\n{TD.card()}\n{E.drawer()}\n<script>\n{js}\n</script>\n{REV.block(mobile, REV16_KEY)}')
     return B.finish(_tc_html(out))
 
 if __name__ == '__main__':

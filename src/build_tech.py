@@ -6,7 +6,7 @@ with contextlib.redirect_stdout(io.StringIO()):
 B = BA.B
 import revsel as REV
 SRC = 'technique-entry-prototype-v13.html'
-REV16 = {'desktop': '/rev16/', 'mobile': '/rev16/mobile/'} if os.environ.get('MOCKS_LOCAL') == '1' else {'desktop': 'https://claude.ai/artifact/AwzhgzHvDKXmCvg8kgRhEL', 'mobile': 'https://claude.ai/artifact/SC6hpbHabduJwd3XurMuzf'}
+REV16 = {'desktop': '/rev16/', 'mobile': '/rev16/mobile/'}
 
 # ---------------- tiny css parser
 def strip_comments(c): return re.sub(r'/\*.*?\*/', '', c, flags=re.S)

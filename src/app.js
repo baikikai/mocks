@@ -58,11 +58,8 @@
         var mine = (kind === 'home') === v.classList.contains('hvh') && (kind === 'video' || kind === 'home');
         if (mine && !reduce) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } else v.pause();
       });
-      // keep the reader where they are; only bring the new content to the top of the screen when they are below the hero
-      if (started) {
-        var top = hero.offsetTop + hero.offsetHeight;
-        if (window.scrollY > top) window.scrollTo(0, top);
-      }
+      // a new page always opens at its top (the hero is pinned, so its offset follows the reader and cannot be used here)
+      if (started && window.scrollY > 0) window.scrollTo(0, 0);
     }
     started = true;
   }

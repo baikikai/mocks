@@ -275,6 +275,9 @@
 @media (prefers-reduced-motion:no-preference){
   .hr{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--ah-h));z-index:0}
   .mn,.ft{position:relative;z-index:2;background:var(--bg)}
+  /* no gap between the page and the footer: the pinned hero would show through it */
+  .ft{margin-top:0}
+  .mn{padding-bottom:calc(var(--sec-y) + 24px)}
   .mn{min-height:calc(100svh - var(--ah-h))}
 }
 
