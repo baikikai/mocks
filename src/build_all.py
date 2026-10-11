@@ -10,7 +10,6 @@ with contextlib.redirect_stdout(io.StringIO()):
     import build_blog as BL
     import build_ar as AR
 import tc as TCm
-import revsel as REV
 import json as _json
 
 # key, hero title, nav section, jump-nav group, hero kind
@@ -103,6 +102,8 @@ FIX = '''/* merged document: each page keeps its own spacing */
 
 HOMECSS = f':root{{--hposter:url({HOMEPOSTER})}}\n'
 import os as _os
+SYS2_FILE = 'system2.css'
+GLOSS = open('glossary.css').read()
 FULLH = open('fullheight.css').read() if _os.environ.get('MOCKS_FULLHEIGHT', '1') == '1' else ''
 REV16_NAME, REV16_KEY = 'rev16', 'rev16'
 
@@ -133,14 +134,14 @@ def build(mobile):
     if mobile:
         css = (B.CSS + open('ext.css').read() + open('mobile.css').read() + open('sched.css').read() + open('sched-m.css').read()
                + open('events.css').read() + open('events-m.css').read() + open('rev16.css').read() + open('rev16-m.css').read()
-               + open('join.css').read() + open('join-m.css').read() + FIX + B.SYS(True) + open('system2.css').read() + open('heroes.css').read() + HOMECSS + FULLH)
+               + open('join.css').read() + open('join-m.css').read() + FIX + B.SYS(True) + open(SYS2_FILE).read() + open('heroes.css').read() + HOMECSS + GLOSS + FULLH)
     else:
         narrow = (open('mobile.css').read() + open('sched-m.css').read() + open('events-m.css').read() + open('rev16-m.css').read() + open('join-m.css').read()
                   + '.wkd{display:none}.wkm{display:block}')
         css = (B.CSS + open('ext.css').read() + open('desktop.css').read() + open('sheet.css').read()
                + open('sched.css').read() + open('sched-d.css').read() + open('events.css').read() + open('events-d.css').read()
                + open('rev16.css').read() + open('rev16-d.css').read() + open('join.css').read() + '.wkm{display:none}\n'
-               + '@media (max-width:900px){\n' + narrow + '\n}\n' + FIX + B.SYS(False) + open('system2.css').read() + open('heroes.css').read() + HOMECSS + FULLH)
+               + '@media (max-width:900px){\n' + narrow + '\n}\n' + FIX + B.SYS(False) + open(SYS2_FILE).read() + open('heroes.css').read() + HOMECSS + GLOSS + FULLH)
     first = FIRST
     hero = (f'<header class="hr" data-hero="{first[4]}"><video class="hv" muted loop playsinline aria-hidden="true" src="{R.VIDEO}"></video><video class="hv hvh" muted loop playsinline aria-hidden="true" poster="{HOMEPOSTER}" src="{HOMEVID}"></video><i class="shade"></i><i class="hp"></i>'
             f'{nav(mobile)}<div class="hh"><span class="ey hero">Brooklyn Aikikai</span><h1>{html.escape(first[1])}</h1><p class="au"></p></div><span class="pl">Hero image placeholder</span></header>')
@@ -150,7 +151,7 @@ def build(mobile):
     js = (B.JS + '\n' + open('sched.scoped.js').read() + '\n' + open('events.scoped.js').read() + '\n' + _i18n() + '\n' + open('extras.js').read()
           + "\n(function(){[].forEach.call(document.querySelectorAll('form'),function(f){f.addEventListener('submit',function(e){e.preventDefault();});});})();")
     out = (f'<meta charset="utf-8">\n<title>{title}</title>\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">\n'
-           f'<style>\n{css}\n</style>\n<div class="site">{B.chrome_ah(mobile)}{hero}{main}{B.FOOT}</div>\n{sheet()}\n{TD.card()}\n{E.drawer()}\n<script>\n{js}\n</script>\n{REV.block(mobile, REV16_KEY)}')
+           f'<style>\n{css}\n</style>\n<div class="site">{B.chrome_ah(mobile)}{hero}{main}{B.FOOT}</div>\n{sheet()}\n{TD.card()}\n{E.drawer()}\n<script>\n{js}\n</script>\n')
     return B.finish(_tc_html(out))
 
 if __name__ == '__main__':

@@ -17,18 +17,19 @@ with contextlib.redirect_stdout(io.StringIO()):   # the legacy page builders pri
     import build_tech as BT
 
 def rev16_viewport(m):
-    BA.REV16_NAME, BA.REV16_KEY = 'rev16 Viewport', 'rev16v'
+    BA.REV16_NAME = 'rev16 Viewport'
     return BA.build(m)
 
 def rev16_baseline(m):
-    """The clean baseline: fixed hero heights, nothing sized from the viewport."""
-    saved = BA.FULLH
-    BA.FULLH = ''
-    BA.REV16_NAME, BA.REV16_KEY = 'rev16 Baseline', 'rev16'
+    """The rollback point: rev16 as it was before the viewport work. Snapshot CSS and JS, fixed hero heights, none of the later fixes."""
+    saved = (BA.FULLH, BA.SYS2_FILE, BA.B.JS)
+    BA.FULLH, BA.SYS2_FILE = '', 'baseline/system2.css'
+    BA.B.JS = Path('baseline/app.js').read_text(encoding='utf-8')
+    BA.REV16_NAME = 'rev16 Baseline'
     try:
         return BA.build(m)
     finally:
-        BA.FULLH = saved
+        BA.FULLH, BA.SYS2_FILE, BA.B.JS = saved
 
 JOBS = {
     'rev16': rev16_viewport,

@@ -1,0 +1,8 @@
+/* Glossary: "Glossary" on top, and the letter blocks as one centred column */
+.sec.cl{grid-template-columns:minmax(0,1fr)!important;justify-items:center;row-gap:var(--sp-5)}
+.sec.cl>.lab-wrap{width:min(100%,860px);text-align:center}
+.sec.cl>.lab-wrap,.sec.cl .lab{position:static!important;align-self:auto!important}
+.sec.cl .lab{margin-inline:0;padding-block:0;background:none;border:0}
+.sec.cl .lab::before{margin-inline:auto}
+.sec.cl .lab::after{display:none}
+.sec.cl>.bd{width:min(100%,860px);margin-inline:auto}

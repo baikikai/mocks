@@ -30,7 +30,6 @@ dist/
 | `src/build_all.py` | rev 16: the shell, every page, i18n |
 | `src/build_dir.py` + `dirA.css`, `dirB.css`, `dirC.css`, `extB.js`, `extC.js` | rev 17 Rail, rev 18 Pigment, rev 19 Index |
 | `src/build_tech.py` | technique database v14 (font set D) from `technique-entry-prototype-v13.html` |
-| `src/revsel.py` | the Revisions picker in every comp |
 | `src/system*.css`, `heroes*.css`, `app.js`, `extras.js` | shared styles and behaviour |
 | `src/web.json`, `blog.json`, harvested `*.html` | the live site's copy, used as is |
 

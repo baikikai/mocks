@@ -161,26 +161,51 @@
   });
 })();
 
-/* main nav: leaves with the page, comes back as soon as the reader scrolls up.
-   While it is the returning bar it lives outside the pinned hero, so the page cannot cover it. */
+/* main nav. It stays where it is until the page (the jump nav) arrives and carries it off the top.
+   Scrolling up brings it back as a bar; its black background fades to transparent as the scroll reaches the top. */
 (function () {
   var nv = document.querySelector('.nv'); if (!nv) return;
-  var root = document.documentElement, site = document.querySelector('.site'), home = nv.parentNode, last = window.pageYOffset, thr = 0;
-  function measure() { if (!nv.classList.contains('fx')) thr = nv.getBoundingClientRect().bottom + window.pageYOffset; }
-  function set(on) {
+  var root = document.documentElement, site = document.querySelector('.site'), home = nv.parentNode;
+  var hero = nv.closest('.hr'), mn = document.querySelector('.mn');
+  var last = window.pageYOffset, thr = 0;
+  function isBar() { return nv.classList.contains('fx'); }
+  function measure() { if (!isBar()) thr = nv.getBoundingClientRect().bottom + window.pageYOffset; }
+  function show(on) {
     nv.classList.toggle('in', on);
     root.style.setProperty('--nvo', on ? nv.offsetHeight + 'px' : '0px');
   }
+  function toHero() {
+    nv.classList.remove('fx', 'in'); nv.style.transform = ''; nv.style.removeProperty('--bar-a');
+    root.style.setProperty('--nvo', '0px');
+    if (nv.parentNode !== home) { var hh = home.querySelector('.hh'); home.insertBefore(nv, hh && hh.parentNode === home ? hh : null); }
+  }
+  function toBar() {
+    if (isBar()) return;
+    nv.classList.add('fx'); nv.style.transform = '';
+    if (site) site.insertBefore(nv, site.firstChild);
+  }
   function tick() {
-    var y = window.pageYOffset, dy = y - last;
-    if (y <= thr) {
-      nv.classList.remove('fx', 'in'); root.style.setProperty('--nvo', '0px');
-      if (nv.parentNode !== home) { var hh = home.querySelector('.hh'); home.insertBefore(nv, hh && hh.parentNode === home ? hh : null); }
-    } else {
-      if (!nv.classList.contains('fx')) { nv.classList.add('fx'); if (site) site.insertBefore(nv, site.firstChild); }
-      if (dy < -4) set(true); else if (dy > 4) set(false);
+    var y = window.pageYOffset, dy = y - last; last = y;
+    if (!isBar() && getComputedStyle(nv).position === 'fixed') return;            // a fixed rail never moves
+    var sticky = hero && getComputedStyle(hero).position === 'sticky';
+    if (!sticky) {                                                                  // reduced motion: the old rule
+      if (y <= thr) toHero();
+      else { toBar(); nv.style.setProperty('--bar-a', 1); if (dy < -4) show(true); else if (dy > 4) show(false); }
+      return;
     }
-    last = y;
+    var navH = nv.offsetHeight, navBottom = hero.getBoundingClientRect().top + navH;
+    var mnTop = mn && mn.offsetParent !== null ? mn.getBoundingClientRect().top : Infinity;
+    var d = mnTop - navBottom;                                                      // >= 0 while the nav is clear of the page
+    if (isBar()) {
+      if (y <= 0.5) { toHero(); return; }                                           // at the very top: the transparent hero nav
+      if (d >= -0.5 && dy > 4) { toHero(); return; }                                // heading back down over the hero: it rides with the hero again
+      nv.style.setProperty('--bar-a', Math.max(0, Math.min(1, y / 160)).toFixed(3)); // the black fades to transparent over the last 160px to the top
+      if (dy < -4) show(true); else if (dy > 4) show(false);
+    } else {
+      var push = Math.max(0, Math.min(navH, -d));
+      if (push >= navH - 0.5) { toBar(); nv.style.setProperty('--bar-a', 1); show(dy < -4); }   // carried off the top
+      else nv.style.transform = push ? 'translateY(' + (-push) + 'px)' : '';
+    }
   }
   measure(); window.addEventListener('resize', measure);
   window.addEventListener('scroll', tick, { passive: true });

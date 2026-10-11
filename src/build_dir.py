@@ -4,7 +4,6 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 with contextlib.redirect_stdout(io.StringIO()):
     import build_all as BA
 B, E, R, TD, BL, TCm = BA.B, BA.E, BA.R, BA.TD, BA.BL, BA.TCm
-import revsel as REV
 
 VAR = {'A': dict(rev=17, name='Rail'), 'B': dict(rev=18, name='Pigment'), 'C': dict(rev=19, name='Index')}
 FONTS = {
@@ -44,7 +43,7 @@ def sys2():
 S2 = sys2()
 
 def css_for(var, mobile):
-    tail = S2 + open('heroes2.css').read() + BA.HOMECSS + open(f'dir{var}.css').read() + BA.FULLH
+    tail = S2 + open('heroes2.css').read() + BA.HOMECSS + BA.GLOSS + open(f'dir{var}.css').read() + BA.FULLH
     if mobile:
         css = (B.CSS + open('ext.css').read() + open('mobile.css').read() + open('sched.css').read() + open('sched-m.css').read()
                + open('events.css').read() + open('events-m.css').read() + open('rev16.css').read() + open('rev16-m.css').read()
@@ -207,7 +206,7 @@ def build(var, mobile):
     main = f'<main class="mn{" has-sub" if var != "B" else ""}">{anc}{subs}{pages}</main>'
     extra = mega() if (var == 'B' and not mobile) or var == 'B' else ''
     out = (f'<meta charset="utf-8">\n<title>{title}</title>\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?{FONTS[var]}&display=swap">\n'
-           f'<style>\n{css}\n</style>\n<div class="site">{ah}{hero_html(var, mobile)}{main}{foot(var)}</div>\n{extra}{BA.sheet()}\n{TD.card()}\n{E.drawer()}\n<script>\n{js_for(var, mobile)}\n</script>\n{REV.block(mobile, 'rev' + str(V['rev']))}')
+           f'<style>\n{css}\n</style>\n<div class="site">{ah}{hero_html(var, mobile)}{main}{foot(var)}</div>\n{extra}{BA.sheet()}\n{TD.card()}\n{E.drawer()}\n<script>\n{js_for(var, mobile)}\n</script>\n')
     out = BA._tc_html(out)
     if var == 'A':
         out = re.sub(r'(<a class="bc"[^>]*>.*?)(</a>)', lambda m: m.group(1) + '<span class="go">Read Full Story<i></i></span>' + m.group(2), out, flags=re.S)

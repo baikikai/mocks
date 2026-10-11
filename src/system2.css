@@ -288,3 +288,6 @@
 .nv.fx{transform:none;opacity:0;pointer-events:none;transition:opacity .2s ease}
 .nv.fx.in{opacity:1;pointer-events:auto}
 .sheet-on .nv.fx{transform:none;opacity:0;pointer-events:none}
+
+/* the returning bar's black fades to transparent as the scroll reaches the top (--bar-a goes from 1 to 0) */
+.nv.fx{background:color-mix(in srgb,var(--bar) calc(var(--bar-a,1) * 100%),transparent);border-bottom-color:color-mix(in srgb,var(--barline,rgba(236,237,232,.12)) calc(var(--bar-a,1) * 100%),transparent)}

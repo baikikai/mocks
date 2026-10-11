@@ -4,7 +4,6 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 with contextlib.redirect_stdout(io.StringIO()):
     import build_all as BA
 B = BA.B
-import revsel as REV
 SRC = 'technique-entry-prototype-v13.html'
 REV16 = {'desktop': '/rev16/', 'mobile': '/rev16/mobile/'}
 
@@ -349,7 +348,7 @@ def build(mobile):
     page_css = appcss + THEME + css
     if mobile: page_css = page_css.replace('@media (max-width:900px){', '@media all{')
     html_ = (f'<meta charset="utf-8">\n<title>{title}</title>\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">\n'
-             f'<style>\n{page_css}\n</style>\n{markup(mobile)}\n<script>\n{app_js()}\n</script>\n<script>\n{LANGJS}\n{TECH_JS}\n</script>\n{REV.block(mobile, 'tech')}')
+             f'<style>\n{page_css}\n</style>\n{markup(mobile)}\n<script>\n{app_js()}\n</script>\n<script>\n{LANGJS}\n{TECH_JS}\n</script>\n')
     return B.finish(html_)
 
 if __name__ == '__main__':

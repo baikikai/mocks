@@ -61,7 +61,7 @@ def glossary():
         if x['type'] == 'p' and k + 1 < len(rest) and rest[k + 1]['type'] == 'p': cur[1].append((x['text'], rest[k + 1]['text'])); k += 2; continue
         k += 1
     gl = ''.join(f'<div class="mo" data-m="{l}"><h3>{html.escape(l)}</h3><dl class="gl">' + ''.join(f'<div class="gr"><dt>{html.escape(a)}</dt><dd>{html.escape(b)}</dd></div>' for a, b in terms) + '</dl></div>' for l, terms in letters)
-    return sec('Aikido Glossary', f'<div class="evs">{gl}</div>')
+    return sec('Glossary', f'<div class="evs">{gl}</div>', cls='cl')
 
 # ---------- Uchideshi program ----------
 def uchideshi():
