@@ -40,7 +40,18 @@ JOBS = {
     'technique': lambda m: BT.build(m),
 }
 
+def with_viewport(rel, text):
+    # without this, iOS lays the page out at 980px and shrinks it, so everything reads tiny
+    if 'name="viewport"' in text[:3000]:
+        return text
+    content = 'width=device-width, initial-scale=1, viewport-fit=cover' if '/mobile/' in '/' + rel else 'width=1280'
+    tag = f'<meta name="viewport" content="{content}">'
+    if '<meta charset="utf-8">' in text[:3000]:
+        return text.replace('<meta charset="utf-8">', '<meta charset="utf-8">' + tag, 1)
+    return tag + text
+
 def write(rel, text):
+    text = with_viewport(rel, text)
     p = DIST / rel
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(text, encoding='utf-8')
