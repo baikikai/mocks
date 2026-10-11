@@ -59,7 +59,10 @@
         if (mine && !reduce) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } else v.pause();
       });
       // a new page always opens at its top (the hero is pinned, so its offset follows the reader and cannot be used here)
-      if (started && window.scrollY > 0) window.scrollTo(0, 0);
+      if (started) {
+        var top0 = function () { window.scrollTo(0, 0); root.scrollTop = 0; document.body.scrollTop = 0; if (window.__navReset) window.__navReset(); };
+        top0(); requestAnimationFrame(top0); setTimeout(top0, 120);
+      }
     }
     started = true;
   }
@@ -174,6 +177,7 @@
     nv.classList.toggle('in', on);
     root.style.setProperty('--nvo', on ? nv.offsetHeight + 'px' : '0px');
   }
+  window.__navReset = function () { if (window.pageYOffset <= 0.5 && isBar()) toHero(); };
   function toHero() {
     nv.classList.remove('fx', 'in'); nv.style.transform = ''; nv.style.removeProperty('--bar-a');
     root.style.setProperty('--nvo', '0px');

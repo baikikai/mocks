@@ -293,3 +293,4 @@
 /* the bar and everything stuck below it move together: no lagging offsets, no see-through frame while it fades in */
 .sub,.lab,.lab-wrap,.wkh{transition:none}
 .nv.fx{transition:none}
+html,body{overflow-anchor:none}
