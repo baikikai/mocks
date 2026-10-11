@@ -133,7 +133,7 @@ def drawer():
     bio = ''.join(f'<p>{html.escape(t)}</p>' for t in BIO)
     dojo = f'<dl class="du"><div><dt>Dojo</dt><dd><a class="lk" href="{DOJO[1]}" target="_blank" rel="noopener">{DOJO[0]}</a></dd></div></dl>'
     return (f'<div id="drawer" role="dialog" aria-modal="true" aria-labelledby="dr-t" hidden><div class="dr-in">'
-            f'<button type="button" class="dr-x" aria-label="Close"><i></i><i></i></button>'
+            f'<button type="button" class="dr-x" aria-label="Close"><svg class="lx" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>'
             f'<img class="dr-img" src="{POSTER}" alt="Poster: {html.escape(NAME)}, {html.escape(DATES)}" width="648" height="1000">'
             f'<h2 id="dr-t" class="dr-h">{html.escape(NAME)}</h2><p class="dr-d">{html.escape(DATES)}</p>'
             f'<div class="dr-bio">{bio}</div>{dojo}{form}'

@@ -53,7 +53,7 @@ def byline(lines):
     return '<p class="by edby">' + ''.join(f'<span>{html.escape(l)}</span>' for l in lines) + '</p>'
 
 def card():
-    return ('<div id="ncard" hidden><div class="nc-in" role="dialog" aria-modal="true"><button type="button" class="nc-x" aria-label="Close note"><i></i><i></i></button>'
+    return ('<div id="ncard" hidden><div class="nc-in" role="dialog" aria-modal="true"><button type="button" class="nc-x" aria-label="Close note"><svg class="lx" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>'
             '<div class="nc-body"></div></div></div>')
 
 def build():

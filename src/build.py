@@ -199,9 +199,9 @@ FOOT = ('<footer class="ft"><nav aria-label="Footer"><a class="lk" href="#" data
         '<span>Brooklyn Aikikai is a 501(c)(3) <a class="lk" href="https://www.guidestar.org/profile/26-1693436" target="_blank" rel="noopener">EIN: 26-1693436</a></span></div></footer>')
 
 SHEET = ('<div id="sheet" role="dialog" aria-modal="true" aria-label="Menu" hidden><div class="sbar"><a class="slogo" href="#mission" data-go="mission">Brooklyn Aikikai</a>'
-         '<button type="button" class="mb sx" data-close aria-label="Close menu"><i></i><i></i></button></div><nav class="snav" aria-label="Menu">'
-         + ''.join(f'<a class="si" href="#{"mission" if i == 0 else ""}" {"data-go=mission" if i == 0 else "data-dead"} style="--i:{i}"><span>{n}</span></a>' for i, (n, _) in enumerate(NAV))
-         + '</nav><div class="sfoot"><p class="sm" style="--i:5"><span>Our 25th Anniversary Fundraiser is underway!</span><a class="lk" href="#donate" data-go="donate">Donate <i aria-hidden="true">\u2192</i></a></p></div></div>')
+         '<button type="button" class="mb sx" data-close aria-label="Close menu"><svg class="lx" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div><nav class="snav" aria-label="Menu">'
+         + ''.join(f'<a class="si" href="#{"mission" if i == 0 else ""}" {"data-go=mission" if i == 0 else "data-dead"} style="--i:{i}"><svg class="ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg><span>{n}</span></a>' for i, (n, _) in enumerate(NAV))
+         + '</nav><div class="sfoot"><p class="sm" style="--i:5"><span>Our 25th Anniversary Fundraiser is underway!</span><a class="lk" href="#donate" data-go="donate">Donate <svg class="lx ra" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a></p></div></div>')
 
 CSS = open('style.css').read()
 

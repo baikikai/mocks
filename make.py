@@ -2,7 +2,7 @@
 """Build every mock into dist/. Python 3.12 or newer, standard library only.
 
     python3 make.py          build everything
-    python3 make.py rev16    build one (rev16, rev16-baseline, rev17, rev18, rev19, technique)
+    python3 make.py rev16    build one (rev16, rev16-baseline, rev17, rev18, rev19, technique, donate)
 """
 import contextlib, io, os, shutil, sys
 from pathlib import Path
@@ -15,6 +15,7 @@ with contextlib.redirect_stdout(io.StringIO()):   # the legacy page builders pri
     import build_all as BA
     import build_dir as BD
     import build_tech as BT
+    import build_donate as BDN
 
 def rev16_viewport(m):
     BA.REV16_NAME = 'rev16 Viewport'
@@ -38,6 +39,7 @@ JOBS = {
     'rev18': lambda m: BD.build('B', m),
     'rev19': lambda m: BD.build('C', m),
     'technique': lambda m: BT.build(m),
+    'donate': lambda m: BDN.build(m),
 }
 
 def with_viewport(rel, text):

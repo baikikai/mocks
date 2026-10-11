@@ -13,5 +13,11 @@
 /* mobile menu footer message */
 .sfoot .sm{margin:0;padding-top:20px;border-top:1px solid var(--line);display:flex;flex-direction:column;align-items:flex-start;gap:12px;font-family:var(--D);font-size:var(--fs-h4,20px);line-height:1.3;color:var(--fg)}
 .sfoot .sm a.lk{display:inline-flex;align-items:center;gap:10px;white-space:nowrap;color:var(--gold);text-decoration:none;font-family:var(--B,inherit);font-size:calc(var(--fs-meta,13px) + 1px);letter-spacing:.04em}
-.sfoot .sm a.lk i{font-style:normal;display:inline-block;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
-.sfoot .sm a.lk:hover i,.sfoot .sm a.lk:focus-visible i,.sfoot .sm a.lk:active i{transform:translateX(5px)}
+.sfoot .sm a.lk .ra{transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.sfoot .sm a.lk:hover .ra,.sfoot .sm a.lk:focus-visible .ra,.sfoot .sm a.lk:active .ra{transform:translateX(5px)}
+
+/* icons (Lucide): shared base so every build sizes them the same */
+.lx{display:block;flex:none}
+.sx,.nc-x,.dr-x{display:flex;align-items:center;justify-content:center}
+:where(.si) .ar{position:absolute;left:0;top:50%;width:0;height:0;opacity:0;overflow:hidden}
+.ft .fm a.lk .ra,.sfoot .sm a.lk .ra{flex:none}

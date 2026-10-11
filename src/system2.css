@@ -74,7 +74,7 @@
 .sheet-on .nv.fx{transform:translateY(-110%)}
 
 /* leaving a page */
-.mn.out .pg:not([hidden]){opacity:0;transform:translateY(-10px);transition:opacity .26s ease-in,transform .26s ease-in}
+.mn.out .pg:not([hidden])>.sec{opacity:0;transform:translateY(-16px);transition:opacity .3s ease-in,transform .3s ease-in;transition-delay:calc(var(--i,0)*70ms)}
 
 /* hover is yellow everywhere in the menus */
 @media (hover:hover){
@@ -310,11 +310,11 @@ html,body{overflow-anchor:none}
 
 /* menu: pressed or hovered items lean toward the left arrow; items leave in a stagger */
 .si{position:relative;overflow:hidden}
-.si::before{content:"\2190";position:absolute;left:0;top:50%;margin-top:-.6em;line-height:1.2;color:var(--gold);opacity:0;transform:translateX(-18px);transition:opacity .25s cubic-bezier(.2,.7,.2,1),transform .35s cubic-bezier(.2,.7,.2,1)}
+.si .ar{position:absolute;left:0;top:50%;width:.8em;height:.8em;margin-top:-.4em;color:var(--gold);opacity:0;transform:translateX(-18px);transition:opacity .25s cubic-bezier(.2,.7,.2,1),transform .35s cubic-bezier(.2,.7,.2,1)}
 .si span{display:block;transition:transform .35s cubic-bezier(.2,.7,.2,1),color .2s}
 .si:active span,.si:focus-visible span{transform:translateX(1.5em);color:var(--gold)}
-.si:active::before,.si:focus-visible::before{opacity:1;transform:none}
-@media (hover:hover){.si:hover span{transform:translateX(1.5em)}.si:hover::before{opacity:1;transform:none}}
+.si:active .ar,.si:focus-visible .ar{opacity:1;transform:none}
+@media (hover:hover){.si:hover span{transform:translateX(1.5em)}.si:hover .ar{opacity:1;transform:none}}
 #sheet.closing .si,#sheet.closing .sfoot>*{opacity:0;transform:translateY(-14px);transition-delay:calc(var(--i)*45ms)}
 
 /* testimonial tiles: the name waits for hover or press; on narrow screens first and last stack */
@@ -337,7 +337,7 @@ html,body{overflow-anchor:none}
 
 /* the pressed state (set from touch on iOS) mirrors :active */
 .si.pr span{transform:translateX(1.5em);color:var(--gold)}
-.si.pr::before{opacity:1;transform:none}
+.si.pr .ar{opacity:1;transform:none}
 .pc.v.pr .pi{opacity:1}
 .pc.v.pr .play{opacity:0}
 .sm a.pr i{transform:translateX(5px)}
@@ -345,9 +345,15 @@ html,body{overflow-anchor:none}
 
 /* a chosen menu item holds the arrow and the accent, then everything leaves in a stagger: top bar, items, message */
 .si.chosen span{transform:translateX(1.5em);color:var(--gold)}
-.si.chosen::before{opacity:1;transform:none}
+.si.chosen .ar{opacity:1;transform:none}
 .sbar>*,.sfoot>*{transition:opacity .35s cubic-bezier(.2,.7,.2,1),transform .35s cubic-bezier(.2,.7,.2,1)}
 #sheet.closing .sbar>*{opacity:0;transform:translateY(-14px)}
 #sheet.closing .sbar>:nth-child(2){transition-delay:60ms}
 #sheet.closing .si{transition-delay:calc(var(--i)*60ms + 60ms)}
 #sheet.closing .sfoot>*{opacity:0;transform:translateY(-14px);transition-delay:calc(var(--i)*60ms + 60ms)}
+
+/* Lucide x and arrows */
+.lx{display:block;flex:none}
+.sx,.nc-x,.dr-x{display:flex;align-items:center;justify-content:center}
+.sm a.lk .ra{transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.sm a.lk:hover .ra,.sm a.lk:focus-visible .ra,.sm a.lk:active .ra,.sm a.pr .ra{transform:translateX(5px)}
