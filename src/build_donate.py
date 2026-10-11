@@ -242,7 +242,54 @@ JS = r'''
 })();
 '''
 
-def build(mobile):
+HERO1 = '''<section class="hero" aria-labelledby="h1">
+  <div class="num" aria-hidden="true"><span><b>2</b></span><span><b>5</b></span></div>
+  <svg class="ring" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width=".14" aria-hidden="true"><circle cx="50" cy="50" r="48"/></svg>
+  <div class="hi">
+    <span class="ey rv" style="--d:0">Brooklyn Aikikai</span>
+    <h1 id="h1" class="rv" style="--d:1">25 Years</h1>
+    <p class="msg rv" style="--d:2">Our 25th Anniversary Fundraiser is underway!</p>
+    <a class="cta rv" style="--d:3" href="@@HREF@@">Donate @@ARROW@@</a>
+    <p class="fine rv" style="--d:4">This year, in honor of our 25th year, all donations from January 2026, to December 31st, 2026 will count towards our 2026 fundraiser.</p>
+  </div>
+  <span class="hint" aria-hidden="true"></span>
+</section>'''
+
+HERO2 = '''<section class="hero h2r" aria-labelledby="h1">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="ol" x="-4%" y="-4%" width="108%" height="108%"><feMorphology in="SourceAlpha" operator="dilate" radius="2.5" result="d"/><feComposite in="d" in2="SourceAlpha" operator="out" result="edge"/><feFlood flood-color="#E5202B" result="c"/><feComposite in="c" in2="edge" operator="in"/></filter></svg>
+  <img class="bgc" src="@@CHOP@@" alt="" aria-hidden="true">
+  <div class="hi">
+    <div class="seal" aria-hidden="true"><i class="sq s3"></i><i class="sq s2"></i><i class="sq s1"></i><img src="@@CHOP@@" alt=""></div>
+    <h1 id="h1" class="rv" style="--d:1">25 Years</h1>
+    <p class="msg rv" style="--d:2">Our 25th Anniversary Fundraiser is underway!</p>
+    <a class="cta rv" style="--d:3" href="@@HREF@@">Donate @@ARROW@@</a>
+    <p class="fine rv" style="--d:4">This year, in honor of our 25th year, all donations from January 2026, to December 31st, 2026 will count towards our 2026 fundraiser.</p>
+  </div>
+  <span class="hint" aria-hidden="true"></span>
+</section>'''
+CHOP = 'data:image/png;base64,' + __import__('base64').b64encode(open('img/chop.png', 'rb').read()).decode()
+HERO2 = HERO2.replace('@@CHOP@@', CHOP)
+
+CSS2 = r'''
+.h2r .num,.h2r .ring{display:none}
+.h2r .hi{gap:25px}
+.h2r h1{font-size:clamp(48px,7vw,100px)}
+.bgc{position:absolute;left:50%;top:50%;width:min(1200px,175vw);height:auto;max-width:none;transform:translate(-50%,calc(-50% + var(--py,0px))) ;filter:url(#ol);opacity:0;transition:opacity 1.6s var(--ease) .2s;pointer-events:none;user-select:none}
+.ld .bgc{opacity:.4}
+.bgc{-webkit-mask-image:radial-gradient(ellipse 48% 52% at 50% 50%,transparent 35%,#000 95%);mask-image:radial-gradient(ellipse 48% 52% at 50% 50%,transparent 35%,#000 95%)}
+.seal{position:relative;width:clamp(150px,17vw,240px);aspect-ratio:1;display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+.seal img{position:relative;width:100%;height:auto;display:block;clip-path:inset(0 0 100% 0);transform:translateY(-36px);opacity:0;transition:clip-path 1s var(--ease) .35s,transform 1s var(--ease) .35s,opacity .4s .35s}
+.ld .seal img{clip-path:inset(0);transform:none;opacity:1}
+.sq{position:absolute;left:50%;top:50%;border:1px solid #E5202B;border-radius:6px;opacity:.7;clip-path:inset(0 100% 0 0);transition:clip-path 1.4s var(--ease);transform:translate(-50%,-50%)}
+.sq.s1{width:128%;height:128%;transition-delay:.7s}
+.sq.s2{width:165%;height:165%;transition-delay:.9s;opacity:.45}
+.sq.s3{width:210%;height:210%;transition-delay:1.1s;opacity:.25}
+.ld .sq{clip-path:inset(0 0 0 0)}
+@media (max-width:900px){.seal{width:130px}.sq.s3{display:none}}
+@media (prefers-reduced-motion:reduce){.bgc,.seal img,.sq{transition:none!important;opacity:1!important;clip-path:none!important;transform:none!important}.sq{transform:translate(-50%,-50%)!important}}
+'''
+
+def build(mobile, rev=1):
     donate_href = '#give'
     foot = ('<footer class="ft"><nav aria-label="Footer"><a href="#" data-dead>Contact</a><a href="#" data-dead>Accessibility</a><a href="#" data-dead>Site Credits</a>'
             '<a href="https://www.instagram.com/baikikai/" target="_blank" rel="noopener">Instagram<span style="position:absolute;left:-9999px"> (opens in a new tab)</span></a></nav>'
@@ -252,13 +299,18 @@ def build(mobile):
     shirts = ''.join(f'<figure style="--d:{i}"></figure>' for i in range(8))
     past = ''.join(video('Video: Past Fundraiser ' + str(i + 1)) for i in range(4))
     back = '../../rev16/mobile/' if mobile else '../rev16/'
+    hero = HERO2 if rev == 2 else HERO1
+    hero = hero.replace('@@ARROW@@', icon("arrow", 28)).replace('@@HREF@@', donate_href)
+    mq1 = '' if rev == 2 else f'<div class="mq" aria-hidden="true"><div class="tr">{marq}</div></div>'
+    mq2 = '' if rev == 2 else f'<div class="mq rev" aria-hidden="true"><div class="tr">{marq}</div></div>'
+    css = CSS + (CSS2 if rev == 2 else '')
     return f'''<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <title>Brooklyn Aikikai Donate</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">
-<style>{CSS}</style>
+<style>{css}</style>
 </head>
 <body>
 <div class="pg" aria-hidden="true"><i></i></div>
@@ -267,20 +319,9 @@ def build(mobile):
   <button type="button" class="tg" aria-label="Switch theme">{icon("moon", 20, "lx moon")}{icon("sun", 20, "lx sun")}</button></div></header>
 
 <main>
-<section class="hero" aria-labelledby="h1">
-  <div class="num" aria-hidden="true"><span><b>2</b></span><span><b>5</b></span></div>
-  <svg class="ring" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width=".14" aria-hidden="true"><circle cx="50" cy="50" r="48"/></svg>
-  <div class="hi">
-    <span class="ey rv" style="--d:0">Brooklyn Aikikai</span>
-    <h1 id="h1" class="rv" style="--d:1">25 Years</h1>
-    <p class="msg rv" style="--d:2">Our 25th Anniversary Fundraiser is underway!</p>
-    <a class="cta rv" style="--d:3" href="{donate_href}">Donate {icon("arrow", 28)}</a>
-    <p class="fine rv" style="--d:4">This year, in honor of our 25th year, all donations from January 2026, to December 31st, 2026 will count towards our 2026 fundraiser.</p>
-  </div>
-  <span class="hint" aria-hidden="true"></span>
-</section>
+{hero}
 
-<div class="mq" aria-hidden="true"><div class="tr">{marq}</div></div>
+{mq1}
 
 <section class="sec" id="give"><div class="wrap">
   <p class="lead wr">{words("Brooklyn Aikikai is a nonprofit dedicated to rigorous training and personal transformation through aikido and other traditional Japanese arts.")}</p>
@@ -297,7 +338,7 @@ def build(mobile):
   {video("Video: 25 years of Brooklyn Aikikai", "feat")}
 </section>
 
-<div class="mq rev" aria-hidden="true"><div class="tr">{marq}</div></div>
+{mq2}
 
 <section class="sec"><div class="wrap shirts">
   <div class="t rv"><h2 style="margin:0;font-size:clamp(40px,5vw,72px)">Here for Summer!</h2><p>Check out our new t-shirts! Another excellent design from dojo member Diego Medina-Rosas and Sensei. Grab one today!</p></div>

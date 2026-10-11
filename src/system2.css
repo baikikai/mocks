@@ -357,3 +357,10 @@ html,body{overflow-anchor:none}
 .sx,.nc-x,.dr-x{display:flex;align-items:center;justify-content:center}
 .sm a.lk .ra{transition:transform .3s cubic-bezier(.2,.7,.2,1)}
 .sm a.lk:hover .ra,.sm a.lk:focus-visible .ra,.sm a.lk:active .ra,.sm a.pr .ra{transform:translateX(5px)}
+
+/* header bar and everything sticky under it follow --nvo exactly; nothing animates on its own */
+.nv.fx,.nv.fx.in{transform:translateY(calc(var(--nvo,0px) - var(--nvh,80px)));transition:none;opacity:1}
+.sheet-on .nv.fx,.sheet-on .nv.fx.in{transform:translateY(-100%)}
+.sub,.lab,.lab-wrap,.wkh{transition:none}
+/* a skirt under the bar so a late frame can never show page content between the two bars */
+.sub::before{content:"";position:absolute;left:0;right:0;top:-16px;height:16px;background:var(--bg);pointer-events:none}

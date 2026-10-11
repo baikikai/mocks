@@ -192,14 +192,30 @@
   var last = window.pageYOffset, thr = 0;
   function isBar() { return nv.classList.contains('fx'); }
   function measure() { if (!isBar()) thr = nv.getBoundingClientRect().bottom + window.pageYOffset; }
+  /* one number drives everything: --nvo is how much of the bar is showing. The bar and every sticky bar under it read it on the same frame, so they cannot drift apart. */
+  var reduceM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cur = 0, from = 0, tgt = 0, t0 = 0, raf = 0;
+  function setNvo(v) { cur = v; root.style.setProperty('--nvo', v.toFixed(2) + 'px'); }
+  function step(now) {
+    var k = Math.min(1, (now - t0) / 320), e = 1 - Math.pow(1 - k, 3);
+    setNvo(from + (tgt - from) * e);
+    raf = k < 1 ? requestAnimationFrame(step) : 0;
+  }
+  function tween(to) {
+    tgt = to; from = cur; t0 = performance.now();
+    if (reduceM) { setNvo(to); return; }
+    if (!raf) raf = requestAnimationFrame(step);
+  }
+  function hold(v) { if (raf) { cancelAnimationFrame(raf); raf = 0; } setNvo(v); }
   function show(on) {
     nv.classList.toggle('in', on);
-    root.style.setProperty('--nvo', on ? nv.offsetHeight + 'px' : '0px');
+    var h = nv.offsetHeight; root.style.setProperty('--nvh', h + 'px');
+    tween(on ? h : 0);
   }
   window.__navReset = function () { if (window.pageYOffset <= 0.5 && isBar()) toHero(); };
   function toHero() {
     nv.classList.remove('fx', 'in'); nv.style.transform = ''; nv.style.removeProperty('--bar-a');
-    root.style.setProperty('--nvo', '0px');
+    hold(0);
     if (nv.parentNode !== home) { var hh = home.querySelector('.hh'); home.insertBefore(nv, hh && hh.parentNode === home ? hh : null); }
   }
   function toBar() {

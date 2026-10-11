@@ -40,6 +40,7 @@ JOBS = {
     'rev19': lambda m: BD.build('C', m),
     'technique': lambda m: BT.build(m),
     'donate': lambda m: BDN.build(m),
+    'donate2': lambda m: BDN.build(m, 2),
 }
 
 def with_viewport(rel, text):
