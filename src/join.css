@@ -1,0 +1,7 @@
+.stp .sub{display:block;margin-top:var(--sp-1);color:var(--mut);font-size:var(--fs-small);line-height:1.5}
+.mo .tx{display:flex;flex-direction:column;gap:var(--stack)}
+.mo .tx p{margin:0}
+.gl{margin:0;padding:0;display:flex;flex-direction:column}
+.gr{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:var(--sp-3);padding-block:var(--row-y);border-top:1px solid var(--line);align-items:baseline}
+.gr dt{font-family:var(--D);font-size:var(--fs-h4);line-height:1.3}
+.gr dd{margin:0;font-size:var(--fs-body);line-height:1.6;color:var(--mut)}

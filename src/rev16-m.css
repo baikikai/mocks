@@ -1,0 +1,8 @@
+.kgrid{grid-template-columns:minmax(0,1fr);gap:28px}
+.mgrid{grid-template-columns:minmax(0,1fr);gap:36px}
+.gal.sh4{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.wkwrap{padding-top:36px}
+.mc-t h2{font-size:26px}.mc-t .tg{font-size:19px}
+.mc-t p{font-size:16px}
+.ey.hero{margin-bottom:10px}
+.mo.flat h3{font-size:24px}

@@ -1,0 +1,11 @@
+{
+  "name": "@baikikai/mocks",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Brooklyn Aikikai design mocks: static builds of the website directions, technique database and collection.",
+  "scripts": {
+    "build": "python3 make.py",
+    "build:rev16": "python3 make.py rev16",
+    "dev": "python3 make.py && python3 -m http.server 8080 -d dist"
+  }
+}

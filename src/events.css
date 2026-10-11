@@ -1,0 +1,56 @@
+/* Events: the date is what a reader scans, so it leads every row in the display face. Months group the rows, years are the sections. */
+.sec{border-top:1px solid var(--line)}
+.lab-wrap{min-width:0}
+.evs{gap:56px;max-width:none}
+.mo{display:grid;gap:20px;min-width:0}
+.mo h3,.sh{margin:0;font-family:var(--D);font-weight:400;font-size:28px;line-height:1.2;color:var(--gi)}
+.mo ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.ev{display:grid;gap:24px;padding:18px 0;border-top:1px solid var(--line);transition:background .25s}
+.ev:hover{background:color-mix(in srgb,var(--fg) 5%,transparent)}
+.ev p,.nt p{margin:0;max-width:none;font-size:19px;line-height:1.5}
+.ev p::first-letter{text-transform:uppercase}
+.dt{display:flex;flex-direction:column;gap:4px;font-variant-numeric:tabular-nums}
+.dt b{font-family:var(--D);font-weight:400;font-size:34px;line-height:1.1;white-space:nowrap}
+.dt span{font-size:14px;line-height:1.3;color:var(--mut)}
+.nt{padding:14px 0 6px;border-top:1px solid var(--line)}
+.nt p{font-size:16px;color:var(--mut)}
+.post{width:100%;max-width:340px;margin-top:28px;align-items:flex-end}
+.dt b.x{font-size:24px;line-height:1.2;white-space:normal}
+
+.none{display:none;padding:18px 0;border-top:1px solid var(--line);color:var(--mut)}
+.none p{margin:0;font-size:17px}
+.mo.empty .none{display:block}
+.mo.empty .nt{display:none}
+.filt{display:flex;flex-wrap:wrap;gap:28px 48px;align-items:flex-end;padding-block:32px;border-top:1px solid var(--line)}
+.fg{display:flex;flex-direction:column;gap:10px;min-width:0}
+.fg label,.fl{font-size:14px;color:var(--mut)}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{border:1px solid var(--line);padding:9px 16px;font-size:15px;line-height:1.2;color:var(--mut);transition:background .2s,color .2s,border-color .2s}
+.chip:hover{border-color:var(--gi);color:var(--fg)}
+.chip[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#14171C;font-weight:500}
+.feat .post{margin-top:0;max-width:340px}
+.reg{display:flex;flex-direction:column;gap:22px;max-width:520px}
+.f{display:flex;flex-direction:column;gap:6px;border:0;margin:0;padding:0;min-width:0}
+.f label,.f legend{font-size:14px;color:var(--mut);padding:0}
+.f input[type=text],.f input[type=email],.f input[type=tel]{display:block;width:100%;background:none;border:0;border-bottom:1px solid var(--line);color:var(--fg);padding:10px 0;font:inherit;font-size:19px;outline:none;border-radius:0;transition:border-color .2s}
+.f input:focus{border-bottom-color:var(--gi)}
+.days{gap:12px}
+.opt{display:flex;gap:12px;align-items:flex-start;font-size:18px;line-height:1.4;cursor:pointer}
+.opt input{accent-color:var(--gold);width:20px;height:20px;margin:2px 0 0;flex:none}
+.reg .cb{align-self:flex-start}
+.info{display:flex;flex-direction:column;gap:14px;margin-top:24px}
+.info p{margin:0;font-size:19px;max-width:520px}
+.f .opt,.opt{font-size:18px;color:var(--fg)}
+.zero{margin:0;padding:32px 0;color:var(--mut);font-size:19px;border-top:1px solid var(--line)}
+.mo[hidden]{display:none}
+.gal{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.pc{position:relative;aspect-ratio:2/3;background:var(--field);overflow:hidden;color:var(--bg);transition:background .3s;outline-offset:3px}
+.pc:hover,.pc:focus-visible{background:var(--gold)}
+.pi{position:absolute;inset:0;padding:16px 14px;display:flex;flex-direction:column;justify-content:space-between;opacity:0;transition:opacity .3s}
+.pc:hover .pi,.pc:focus-visible .pi{opacity:1}
+.pi b{font-family:var(--D);font-weight:400;font-size:26px;line-height:1.15;color:#14171C}
+.pi span{font-size:14px;line-height:1.35;color:#14171C}
+@media (hover:none){.pc .pi{opacity:1}.pc:has(.pi){background:color-mix(in srgb,var(--gold) 16%,var(--field))}.pi b,.pi span{color:var(--fg)}}
+.lnkrow{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:56px;padding:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:var(--D);font-size:30px;line-height:1.2;transition:padding-left .3s,color .2s}
+.lnkrow:hover{padding-left:14px;color:var(--gi)}
+.lnkrow::after{width:.7em;height:.7em;margin-left:0;flex:none}

@@ -1,0 +1,19 @@
+.evs{gap:36px}
+.mo{gap:6px}
+.mo h3{font-size:24px}
+.ev{grid-template-columns:116px minmax(0,1fr);gap:14px;padding:14px 0;align-items:baseline}
+.dt b{font-size:26px}
+.dt span{font-size:13px}
+.ev p,.nt p{font-size:17px}
+.post{max-width:240px;margin-top:0}
+.gal{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.pi{padding:12px 10px}.pi b{font-size:20px}.pi span{font-size:13px}
+.lnkrow{font-size:22px;margin-top:40px}
+.dt b.x{font-size:20px}
+.filt{padding-block:24px;gap:20px}
+.fg{width:100%}
+.msel{width:100%}
+.chips{flex-wrap:wrap}
+.feat .post{max-width:240px}
+.opt{font-size:17px}
+.info p{font-size:17px}

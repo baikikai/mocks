@@ -1,0 +1,17 @@
+/* One tile size for every class, two for the long ones, each the full width of its column. Rows are shared by start time, and the grid sizes itself to the viewport so the whole week shows at once. */
+.wk{margin-bottom:96px}
+.wkh{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));position:sticky;top:0;z-index:3;background:var(--bg)}
+.dh{padding:14px 8px 16px;font-family:var(--D);font-size:22px;text-align:center}
+.wkb{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));height:clamp(760px,calc(100vh - 100px),1000px)}
+.col{display:grid;gap:3px;border-left:1px solid var(--line);padding-block:0;min-width:0}
+.col:last-child{border-right:1px solid var(--line)}
+.blk{padding-block:10px;background:var(--field);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:1px;line-height:1.25;min-width:0;overflow:hidden;font-variant-numeric:tabular-nums;transition:opacity .35s,background .35s;transition-delay:calc(var(--i)*25ms)}
+.blk b{font-weight:500;font-size:16px}
+.blk span{font-size:13px;color:var(--mut)}
+.wk:not([data-f="all"]) .blk{opacity:.2}
+.wk[data-f="aikido"] .blk[data-p~="aikido"],.wk[data-f="weapons"] .blk[data-p~="weapons"],.wk[data-f="iaido"] .blk[data-p~="iaido"],.wk[data-f="zazen"] .blk[data-p~="zazen"],.wk[data-f="misogi"] .blk[data-p~="misogi"],.wk[data-f="free practice"] .blk[data-p~="free"]{opacity:1;background:color-mix(in srgb,var(--gold) 20%,var(--field))}
+.mb{display:none}
+@media (max-width:900px){
+  .wk{overflow-x:auto}
+  .wkh,.wkb{min-width:760px}
+}

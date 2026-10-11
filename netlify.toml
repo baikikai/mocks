@@ -1,0 +1,13 @@
+# Netlify builds the mocks with the standard library only (Python 3.12 or newer).
+[build]
+  command = "python3 make.py"
+  publish = "dist"
+
+[build.environment]
+  PYTHON_VERSION = "3.12"
+
+# Private design reference: keep it out of search results.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"

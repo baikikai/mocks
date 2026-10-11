@@ -1,0 +1,3 @@
+.mn>.sec:first-child{margin-top:0}
+.hv{border:0}
+@media (max-width:900px){.kgrid{grid-template-columns:minmax(0,1fr)}.mgrid{grid-template-columns:minmax(0,1fr)}.gal.sh4{grid-template-columns:repeat(3,minmax(0,1fr))}}

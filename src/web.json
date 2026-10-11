@@ -1,0 +1,402 @@
+{
+  "pages": [
+    {
+      "id": "seed-page-mission-vision",
+      "title": "Our Mission",
+      "slug": "mission-vision",
+      "body": [
+        {
+          "type": "h2",
+          "text": "Our Mission"
+        },
+        {
+          "type": "p",
+          "text": "The mission of Brooklyn Aikikai is to foster the harmony of the entire individual through the traditional Japanese disciplines of aikido, zen, misogi, and iaido."
+        },
+        {
+          "type": "p",
+          "text": "As a nonprofit institution, we provide a sanctuary in New York City where individuals from all backgrounds may develop themselves through training in the above arts. We promote further understanding of these traditional Japanese arts, as well as other Japanese cultural activities, by:"
+        },
+        {
+          "type": "li",
+          "text": "enabling students to travel to other dojos and practice communities,"
+        },
+        {
+          "type": "li",
+          "text": "bringing high level instructors from around the world to Brooklyn, and"
+        },
+        {
+          "type": "li",
+          "text": "cultivating and supporting future instructors of aikido at various levels of the profession."
+        },
+        {
+          "type": "p",
+          "text": "In order to make these activities available to all, we provide financial assistance to those who need it."
+        },
+        {
+          "type": "p",
+          "text": "We welcome engagement with schools, other nonprofits, and community organizations to share our practices."
+        },
+        {
+          "type": "p",
+          "text": "Brooklyn Aikikai is a member of [Birankai North America](http://www.birankai.org/), an organization founded by [T.K. Chiba Shihan](https://www.brooklynaikikai.com/chiba-sensei) to promote quality instruction and practice of aikido. Birankai is recognized by Hombu Dojo in Japan."
+        },
+        {
+          "type": "p",
+          "text": "Brooklyn Aikikai does not discriminate on the basis of age, race, gender, religion, ethnicity, sexual orientation, or national origin."
+        },
+        {
+          "type": "p",
+          "text": "[aikido for adults](https://www.brooklynaikikai.com/join)"
+        },
+        {
+          "type": "p",
+          "text": "[aikido for kids](https://www.brooklynaikikai.com/kids)"
+        },
+        {
+          "type": "h2",
+          "text": "Our Vision"
+        },
+        {
+          "type": "p",
+          "text": "We envision Brooklyn Aikikai as a community of learners dedicated to the practice of aikido, iaido, zen and misogi. At Brooklyn Aikikai we believe that the understanding and performance of these practices is a way to deepen the quality of individual lives and to contribute to the betterment of humanity’s condition. We aim to strengthen our connections both to our local community and to the larger world of aikido in order to spread our practice and make it available to as many people as possible now and into the future."
+        }
+      ]
+    },
+    {
+      "id": "seed-page-classes",
+      "title": "Curriculum",
+      "slug": "classes",
+      "content": [
+        {
+          "type": "h2",
+          "text": "Aikido"
+        },
+        {
+          "type": "img",
+          "src": "https://static.wixstatic.com/media/1a516b_92d4f920c31a42b187bc40883042186f~mv2.jpg",
+          "alt": "A koshinage (hip throw) in an aikido class"
+        },
+        {
+          "type": "p",
+          "text": "There are no competitions in aikido. Instead, a student's development is marked by their interaction with others and their ability to blend with an attack or deliver one, take a fall safely, and redirect an aggressor's energy. After the teacher has demonstrated a technique, students practice in pairs, alternating turns as attacker and defender. Aikido techniques depend primarily on circular movements to harmonize with an aggressor's force. Additional training with a wooden sword (bokken) and a staff (jyo) complements the body art and allows for improved stance, timing, and distance in martial encounters."
+        },
+        {
+          "type": "p",
+          "text": "Training in aikido improves flexibility, muscle tone, endurance, and the stimulation and direction of ki (universal energy). Moreover, through disciplined and focused study, aikido students learn to become more centered in their lives, allowing a sense of calm to penetrate their actions and thoughts."
+        },
+        {
+          "type": "h2",
+          "text": "Weapons"
+        },
+        {
+          "type": "img",
+          "src": "https://static.wixstatic.com/media/1a516b_5f0109c31a31463a92c9cd0ec77112b3~mv2.png",
+          "alt": "Weapons class at Brooklyn Aikikai"
+        },
+        {
+          "type": "p",
+          "text": "\"The sword and jyo are extensions of your body and must be handled as if they have your blood running through them,\" writes the late master Kisshomaru Ueshiba in his book, Aikido. \"Unless you can make the weapons part of your body, you have not truly trained in aikido.\""
+        },
+        {
+          "type": "p",
+          "text": "Weapons training is an integral part of the curriculum at Brooklyn Aikikai. Training with weapons informs the unarmed body art movements, primarily because many aikido movements are derived from sword work. Working with a bokken and jyo (a wooden sword and staff) can help students grasp the timing, distance, and technique of a martial encounter."
+        },
+        {
+          "type": "p",
+          "text": "After training at Brooklyn Aikikai for a minimum of six months, students may begin weapons training with the permission of the chief instructor. Students must purchase their own set of weapons (cost approximately $180)."
+        },
+        {
+          "type": "h2",
+          "text": "Iaido"
+        },
+        {
+          "type": "img",
+          "src": "https://static.wixstatic.com/media/1a516b_0a3f1803e7ce4501b6fb5823b5d34dfa~mv2.jpg",
+          "alt": "Iaido practice"
+        },
+        {
+          "type": "p",
+          "text": "Batto-ho, \"sword-drawing method,\" is based on iaido, the \"way of sword-drawing\" and other traditional forms of Japanese sword work. Batto-ho is studied largely for the same reasons as weapons work with bokken and jyo: for what it reveals about the roots of aikido as a martial art."
+        },
+        {
+          "type": "p",
+          "text": "Joining this class requires the permission of the chief instructor as well as the purchase of extra equipment."
+        },
+        {
+          "type": "h2",
+          "text": "Zen"
+        },
+        {
+          "type": "img",
+          "src": "https://static.wixstatic.com/media/1a516b_10f56e7fed214ae5a903caea05795058~mv2.jpg",
+          "alt": "Zazen at Brooklyn Aikikai"
+        },
+        {
+          "type": "p",
+          "text": "Zen has a strong link to the martial culture of Japan. Both the warrior culture and zen discipline emphasize the impermanence of life and teach us to be present in the moment, here and now."
+        },
+        {
+          "type": "p",
+          "text": "Ultimately, a warrior wages war against him/herself in an attempt to shed his/her numerous delusions, and to become unconditionally present. Zen is a non-intellectual practice; through sitting it is possible to see one's true nature."
+        },
+        {
+          "type": "p",
+          "text": "At Brooklyn Aikikai we have several periods of meditation each week; they are open to all students."
+        },
+        {
+          "type": "h2",
+          "text": "Misogi"
+        },
+        {
+          "type": "img",
+          "src": "https://static.wixstatic.com/media/908d53_dedf7fa551534518aaa32fcf069642f0~mv2.jpeg",
+          "alt": "Misogi practice"
+        },
+        {
+          "type": "p",
+          "text": "\"An important practice from the Shinto tradition, misogi-no-kokyu-ho may be translated as purification through breathing. Training is arduous, emotionally straining, and physically exhausting. Yet it is a unique opportunity to break through self-imposed limitations and egoistic personality defenses. With the intense stimulation of misogi, primal life force deep in the lower abdomen is activated and the potential to directly experience the root of one's being is at hand.\""
+        },
+        {
+          "type": "p",
+          "text": "The above is an excerpt from an essay on misogi. Read the full text [here](https://www.brooklynaikikai.com/misogi)."
+        },
+        {
+          "type": "p",
+          "text": "Brooklyn Aikikai offers misogi training several times a week, by permission of the chief instructor."
+        }
+      ]
+    },
+    {
+      "id": "seed-page-history",
+      "title": "History",
+      "slug": "history",
+      "content": [
+        {
+          "type": "h2",
+          "text": "History of Aikido"
+        },
+        {
+          "type": "img",
+          "src": "https://static.wixstatic.com/media/908d53_79edc5e522f74e63ac6834dac03e8c23~mv2.jpeg",
+          "alt": "Morihei Ueshiba, O Sensei"
+        },
+        {
+          "type": "p",
+          "text": "Aikido is a martial way that was created in Japan in the early 1920s by Morihei Ueshiba (1883-1969) or O Sensei. O Sensei, which means 'great teacher,' was a man dedicated to the study of classical martial arts including the sword, spear, staff, and various types of empty-hand combat. O Sensei developed aikido through an intense and committed lifelong study of these ancient warrior traditions."
+        },
+        {
+          "type": "p",
+          "text": "O Sensei, however, was not merely satisfied to create an effective form of self-defense or combat. He sought true victory over himself as well. Through vigorous spiritual and physical training, the art of aikido emerged, which in Japanese means \"way of harmony with the fundamental force of the universe.\" Like other Japanese martial traditions, O Sensei's aikido was a type of Budo, or martial path meant for the polishing of the spirit as well as the body. \"The purpose of training,\" said O Sensei, \"is to tighten up the slack, toughen the body, and polish the spirit.\""
+        },
+        {
+          "type": "h2",
+          "text": "Origins and History of Tendokan Dojo"
+        },
+        {
+          "type": "p",
+          "text": "by Chief Instructor Ryūgan R.D. Savoca"
+        },
+        {
+          "type": "p",
+          "text": "from Brooklyn Aikikai's 10th Anniversary journal"
+        },
+        {
+          "type": "img",
+          "src": "https://static.wixstatic.com/media/908d53_e3a1cf5d8cdd4450aa785ef6e8eccba0~mv2.jpeg",
+          "alt": "Brooklyn Aikikai in its early years"
+        },
+        {
+          "type": "img",
+          "src": "https://static.wixstatic.com/media/908d53_c9459da494ad41ac83c91e85d30579d8~mv2.jpeg",
+          "alt": "Brooklyn Aikikai in its early years"
+        },
+        {
+          "type": "p",
+          "text": "I first encountered aikido when I was about twelve or thirteen years old. This was in Oceanside, California. My father had taken me for judo lessons, and I was practicing for little under a year when my judo instructor, Mr. Charles Potter, told me to try aikido. He said it would help my judo. Eventually Mr. Potter left the Oceanside dojo (he was also an undercover policeman) — and left it in the hands of another more junior judoka. The man was unlike Mr. Potter in that he emphasized more the competitive training in judo, and wanted us all to compete. Although I did compete a little, I preferred Mr. Potter’s method of training— competitive, yes, but with a strong emphasis on tradition and hard training as well as some classical ju-jitsu. Eventually I turned more and more toward aikido, and after some time left judo altogether."
+        },
+        {
+          "type": "p",
+          "text": "Aikido is a martial way that was created in Japan in the early 1930s by Morihei Ueshiba (1883-1969) or O-Sensei. O-Sensei, whose title means \"great teacher,\" was a man dedicated to the study of classical martial arts including the sword, spear, staff, and various types of empty-hand combat. O-Sensei developed aikido through an intense and committed lifelong study of these ancient warrior traditions. O-Sensei, however, was not merely satisfied to create an effective form of self-defense or combat. He sought true victory over himself as well. Through vigorous spiritual and physical training, the art of aikido emerged, which in Japanese can be translated as the \"way of harmony with the fundamental force of the universe.\" Like other Japanese martial traditions, O-Sensei’s aikido was a type of Budo, or martial path meant for the polishing of the spirit as well as the body."
+        },
+        {
+          "type": "p",
+          "text": "The idea that one could transform oneself through practice greatly appealed to me, and still does. I imagine it was this idea that led me to continue practice into high school, and into college. I ended up going to the University of California at Los Angeles, and practiced aikido at the university for a year or so. From there I continued to practice at the West Los Angeles Aikido Institute for about six years. At some point in college, I knew that I wanted only to practice aikido, and any idea about other jobs (I had thoughts of becoming a criminologist), or any other way of life did not appeal to me. From about nineteen onward, I began to practice seriously, at least two or three hours a day, and often more. Slowly, I began to put training in aikido over studying in college. I had found what I really wanted to do with my life."
+        },
+        {
+          "type": "p",
+          "text": "I do not think that I could exactly place my finger on what I had found then, but the feeling became clear much later, in 2002, when I went through Shogaku at Ichikukai Dojo. During that training, one is pushed to what one’s limit is thought to be…and then you go past that. I think that in the early days of practicing aikido I saw something of the potential of aikido to push me past what I thought my limit was. And once you push past the limit of who you think you are you are left with the question \"Well, then, who am I?\" And this is the central question I have had since being a child. Although it wasn’t a conscious decision at this early stage in college, I believe that something in me saw in aikido a way to approach that question."
+        },
+        {
+          "type": "p",
+          "text": "I graduated college in 1993, and at the end of 1997 moved to New York City. From this point I began to train with Juba Nour Shihan, one of the first students of Chiba Shihan. Training with Nour Sensei was always intense (and still is!) and opened up my training in a new way. I have always felt that Nour Sensei presents himself as he truly is, and demonstrates this not only on the mat doing aikido, but off the mat as well. This became a real inspiration to me—to meet an individual with no pretense. It was something I wanted for myself. After a year and a half of training in New York with him, he sent me to be an uchideshi (live-in student) with his teacher, [T.K. Chiba Shihan](https://www.brooklynaikikai.com/chiba-sensei), a prominent disciple of O-Sensei."
+        },
+        {
+          "type": "p",
+          "text": "Chiba Sensei has promoted aikido throughout the world, not only by teaching many seminars abroad, but by creating teacher training programs which enabled individuals to become teachers as well. This was done primarily with two programs—the uchideshi and kenshushei programs. Both programs were made up of committed students required to commit a certain number of hours weekly—studying aikido, weapons, iaido (the art of drawing the sword) and zen meditation. The uchideshi program required students to live within the dojo, while the kenshushei program did not."
+        },
+        {
+          "type": "p",
+          "text": "The uchideshi program is what I committed to for a full year. It is a relentless period of living in the dojo, taking all classes (approximately four to five a day), doing samu (work practice), and helping to take care of the chief instructor. Although Chiba Sensei was not living in the dojo at the time, it was nonetheless very intense. Chiba Sensei put an emphasis on doing what needed to be done, without much explanation. Indeed, this is the traditional way of teaching in Japanese culture."
+        },
+        {
+          "type": "p",
+          "text": "I left San Diego Aikikai in 2000, and drove back to New York with my first wife Neilu Naini. After a short period of further study with Juba Nour Shihan, we traveled to Kazakstan to teach for a couple of weeks. We traveled a little more and then returned to San Diego for further study. We finally returned once again to New York to form Brooklyn Aikikai at the end of 2001. After traveling back and forth in the year 2000, Neilu and I were very ready to settle in one place. I had seen many dojos by then, and reflected on much that they did or did not present. Some dojos were more traditionally Japanese, some less, some involved a community that was really active, and many did not.Whether it is due to the fact that I was raised very traditionally or have a natural tendency toward strong bonds and traditions, the creation of Brooklyn Aikikai couldn't but otherwise reflect this karma of mine. And so, Brooklyn Aikikai became a dojo that has strong bonds, traditions, and a vibrant sense of community."
+        },
+        {
+          "type": "p",
+          "text": "This first began at the Albee School of Dance in Carroll Gardens, Brooklyn, New York. From December 2001 until November of 2004, practice was held at this dance studio. The prime difficulty of practicing in this space was the necessity of setting up mats, taping them together, and breaking them down at the end of practice. Each day, the space had to be transformed from a dance studio into a traditional Japanese dojo. All students were required to help facilitate this transformation. Often times we had to set up class right after another dance class had finished, with many kids in tutus coming and going! We had to break down the dojo after most classes and the students were instrumental in helping Neilu and I with this."
+        },
+        {
+          "type": "p",
+          "text": "I realized that what I wanted to do with the dojo was not possible without a strong sense of community. If I had been content to have a small dojo in a dance studio with a few practices a week, I don’t think our dojo would have been born the way it was. My ideal, however, was to practice and teach aikido professionally; and to do this, one needs a lot of energy and commitment, not only from the chief instructor, but also from the students. I realized this would take time, but I demanded a great deal from the few students who were present at the beginning, trying to plant the seed of this new community. Of course, in the beginning, classes were only held two to three times a week. Slowly, classes were added, along with weapons, iaido, and zen meditation. Before we moved to our current space, classes were held almost daily, with a total membership of fifteen adults and ten children."
+        },
+        {
+          "type": "p",
+          "text": "In 2004, my student Ian Witter drove by and saw a \"For Sale\" sign on an old iron works factory. After much deliberation on how to raise funds and do the proposed construction, Neilu and I acquired a mortgage on the building in May 2004. I must admit upon seeing the current dojo space I was quite concerned with whether or not we could transform an old iron works building into a dojo. The electricity came straight out of the walls, there was an extreme amount of filth everywhere, the second floor was tilted, the plumbing was leaking, and there was no heat. Several students, visitors, guests instructors, Neilu, and I did the demolition on the building for three months, about eight to nine hours a day. We still had classes in the morning and evening at the Albee School of Dance. During this time, Neilu and I were sleeping illegally at Albee, and eventually we moved into the dojo when it was clean enough to sleep there. In September of 2004, contractors came into the building after the bulk of the demolition had been done and worked until early March 2005, when the construction was finally finished."
+        },
+        {
+          "type": "p",
+          "text": "The first classes were held in the dojo in November of 2004, during very cold times! At this time, the heat wasn’t working yet and we tried using a gasoline powered jet heater to warm up the space before the class began. Chiba Sensei, along with Eido Roshi and members of Ichikukai Dojo, came and celebrated the opening seminar in September of 2005. There were over 100 people on the mat for Chiba Sensei’s classes! Since 2005, the dojo has grown from approximately fifteen to twenty students, to about sixty adults and thirty children. There are approximately four classes each day, including aikido, iaido, zazen, and misogi. There have been several live-in students, seeking to go deeper in their training by living in the dojo and taking all classes as well as being engaged in work, cooking, cleaning and self-study. We have had various instructors come from the United States, as well as Japan. The dojo has hosted visitors from all over the world."
+        },
+        {
+          "type": "p",
+          "text": "It is amazing for me to observe how our dojo has grown from a small space in a dance studio to a full-time dojo that draws people from all over. When I dwell on my observations, trying to receive them all, I see the efforts of so many people are in each piece of wood, stone, paint and concrete. Our dojo has truly become a living space—still a young being—but one that I hope will continue to grow at a slow, steady pace. Each student who has come here, whether they are still here or not, has brought their struggle. This helped to create a fire in this place—a fire that continued to grow. Through all the undertakings of the students here we have been able to have numerous training sessions, hold seminars, send students to other states in the country and overseas, and organize plenty of potlucks, stoop sales and fundraisers. With all the difficult training that the students have undergone, they have grown together, as a community should, and helped each other quite often—in the dojo and in their personal lives."
+        },
+        {
+          "type": "p",
+          "text": "My hope is for the dojo to exist long after I am gone, and for it to provide a true sanctuary for training in our city. In an era when so much materialism and self-promotion exists, it is my belief we need to sincerely and deeply practice the arts that are offered at our school. In doing so, perhaps little by little, we can remove the veil that separates us from our true nature. I am truly thankful for all your efforts thus far! Let us continue together and bring another ten years of hard practice!"
+        },
+        {
+          "type": "img",
+          "src": "https://static.wixstatic.com/media/908d53_dfd5146fdd714e1d84e0502e5383a185~mv2.jpeg",
+          "alt": "Brooklyn Aikikai in its early years"
+        },
+        {
+          "type": "img",
+          "src": "https://static.wixstatic.com/media/908d53_a60c7b35b9964d6cb9760d0b776d1bda~mv2.jpg",
+          "alt": "Brooklyn Aikikai dojo"
+        },
+        {
+          "type": "h2",
+          "text": "Origins and History of Tendokan Dojo- Part II"
+        },
+        {
+          "type": "p",
+          "text": "by Chief Instructor Ryūgan R.D. Savoca"
+        },
+        {
+          "type": "p",
+          "text": "from Brooklyn Aikikai's 20th Anniversary journal"
+        },
+        {
+          "type": "p",
+          "text": "Over the past few years I have been going to the ocean regularly—twice a week to swim. I have gone in the summer and in the fall, in the winter, and in the spring. It is an interesting practice to go to the same place, over and over, throughout the seasons and see the change. You can see the people come in the summer and fade in the fall— they are absent in the winter and a few begin to return in the spring. The tide comes in and goes out, endlessly, repeatedly. What seemingly arises and manifests, passes."
+        },
+        {
+          "type": "p",
+          "text": "The past ten years, since last I wrote about the history of our dojo, seem exactly like this to me. So many people have come through the dojo: some have stayed and are here to this day, some have come and gone briefly, and some have worked deeply and moved on. To speak about all of this, to think on it, to ask, “What is it all about? What is it all for?” brings me to a place of silence."
+        },
+        {
+          "type": "p",
+          "text": "If I look at the past ten years, I have experienced great personal loss. Both my mother and father have passed away; my teacher—Chiba Sensei—died. Murashige Sensei, who taught me a great many important lessons, is gone, and several important members from Ichikukai Dojo in Japan have left this earth. Eido Roshi, whom I broke with over his abuse of women but was nevertheless an important Zen teacher for me, died in this last decade also. Several students who were close to me have left, moving on to other things in life."
+        },
+        {
+          "type": "p",
+          "text": "Alongside these losses, there has also been a deepening of study in our dojo. Many students have realized the rank of Shodan or higher, and several have furthered their study of weapons, Iaido, Zen, and Misogi. Throughout the past ten years, we have hosted many guest teachers, seminars, and Zen intensives. We have launched several fundraisers with the mission to make our training financially accessible, to provide scholarships for travel, and perhaps most importantly, to keep our dojo alive and thriving in even the most difficult of times. It is a long way from the small stoop sales we used to have, when raising $400 was a milestone!"
+        },
+        {
+          "type": "p",
+          "text": "In a historic moment, with the permission and support of Hiruta Sensei, we were able to hold the first Shogaku Shugyo—a Misogi initiation practice—outside of Japan. Our dojo has continued to offer this training and support the transmission of this important practice to this country."
+        },
+        {
+          "type": "p",
+          "text": "The heart of the Tendokan Dojo, of Brooklyn Aikikai, is shugyo—austere training. It is my hope that, when I am no longer alive, the next head of our dojo reads this writing— which is, in many ways, addressed to them—and deeply meditates on what that statement means."
+        },
+        {
+          "type": "p",
+          "text": "It does not mean that every student who crosses the threshold here will be as interested as another in this intense type of training—a training that is intended to strip a person of their idea of self. A person entering our dojo may be somewhat interested in this idea, or they may come to it later in time. To the one that comes after me, who will take on the burden and joy of running this dojo, I say, no matter! There must exist a place that offers the most rigorous training and, at the same time, offers a place of refuge where people can come and approach the path in an accessible way. For a long while, I thought these two ideas to be in opposition to each other, but no longer."
+        },
+        {
+          "type": "p",
+          "text": "I have almost always had two missions regarding the training at Brooklyn Aikikai: to pass on what I know and understand this teaching to be to a few individuals who will take it forth and become teachers in their own right; and to have a place where individuals not seeking to become teachers of the art can become more unified, less fragmented, and bring this light into their daily lives."
+        },
+        {
+          "type": "p",
+          "text": "As we begin to approach another decade of work/practice here, I am somewhat content in the path of our dojo. Do I want there to be a deeper approach, a deeper understanding of our practices here? Of course I do. But! I also have a deep faith in the order of things and believe deeply that the path is unfolding as it ought to, as it must."
+        },
+        {
+          "type": "p",
+          "text": "As the wind continues to blow, regardless of the season we are living in, and as the waves continue to flow in and out, regardless of who goes to the sea to witness them, so, too, do I have faith in our dojo continuing. Regardless of who comes and goes, what understanding is “gained” or “lost,” there will continue to be a flow of study and a deeper revealing of the Dharma. To those who will come, please remember this and ponder it deeply."
+        }
+      ]
+    }
+  ],
+  "people": [
+    {
+      "id": "seed-person-ryugan-savoca",
+      "title": "Ryūgan R.D. Savoca",
+      "nameGiven": "Ryūgan",
+      "middleGiven": "R.D.",
+      "familyName": "Savoca",
+      "slug": "ryugan-savoca",
+      "role": "Chief Instructor",
+      "image": {
+        "src": "https://static.wixstatic.com/media/908d53_9174ed493c2b455d8c27fa2927910addf000.jpg",
+        "alt": "Portrait of Ryūgan R.D. Savoca"
+      },
+      "bio": [
+        {
+          "type": "p",
+          "text": "Ryūgan Robert D. Savoca began studying judo and aikido at age 13 in San Diego County. He continued to study aikido at UCLA and then the West Los Angeles Aikido Institute."
+        },
+        {
+          "type": "p",
+          "text": "Moving to New York, he continued his training at Aikido of Manhattan for a year and a half with [Juba Nour Shihan](http://www.bajaaikido.com/). Afterwards, he apprenticed to [T.K. Chiba Shihan](https://www.brooklynaikikai.com/chiba-sensei), as an uchideshi (live-in student) in San Diego for a year. Moving back to New York, he resumed training with Juba Nour Shihan and then started Brooklyn Aikikai in 2001."
+        },
+        {
+          "type": "p",
+          "text": "Ryūgan holds the rank of rokudan (6th dan), and is a Birankai North America Shihan."
+        }
+      ]
+    },
+    {
+      "id": "seed-person-kate-savoca",
+      "title": "Kate Savoca",
+      "nameGiven": "Kate",
+      "middleGiven": "",
+      "familyName": "Savoca",
+      "slug": "kate-savoca",
+      "role": "Assistant Instructor",
+      "image": {
+        "src": "https://static.wixstatic.com/media/908d53_9ff12c34f60d4415a9f824aa1e09696cf000.jpg",
+        "alt": "Portrait of Kate Savoca"
+      },
+      "bio": [
+        {
+          "type": "p",
+          "text": "Kate Savoca began her aikido training in 2002 at Brooklyn Aikikai. She currently holds the rank of godan (5th dan) and is certified to teach by Birankai North America. Kate has been teaching at Saint Ann's School in Brooklyn, NY, for over 20 years."
+        }
+      ]
+    },
+    {
+      "id": "seed-person-kaishin-kortney-bernard",
+      "title": "Kaishin Kortney Bernard",
+      "nameGiven": "Kaishin",
+      "middleGiven": "Kortney",
+      "familyName": "Bernard",
+      "slug": "kaishin-kortney-bernard",
+      "role": "Assistant Instructor",
+      "image": {
+        "src": "https://static.wixstatic.com/media/1a516b_054e5b450df04e2aab6ada0f28b535ae~mv2.jpg",
+        "alt": "Portrait of Kaishin Kortney Bernard"
+      },
+      "bio": [
+        {
+          "type": "p",
+          "text": "Kortney Bernard currently holds the rank of sandan (3rd dan) and is a certified fukushidoin (assistant instructor) by Birankai North America. She has worked in the theatrical and entertainment audio field for over 20 years. Kortney enjoys maintaining and repairing the dojo in her spare time as Operations Manager."
+        }
+      ]
+    }
+  ]
+}

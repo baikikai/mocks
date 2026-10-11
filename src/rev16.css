@@ -1,0 +1,31 @@
+/* Kids, Members, Donate: the same pieces as Events (rows, tiles, cards), so a new page is a new arrangement, not a new look. */
+.sec .lab-wrap{min-width:0}
+.hr{overflow:hidden}
+.hv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.6;transform:scale(1.14)}
+.shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,23,28,.55),rgba(20,23,28,.1) 45%,rgba(20,23,28,.6))}
+.hh{z-index:1}
+.ey{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+.ey.hero{display:block;color:var(--hero-mut);margin-bottom:14px}
+.mo+.mo,.bd>.mo{margin-top:16px}
+.kgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.kd{display:flex;flex-direction:column;gap:3px;min-width:0}
+.kd h3{margin:0 0 10px;font-family:var(--D);font-weight:400;font-size:26px;line-height:1.2;text-align:center}
+.tl{background:var(--field);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:2px;padding:14px 10px;min-width:0;font-variant-numeric:tabular-nums}
+.tl b{font-weight:500;font-size:16px}
+.tl span{font-size:14px;color:var(--mut)}
+.mo.flat{display:block}
+.mgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 32px}
+.mcard{display:flex;flex-direction:column;gap:20px;min-width:0;transition:opacity .3s}
+.mcard::after{content:none!important}
+.mcard .ph{transition:background .3s}
+.mcard:hover .ph{background:color-mix(in srgb,var(--gold) 22%,var(--field))}
+.mc-t{display:flex;flex-direction:column;gap:8px}
+.mc-t p{margin:0;font-size:18px;line-height:1.5;color:var(--mut)}
+.gal.sh4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.don.on{color:var(--gold);border-color:var(--gold)}
+.wkwrap{padding:56px 0 0}
+.mn>.wkwrap:first-child{padding-top:0}
+.gal.sh4 .big{grid-column:span 2;grid-row:span 2}
+.mc-t h2{margin:0;font-family:var(--D);font-weight:400;letter-spacing:-.01em;font-size:32px;line-height:1.15;transition:color .2s}
+.mc-t .tg{font-family:var(--D);font-size:22px;line-height:1.3;color:var(--fg)}
+.mcard:hover .mc-t h2{color:var(--gi)}

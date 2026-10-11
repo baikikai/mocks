@@ -1,0 +1,24 @@
+.mb{display:flex;flex-direction:column;gap:7px;align-items:center;justify-content:center;width:44px;height:44px;margin-right:-8px}
+.mb i{display:block;width:26px;height:2px;background:currentColor;transition:transform .3s}
+#sheet{position:fixed;inset:0;z-index:50;background:var(--bg);color:var(--fg);display:flex;flex-direction:column;padding:env(safe-area-inset-top,0px) var(--pad) calc(24px + env(safe-area-inset-bottom,0px));clip-path:inset(0 0 100% 0);transition:clip-path .6s cubic-bezier(.7,0,.2,1);overflow-y:auto}
+#sheet.open{clip-path:inset(0 0 0 0)}
+.sbar{display:flex;justify-content:space-between;align-items:center;height:64px;flex:none}
+.slogo{font-family:var(--D);font-size:21px}
+.sx{margin-right:-8px}
+.sx i:first-child{transform:translateY(4.5px) rotate(45deg)}
+.sx i:last-child{transform:translateY(-4.5px) rotate(-45deg)}
+.snav{display:flex;flex-direction:column;margin-top:24px}
+.si{display:flex;align-items:baseline;gap:18px;padding:16px 0;border-bottom:1px solid var(--line);font-family:var(--D);font-size:30px;line-height:1.2;opacity:0;transform:translateY(14px);transition:opacity .5s,transform .5s,color .2s;transition-delay:calc(160ms + var(--i)*50ms)}
+.si b{font-weight:400;font-size:20px;color:var(--num);min-width:28px}
+.si:hover{color:var(--gi)}
+#sheet.open .si,#sheet.open .sfoot>*{opacity:1;transform:none}
+.sfoot{margin-top:auto;padding-top:32px;display:flex;flex-direction:column;gap:20px}
+.sfoot>*{opacity:0;transform:translateY(14px);transition:opacity .5s,transform .5s;transition-delay:calc(160ms + var(--i)*50ms)}
+.sdon{align-self:flex-start;border:1px solid currentColor;padding:14px 26px;font-size:16px}
+.sdon:hover{background:var(--gold);border-color:var(--gold);color:#14171C}
+.tgl{color:var(--mut);font-size:15px}
+.slinks{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:14px;color:var(--mut)}
+/* hidden on wide screens */
+.mb{display:none}
+/* desktop comp on a narrow screen: the nav becomes the menu button */
+@media (max-width:900px){.nv nav{display:none}.mb{display:flex!important}}

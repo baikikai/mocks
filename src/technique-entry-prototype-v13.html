@@ -1,0 +1,713 @@
+<title>Technique Entry Prototype v13</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500&display=swap">
+<style>
+/* Layout: fixed app shell (header, breadcrumb bar) around two panels. Left ink panel is the one shape that morphs between views. */
+:root {
+  --ink: #14171C; --ink2: #1D2128; --paper: #ECEDE8; --stone: #C4C8C0; --indigo: #2C3E72; --lilac: #9AA7D4;
+  --muted-d: #4B5058; --rule-d: #3A3F47; --hov: #DADCD5;
+  --display: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
+  --body: 'Zen Kaku Gothic New', 'Hiragino Sans', system-ui, sans-serif;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body { background: var(--ink); color: var(--paper); font-family: var(--body); overflow: hidden; }
+button { all: unset; box-sizing: border-box; cursor: pointer; }
+button:focus-visible { outline: 2px solid var(--lilac); outline-offset: -2px; }
+.app { height: 100%; display: flex; flex-direction: column; }
+.label { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+
+.crumbs { view-transition-name: crumbs; transition: background-color .35s, border-color .35s; flex: none; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 12px 24px; border-bottom: 1px solid var(--rule-d); background: var(--ink); min-height: 46px; box-sizing: border-box; }
+.crumbs button { color: var(--stone); padding: 4px 2px; }
+.crumbs button:hover { color: var(--paper); text-decoration: underline; }
+.crumbs .cur { color: var(--paper); }
+.crumbs .sep { color: var(--rule-d); }
+#view { flex: 1; min-height: 0; display: flex; }
+
+/* Entry: five columns */
+.cols { flex: 1; min-width: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); min-height: 0; }
+.col { display: flex; flex-direction: column; min-height: 0; min-width: 0; border-right: 1px solid var(--rule-d); background: var(--ink); padding: 22px 0 0; }
+.col:last-child { border-right: 0; }
+.col .head { padding: 0 20px 14px; }
+.col .num { font-family: var(--display); font-size: 18px; color: var(--lilac); }
+.col h2 { font-family: var(--display); font-weight: 400; font-size: 34px; line-height: 1.05; margin: 4px 0 4px; }
+.col .sub { font-size: 13px; color: var(--stone); }
+.col .list { flex: 1; min-height: 0; overflow-y: auto; border-top: 1px solid var(--rule-d); }
+.item { width: 100%; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 11px 20px; border-bottom: 1px solid var(--rule-d); font-family: var(--display); font-size: 19px; transition: background .2s, padding-left .25s; }
+.item:hover { background: var(--ink2); padding-left: 26px; }
+.item small { font-family: var(--body); font-size: 13px; color: var(--stone); white-space: nowrap; }
+.foot { padding: 10px 20px; font-size: 12px; color: var(--stone); border-top: 1px solid var(--rule-d); }
+
+/* Drill, flat, waza: left ink panel plus right paper panel */
+.split { flex: 1; min-width: 0; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); min-height: 0; }
+.left { background: var(--ink2); padding: 28px 32px; display: flex; flex-direction: column; gap: 14px; min-height: 0; overflow-y: auto; border-right: 1px solid var(--rule-d); }
+.left .big { font-family: var(--display); font-size: clamp(40px, 6vw, 84px); line-height: 1; margin: 6px 0 0; text-wrap: balance; }
+.left .big small { font-size: .45em; color: var(--stone); margin-left: .25em; }
+.left .meta { color: var(--stone); font-size: 15px; }
+.pins { margin-top: auto; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill { display: inline-flex; align-items: center; border: 1px dashed var(--rule-d); border-radius: 999px; font-size: 13px; color: var(--stone); }
+.pill.on { border-style: solid; border-color: var(--lilac); color: var(--paper); }
+.pill.ed { background: var(--indigo); border-color: var(--indigo); }
+.pill button { padding: 6px 12px; display: inline-flex; gap: 8px; align-items: baseline; color: inherit; }
+.pill b { font-weight: 400; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--stone); }
+.pill .x { padding: 6px 12px 6px 0; color: var(--lilac); font-size: 15px; }
+.crumbs .pill button:hover { text-decoration: none; color: var(--paper); }
+.row.cur { background: var(--hov); box-shadow: inset 4px 0 0 var(--indigo); }
+.row.any .rl { color: var(--muted-d); }
+.pin { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--rule-d); font-family: var(--display); font-size: 19px; }
+.pin span:first-child { font-family: var(--body); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--stone); }
+.pin:hover { color: var(--lilac); }
+.link { color: var(--lilac); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; padding: 6px 0; align-self: flex-start; }
+.link:hover { text-decoration: underline; }
+.video { flex: 1; min-height: 160px; background: var(--ink); display: flex; align-items: center; justify-content: center; }
+.play { border: 1px solid var(--paper); padding: 12px 22px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; transition: background-color .2s, color .2s; }
+.play:hover { background: var(--paper); color: var(--ink); }
+.right { background: var(--paper); color: var(--ink); min-height: 0; overflow-y: auto; display: flex; flex-direction: column; }
+.rhead { padding: 24px 32px 14px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; border-bottom: 1px solid var(--ink); }
+.rhead h3 { font-family: var(--display); font-weight: 400; font-size: 28px; margin: 0; }
+.rhead .label { color: var(--muted-d); }
+.row { width: 100%; display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 0 32px; min-height: 64px; border-bottom: 1px solid var(--stone); transition: background .2s, padding-left .25s; animation: rise .35s ease both; animation-delay: calc(var(--i, 0) * 22ms); }
+.row:hover { background: var(--hov); padding-left: 40px; }
+.row:focus-visible { outline-color: var(--indigo); }
+.row .rn { font-family: var(--display); font-size: 18px; color: var(--indigo); }
+.row .rl { font-family: var(--display); line-height: 1.1; }
+.row .rl small { font-size: .55em; color: var(--muted-d); margin-left: .35em; }
+.row .rm { font-size: 13px; color: var(--muted-d); white-space: nowrap; }
+.right.nos { overflow: hidden; }
+.rscroll { flex: 1; min-height: 0; overflow-y: auto; touch-action: pan-y; }
+.row.all { flex: none; background: var(--ink); color: var(--paper); border-bottom: 0; animation: none; padding-right: 160px; }
+.row.all:hover { background: var(--indigo); }
+.row.all .rm { color: var(--stone); }
+.group { padding: 14px 32px 8px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted-d); border-bottom: 1px solid var(--ink); background: var(--paper); }
+.rbody { padding: 22px 32px; display: flex; flex-direction: column; gap: 18px; }
+.seg { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.seg button { padding: 8px 16px; border: 1px solid var(--ink); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+.seg button.on { background: var(--ink); color: var(--paper); }
+.seg .rk { margin-left: auto; color: var(--muted-d); font-size: 13px; }
+.steps { border-top: 1px solid var(--ink); }
+.steps div { display: grid; grid-template-columns: 90px minmax(0, 1fr); padding: 12px 0; border-bottom: 1px solid var(--stone); font-size: 15px; }
+.steps span:first-child { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted-d); }
+.otitle { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted-d); }
+.others .row { min-height: 52px; padding: 0; grid-template-columns: minmax(0, 1fr) auto; }
+.others .row:hover { padding-left: 8px; }
+.others .rl { font-size: 20px; }
+
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* Transitions: one shape (the ink panel) morphs; everything else crossfades. */
+::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+::view-transition-group(*) { animation-duration: 0s; }
+#view { background: var(--ink2); }
+::view-transition-image-pair(*) { isolation: auto; }
+::view-transition-old(*), ::view-transition-new(*) { animation-duration: 480ms; animation-timing-function: cubic-bezier(.65, 0, .25, 1); animation-fill-mode: both; mix-blend-mode: normal; }
+html[data-dir="fwd"]::view-transition-old(*) { animation-name: out-l; }
+html[data-dir="fwd"]::view-transition-new(*) { animation-name: in-r; }
+html[data-dir="back"]::view-transition-old(*) { animation-name: out-r; }
+html[data-dir="back"]::view-transition-new(*) { animation-name: in-l; }
+html[data-dir]::view-transition-new(site-header), html[data-dir]::view-transition-new(crumbs), html[data-dir]::view-transition-new(site-footer) { animation: none; }
+html[data-dir]::view-transition-old(site-header), html[data-dir]::view-transition-old(crumbs), html[data-dir]::view-transition-old(site-footer) { display: none; }
+::view-transition-new(pr) { animation-delay: 80ms; }
+::view-transition-new(c1) { animation-delay: 50ms; } ::view-transition-new(c2) { animation-delay: 100ms; } ::view-transition-new(c3) { animation-delay: 150ms; } ::view-transition-new(c4) { animation-delay: 200ms; }
+@keyframes out-l { to { transform: translateX(-60%); opacity: 0; } }
+@keyframes in-r { from { transform: translateX(60%); opacity: 0; } }
+@keyframes out-r { to { transform: translateX(60%); opacity: 0; } }
+@keyframes in-l { from { transform: translateX(-60%); opacity: 0; } }
+::view-transition-group(site-header), ::view-transition-group(crumbs), ::view-transition-group(site-footer) { animation: none; z-index: 100; }
+::view-transition-old(site-header), ::view-transition-old(crumbs), ::view-transition-old(site-footer) { display: none; }
+::view-transition-new(site-header), ::view-transition-new(crumbs), ::view-transition-new(site-footer) { animation: none; }
+::view-transition { pointer-events: none; }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*), ::view-transition-new(*), ::view-transition-group(*) { animation-duration: 0s !important; animation-delay: 0s !important; }
+  .row { animation: none; }
+}
+#vp { position: fixed; inset: 52px 0 0 0; overflow: hidden; touch-action: none; background: var(--ink); }
+#stage { position: absolute; left: 0; top: 0; width: 1280px; height: 1012px; transform-origin: 0 0; }
+.list, .right, .left { touch-action: pan-y; }
+.zc { position: fixed; right: 12px; bottom: 12px; display: flex; gap: 6px; z-index: 1000; }
+.zc button { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: var(--paper); color: var(--ink); border: 1px solid var(--ink); font-size: 16px; }
+
+html[data-k="E"]{--display:'Archivo','Hiragino Sans','Noto Sans JP',sans-serif;--body:'Archivo','Hiragino Sans','Noto Sans JP',sans-serif;--sd:var(--display);--sb:var(--body);--sw:600;--sl:-.045em}
+html[data-k="F"]{--display:'Fraunces','Hiragino Mincho ProN','Yu Mincho',serif;--body:'Karla','Hiragino Sans',system-ui,sans-serif;--sd:var(--display);--sb:var(--body);--sw:300;--sl:-.02em}
+html,html[data-k="D"]{--sd:'Shippori Mincho','Hiragino Mincho ProN',serif;--sb:'Zen Kaku Gothic New','Hiragino Sans',system-ui,sans-serif;--sw:400;--sl:-.01em}
+html[lang="zh-Hans"][data-k="D"]{--display:'Shippori Mincho','PingFang SC','Songti SC',serif;--body:'Zen Kaku Gothic New','PingFang SC','Microsoft YaHei',sans-serif}
+html[lang="zh-Hans"][data-k="E"]{--display:'Archivo','PingFang SC','Microsoft YaHei',sans-serif;--body:'Archivo','PingFang SC','Microsoft YaHei',sans-serif}
+html[lang="zh-Hans"][data-k="F"]{--display:'Fraunces','Songti SC','SimSun',serif;--body:'Karla','PingFang SC','Microsoft YaHei',sans-serif}
+html{--K:'Zen Kaku Gothic New','Hiragino Sans',sans-serif;--gold:#E2B53F;--gi:#E2B53F;--g2:#B68A1C;--s-bg:#14171C;--s-fg:#ECEDE8;--s-mut:#C4C8C0;--s-rule:#3A3F47;--sp:24px}
+html[data-k="F"]{--K:'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif}
+html[data-eff="light"]{--s-bg:#ECEDE8;--s-fg:#14171C;--s-mut:#4B5058;--s-rule:#C4C8C0;--gi:#8A5E00;--g2:#5C3F00}
+html,body,#vp{background:var(--s-bg)}
+.sh,.sf,.sh *,.sf *{box-sizing:border-box}
+.sh button,.sf button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;text-align:left;-webkit-tap-highlight-color:transparent}
+.sh{view-transition-name:site-header;width:1280px;background:var(--s-bg);color:var(--s-fg);font:15px/1.3 var(--sb);border-bottom:1px solid var(--s-rule);transition:background-color .35s,color .35s,border-color .35s;animation:shin .7s cubic-bezier(.2,.7,.2,1) both}
+@keyframes shin{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.sh .ah{position:relative;height:40px;display:flex;align-items:center;justify-content:center;background:#0c0e12;color:#ECEDE8}
+.sh .ah>button{font-size:14px;letter-spacing:.02em;transition:color .2s}
+.sh .ah>button:hover{color:var(--gold)}
+.sh .ctl{position:absolute;right:var(--sp);top:0;height:40px;display:flex;align-items:center;gap:20px}
+.lsel{appearance:none;-webkit-appearance:none;border:0;border-radius:0;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23C4C8C0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") right center/14px no-repeat;color:#C4C8C0;font:13px/1 var(--sb);padding:8px 20px 8px 0;cursor:pointer;transition:color .2s}
+.lsel:hover{color:var(--gold)}
+.lsel option{color:#14171C;background:#fff}
+.sh .lsel:focus-visible,.sh .tgb:focus-visible,.sh .nl:focus-visible,.sh .don:focus-visible,.sf .fl:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.sh .tgb{display:flex;align-items:center;justify-content:center;padding:6px 0;color:#C4C8C0;transition:color .2s,transform .5s cubic-bezier(.2,.7,.2,1)}
+.sh .tgb:hover{color:var(--gold)}
+.sh .tgb:active{transform:rotate(25deg) scale(.92)}
+.sh .tgb span{display:flex}
+html[data-eff="light"] .tgb .i-moon{display:none}
+html[data-eff="dark"] .tgb .i-sun{display:none}
+.sh .nv{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--sp)}
+.sh .lw{display:flex;align-items:baseline;gap:18px}
+.sh .logo{font-family:var(--sd);font-weight:var(--sw);letter-spacing:var(--sl);font-size:24px;transition:color .2s}
+.sh .logo:hover{color:var(--gi)}
+.sh .dbl{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--s-mut)}
+.sh nav{display:flex;gap:30px;align-items:center}
+.sh .nl{font-size:15px;padding-bottom:2px;background:linear-gradient(var(--gi),var(--gi)) 0 100%/0 2px no-repeat;transition:color .2s,background-size .35s cubic-bezier(.2,.7,.2,1)}
+.sh .nl:hover,.sh .nl.on{background-size:100% 2px}
+html[data-k="F"] .sh .nl{background-image:linear-gradient(var(--gold),var(--gold));background-size:0 3px}
+html[data-k="F"] .sh .nl:hover,html[data-k="F"] .sh .nl.on{background-size:100% 3px}
+html:not([data-k="F"]) .sh .nl:hover,html:not([data-k="F"]) .sh .nl.on{color:var(--gi)}
+.sh .nl:active{color:var(--g2)}
+.sh .don{border:1px solid currentColor;padding:10px 20px;font-size:15px;transition:background .2s,color .2s,border-color .2s}
+.sh .don:hover{background:var(--gold);border-color:var(--gold);color:#14171C}
+.sh .don:active{background:var(--g2);border-color:var(--g2)}
+.sf{view-transition-name:site-footer;width:1280px;height:96px;padding:22px var(--sp) 0;background:var(--s-bg);color:var(--s-mut);font:13px/1.3 var(--sb);border-top:1px solid var(--s-rule);display:flex;flex-direction:column;gap:10px;transition:background-color .35s,color .35s,border-color .35s}
+.sf nav{display:flex;gap:22px}
+.sf .lg{display:flex;justify-content:space-between;gap:24px}
+.sf a{color:inherit;text-decoration:none}
+.sf .fl{transition:color .2s}
+.sf .fl:hover{color:var(--gi)}
+.sf .fl:active{color:var(--g2)}
+#dbar{position:fixed;left:50%;top:max(8px,env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:60;display:flex;gap:14px;align-items:center;max-width:calc(100% - 24px);padding:5px 8px;background:rgba(23,26,32,.94);border-radius:10px;color:#C4C8C0;font:13px system-ui,sans-serif}
+#dsw{display:flex;gap:2px}
+#dsw button{font:inherit;color:#C4C8C0;background:none;border:0;padding:8px 12px;border-radius:7px;cursor:pointer;min-width:36px;transition:background .2s,color .2s}
+#dsw button.on{background:#E2B53F;color:#14171C}
+.col .num,.row .rn{font-family:var(--K)}
+.app>.sh,.app>.sf{flex:none}
+@media (prefers-reduced-motion:reduce){.sh{animation:none}.sh *,.sf *{transition:none!important}}
+
+html[data-eff="light"]{--ink:#ECEDE8;--ink2:#E2E4DD;--paper:#14171C;--stone:#4B5058;--muted-d:#B5B9B1;--rule-d:#C4C8C0;--lilac:#2C3E72;--indigo:#9AA7D4;--hov:#232830;color-scheme:light}
+body,.col,.left,.right,.crumbs,.item,.row,.rhead,.group{transition:background-color .35s,color .35s,border-color .35s}
+.col .num,.row .rn{font-family:var(--display)}
+/* Entry: lit and dim items */
+.cols .item { transition: opacity .45s cubic-bezier(.3, 0, .2, 1) var(--d, 0ms), background-color .25s, padding-left .25s, color .25s; }
+.cols .item.rest { opacity: .42; }
+.cols .item.off { opacity: .16; pointer-events: none; }
+.cols .item.sel { background: var(--indigo); color: var(--paper); }
+.cols .item.sel small { color: var(--stone); }
+.cols .item.off:hover, .cols .item.sel:hover { padding-left: 20px; }
+.ecum { display: flex; gap: 14px; margin-top: 8px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+.ecum button { color: var(--muted-d); padding: 4px 0; border-bottom: 1px solid transparent; transition: color .2s; }
+.ecum button.on { color: var(--paper); border-bottom-color: var(--lilac); }
+.ecum button:hover { color: var(--paper); }
+.col .hint { font-size: 12px; color: var(--muted-d); letter-spacing: .02em; }
+
+/* Entry: chain dock */
+.ent { flex: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; }
+.ent .cols { flex: 1; min-height: 0; }
+.dock { flex: none; height: 0; overflow: hidden; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); background: var(--ink2); border-top: 1px solid var(--rule-d); transition: height .5s cubic-bezier(.65, 0, .25, 1); }
+.dock.on { height: 280px; }
+.dock .dl { padding: 24px 32px; display: flex; flex-direction: column; gap: 8px; min-width: 0; border-right: 1px solid var(--rule-d); }
+.dock .dl .label { color: var(--lilac); }
+.dock .dl .big { font-family: var(--display); font-size: clamp(26px, 3.2vw, 44px); line-height: 1.08; text-wrap: balance; }
+.dock .dl .meta { color: var(--stone); font-size: 15px; }
+.dock .dl .link { margin-top: auto; }
+.dock .dr { min-width: 0; display: flex; flex-direction: column; background: var(--ink); overflow-y: auto; }
+.dock .dr .video { min-height: 0; }
+.dock .dr .hint { margin: auto; padding: 24px; color: var(--stone); font-size: 15px; text-align: center; }
+.dock .dr .row { color: var(--paper); border-bottom-color: var(--rule-d); }
+.dock .dr .row:hover { background: var(--indigo); }
+.dock .dr .row .rm { color: var(--stone); }
+@keyframes erise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.cols.first .item { animation: erise .5s cubic-bezier(.3, 0, .2, 1) both; animation-delay: calc(var(--c, 0) * 90ms + var(--n, 0) * 20ms); }
+</style>
+
+<div id="dbar"><div id="dsw"><button type="button" data-k="D">D</button><button type="button" data-k="E">E</button><button type="button" data-k="F">F</button></div><span id="dfn"></span></div>
+<div id="vp"><div id="stage"><div class="app">
+  <div class="sh" id="sh"><div class="ah"><button type="button" data-t="ar">Our Commitment to Anti-Racism</button><div class="ctl"><select class="lsel" data-sel aria-label="Language"><option value="en">English</option><option value="es">Español</option><option value="zh">中文</option></select><button type="button" class="tgb" data-tg aria-label="Toggle light and dark mode" title="Toggle light and dark mode"><span class="i-sun"><svg class="ic" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span><span class="i-moon"><svg class="ic" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg></span></button></div></div><div class="nv"><div class="lw"><button type="button" class="logo">Brooklyn Aikikai</button><span class="dbl">Technique database</span></div><nav><button type="button" class="nl" data-t="n_about">About</button><button type="button" class="nl" data-t="n_schedule">Schedule</button><button type="button" class="nl" data-t="n_join">Join</button><button type="button" class="nl" data-t="n_kids">Kids' Aikido</button><button type="button" class="nl on" data-t="n_members">Dojo Members</button><button type="button" class="don" data-t="donate">Donate</button></nav></div></div>
+  <nav class="crumbs" id="crumbs" aria-label="Breadcrumb"></nav>
+  <div id="view"></div>
+  <div class="sf" id="sf"><nav><button type="button" class="fl" data-t="contact">Contact</button><button type="button" class="fl" data-t="access">Accessibility</button><a class="fl" href="https://www.instagram.com/baikikai/" target="_blank" rel="noopener">Instagram</a></nav><div class="lg"><span data-t="copy">© 2026 Brooklyn Aikikai</span><span data-t="legal">Brooklyn Aikikai is a 501(c)(3) in the state of New York</span></div></div>
+</div></div></div>
+<div class="zc"><button type="button" id="zin" aria-label="Zoom in">+</button><button type="button" id="zout" aria-label="Zoom out">−</button><button type="button" id="zfit" aria-label="Fit">Fit</button></div>
+
+<script>
+(function () {
+  var DATA = [[0,"tachi-waza","katate-dori-gyaku-hanmi","ikkyo",""],[0,"tachi-waza","katate-dori-gyaku-hanmi","shihonage",""],[0,"tachi-waza","katate-dori-gyaku-hanmi","kaitennage",""],[0,"tachi-waza","katate-dori-ai-hanmi","ikkyo",""],[0,"suwari-waza","ryote-dori","kokyuho",""],[0,"tachi-waza","kata-dori","ikkyo",""],[0,"suwari-waza","shomen-uchi","ikkyo",""],[0,"tachi-waza","shomen-uchi","ikkyo",""],[1,"tachi-waza","katate-dori-gyaku-hanmi","iriminage",""],[1,"tachi-waza","katate-dori-gyaku-hanmi","nikyo",""],[1,"tachi-waza","katate-dori-gyaku-hanmi","sankyo",""],[1,"tachi-waza","katate-dori-gyaku-hanmi","kotegaeshi",""],[1,"tachi-waza","katate-dori-gyaku-hanmi","kokyunage",""],[1,"tachi-waza","katate-dori-ai-hanmi","iriminage",""],[1,"tachi-waza","katate-dori-ai-hanmi","nikyo",""],[1,"tachi-waza","katate-dori-ai-hanmi","sankyo",""],[1,"tachi-waza","katate-dori-ai-hanmi","kotegaeshi",""],[1,"tachi-waza","katate-dori-ai-hanmi","sotokaitennage",""],[1,"tachi-waza","katate-dori-ai-hanmi","shihonage",""],[1,"tachi-waza","ryote-dori","shihonage",""],[1,"tachi-waza","ryote-dori","tenchinage",""],[1,"tachi-waza","ryote-dori","kokyunage",""],[1,"hanmi-handachi","ryote-dori","shihonage",""],[1,"tachi-waza","morote-dori","kokyunage",""],[1,"tachi-waza","kata-dori","nikyo",""],[1,"tachi-waza","kata-dori","sankyo",""],[1,"suwari-waza","shomen-uchi","nikyo",""],[1,"tachi-waza","shomen-uchi","nikyo",""],[1,"suwari-waza","shomen-uchi","sankyo",""],[1,"tachi-waza","shomen-uchi","sankyo",""],[1,"tachi-waza","yokomen-uchi","shihonage",""],[2,"hanmi-handachi","katate-dori-gyaku-hanmi","shihonage",""],[2,"hanmi-handachi","katate-dori-gyaku-hanmi","kaitennage",""],[2,"tachi-waza","katate-dori-gyaku-hanmi","sumiotoshi",""],[2,"tachi-waza","katate-dori-gyaku-hanmi","koshinage",""],[2,"tachi-waza","katate-dori-gyaku-hanmi","yonkyo",""],[2,"tachi-waza","katate-dori-ai-hanmi","jujinage",""],[2,"tachi-waza","katate-dori-ai-hanmi","yonkyo",""],[2,"tachi-waza","katate-dori-ai-hanmi","sumiotoshi",""],[2,"tachi-waza","katate-dori-ai-hanmi","koshinage",""],[2,"tachi-waza","ryote-dori","iriminage",""],[2,"tachi-waza","ryote-dori","kotegaeshi",""],[2,"tachi-waza","ryote-dori","koshinage",""],[2,"tachi-waza","morote-dori","ikkyo",""],[2,"tachi-waza","morote-dori","nikyo",""],[2,"tachi-waza","morote-dori","iriminage",""],[2,"tachi-waza","kata-dori","yonkyo",""],[2,"tachi-waza","kata-dori","shihonage",""],[2,"tachi-waza","kata-dori","kotegaeshi",""],[2,"suwari-waza","shomen-uchi","yonkyo",""],[2,"tachi-waza","shomen-uchi","yonkyo",""],[2,"suwari-waza","shomen-uchi","iriminage",""],[2,"tachi-waza","shomen-uchi","iriminage",""],[2,"suwari-waza","shomen-uchi","kotegaeshi",""],[2,"tachi-waza","shomen-uchi","kotegaeshi",""],[2,"suwari-waza","shomen-uchi","sotokaitennage",""],[2,"tachi-waza","shomen-uchi","sotokaitennage",""],[2,"suwari-waza","shomen-uchi","shihonage",""],[2,"tachi-waza","shomen-uchi","shihonage",""],[2,"suwari-waza","yokomen-uchi","kokyunage",""],[2,"tachi-waza","yokomen-uchi","ikkyo",""],[2,"tachi-waza","yokomen-uchi","nikyo",""],[2,"tachi-waza","yokomen-uchi","sankyo",""],[2,"tachi-waza","yokomen-uchi","yonkyo",""],[2,"tachi-waza","yokomen-uchi","iriminage",""],[2,"tachi-waza","yokomen-uchi","kotegaeshi",""],[2,"tachi-waza","yokomen-uchi","jujinage",""],[2,"tachi-waza","tsuki","ikkyo",""],[2,"tachi-waza","tsuki","nikyo",""],[2,"tachi-waza","tsuki","sankyo",""],[2,"tachi-waza","tsuki","kotegaeshi",""],[2,"tachi-waza","ushiro-ryote-dori","kokyunage",""],[2,"tachi-waza","ushiro-ryokata-dori","kokyunage",""],[2,"tachi-waza","ushiro-ryokata-dori","ikkyo","katate-eridori"],[3,"hanmi-handachi","katate-dori-gyaku-hanmi","uchi-kaiten-katagatame",""],[3,"hanmi-handachi","katate-dori-gyaku-hanmi","soto-kaiten-katagatame",""],[3,"tachi-waza","morote-dori","kotegaeshi",""],[3,"tachi-waza","morote-dori","jujinage",""],[3,"tachi-waza","kata-dori","uchi-kaiten-katagatame",""],[3,"tachi-waza","kata-dori","soto-kaiten-katagatame",""],[3,"suwari-waza","shomen-uchi","sumiotoshi",""],[3,"tachi-waza","shomen-uchi","sumiotoshi",""],[3,"suwari-waza","shomen-uchi","gokyo",""],[3,"tachi-waza","shomen-uchi","gokyo",""],[3,"suwari-waza","shomen-uchi","koshinage",""],[3,"tachi-waza","shomen-uchi","koshinage",""],[3,"suwari-waza","yokomen-uchi","ikkyo",""],[3,"suwari-waza","yokomen-uchi","nikyo",""],[3,"suwari-waza","yokomen-uchi","sankyo",""],[3,"suwari-waza","yokomen-uchi","yonkyo",""],[3,"suwari-waza","yokomen-uchi","iriminage",""],[3,"suwari-waza","yokomen-uchi","kotegaeshi",""],[3,"tachi-waza","tsuki","iriminage",""],[3,"tachi-waza","tsuki","sumiotoshi",""],[3,"tachi-waza","tsuki","gokyo",""],[3,"tachi-waza","tsuki","koshinage",""],[3,"tachi-waza","ushiro-ryote-dori","ikkyo",""],[3,"tachi-waza","ushiro-ryote-dori","nikyo",""],[3,"tachi-waza","ushiro-ryote-dori","sankyo",""],[3,"tachi-waza","ushiro-ryote-dori","yonkyo",""],[3,"tachi-waza","ushiro-ryokata-dori","ikkyo",""],[3,"tachi-waza","ushiro-ryokata-dori","nikyo",""],[3,"tachi-waza","ushiro-ryokata-dori","sankyo",""],[3,"tachi-waza","ushiro-ryokata-dori","yonkyo",""],[3,"tachi-waza","ushiro-ryokata-dori","iriminage","katate-eridori"],[4,"tachi-waza","morote-dori","udegarami",""],[4,"tachi-waza","morote-dori","shihonage",""],[4,"tachi-waza","kata-dori","rokyo",""],[4,"tachi-waza","kata-dori","kokyunage",""],[4,"suwari-waza","kata-dori","rokyo",""],[4,"hanmi-handachi","shomen-uchi","iriminage",""],[4,"hanmi-handachi","shomen-uchi","kotegaeshi",""],[4,"hanmi-handachi","shomen-uchi","sotokaitennage",""],[4,"hanmi-handachi","yokomen-uchi","shihonage",""],[4,"hanmi-handachi","yokomen-uchi","kotegaeshi",""],[4,"suwari-waza","tsuki","ikkyo",""],[4,"tachi-waza","ushiro-ryote-dori","kaitennage",""],[4,"tachi-waza","ushiro-ryote-dori","shihonage",""],[4,"tachi-waza","ushiro-ryote-dori","kotegaeshi",""],[4,"tachi-waza","ushiro-ryote-dori","iriminage",""],[4,"tachi-waza","ushiro-ryote-dori","jujinage",""],[4,"tachi-waza","ushiro-ryokata-dori","kotegaeshi",""],[4,"tachi-waza","ushiro-ryokata-dori","shihonage",""],[4,"tachi-waza","ushiro-ryokata-dori","udegarami",""],[5,"tachi-waza","ryote-dori","aikiotoshi",""],[5,"tachi-waza","morote-dori","koshinage",""],[5,"suwari-waza","kata-dori","ikkyo","katamenuchi"],[5,"tachi-waza","kata-dori","ikkyo","katamenuchi"],[5,"suwari-waza","kata-dori","nikyo","katamenuchi"],[5,"tachi-waza","kata-dori","nikyo","katamenuchi"],[5,"suwari-waza","kata-dori","sankyo","katamenuchi"],[5,"tachi-waza","kata-dori","sankyo","katamenuchi"],[5,"suwari-waza","kata-dori","yonkyo","katamenuchi"],[5,"tachi-waza","kata-dori","yonkyo","katamenuchi"],[5,"suwari-waza","kata-dori","iriminage","katamenuchi"],[5,"tachi-waza","kata-dori","iriminage","katamenuchi"],[5,"suwari-waza","kata-dori","kotegaeshi","katamenuchi"],[5,"tachi-waza","kata-dori","kotegaeshi","katamenuchi"],[5,"tachi-waza","kata-dori","shihonage","katamenuchi"],[5,"tachi-waza","tsuki","rokyo",""],[5,"tachi-waza","ushiro-ryote-dori","udegarami",""],[5,"tachi-waza","ushiro-ryote-dori","koshinage",""],[5,"hanmi-handachi","ushiro-ryokata-dori","ikkyo",""],[5,"hanmi-handachi","ushiro-ryokata-dori","nikyo",""],[5,"hanmi-handachi","ushiro-ryokata-dori","sankyo",""],[5,"hanmi-handachi","ushiro-ryokata-dori","yonkyo",""],[5,"hanmi-handachi","ushiro-ryokata-dori","kotegaeshi",""],[5,"hanmi-handachi","ushiro-ryokata-dori","shihonage",""],[5,"tachi-waza","ushiro-kubishime","ikkyo",""],[5,"tachi-waza","ushiro-kubishime","nikyo",""],[5,"tachi-waza","ushiro-kubishime","sankyo",""],[5,"tachi-waza","ushiro-kubishime","udegarami",""],[5,"tachi-waza","ushiro-kubishime","kotegaeshi",""],[6,"hanmi-handachi","shomen-uchi","kokyunage",""],[6,"hanmi-handachi","yokomen-uchi","kokyunage",""],[6,"tachi-waza","ushiro-kubishime","kokyunage",""]];
+  var RANKS = ['5th kyu', '4th kyu', '3rd kyu', '2nd kyu', '1st kyu', 'Shodan', 'Nidan', 'Sandan'];
+  var TECH = {
+    ikkyo: ['Ikkyo', '一教'], nikyo: ['Nikyo', '二教'], sankyo: ['Sankyo', '三教'], yonkyo: ['Yonkyo', '四教'], gokyo: ['Gokyo', '五教'], rokyo: ['Rokyo', '六教'],
+    shihonage: ['Shiho-nage', '四方投げ'], iriminage: ['Irimi-nage', '入身投げ'], kotegaeshi: ['Kote-gaeshi', '小手返し'], kokyunage: ['Kokyu-nage', '呼吸投げ'],
+    tenchinage: ['Tenchi-nage', '天地投げ'], jujinage: ['Juji-nage', '十字投げ'], sumiotoshi: ['Sumi-otoshi', '隅落'], koshinage: ['Koshi-nage', '腰投げ'],
+    udegarami: ['Ude-garami', '腕絡'], kaitennage: ['Kaiten-nage', '回転投げ'], sotokaitennage: ['Sotokaiten-nage', '外回転投げ'], kokyuho: ['Kokyuho', '呼吸法'],
+    aikiotoshi: ['Aiki-otoshi', '合気落'], 'uchi-kaiten-katagatame': ['Uchi-kaiten katagatame', ''], 'soto-kaiten-katagatame': ['Soto-kaiten katagatame', '']
+  };
+  var TORDER = Object.keys(TECH);
+  var ATK = {
+    'katate-dori-gyaku-hanmi': 'Katate-dori gyaku-hanmi', 'katate-dori-ai-hanmi': 'Katate-dori ai-hanmi', 'ryote-dori': 'Ryote-dori', 'morote-dori': 'Morote-dori',
+    'kata-dori': 'Kata-dori', 'shomen-uchi': 'Shomen-uchi', 'yokomen-uchi': 'Yokomen-uchi', 'tsuki': 'Tsuki',
+    'ushiro-ryote-dori': 'Ushiro ryote-dori', 'ushiro-ryokata-dori': 'Ushiro ryokata-dori', 'ushiro-kubishime': 'Ushiro kubishime'
+  };
+  var AORDER = Object.keys(ATK);
+  var ST = { 'tachi-waza': ['Tachi-waza', '立技'], 'suwari-waza': ['Suwari-waza', '座技'], 'hanmi-handachi': ['Hanmi-handachi', '半身半立'] };
+  var SORDER = Object.keys(ST);
+  var HIER = ['stance', 'attack', 'technique', 'variant', 'rank'];
+  var VORDER = ['std', 'katamenuchi', 'katate-eridori'];
+  var WEAP = [['Tanto-dori', 5], ['Jo-dori', 5], ['Futari-dori', 5], ['Jo awase waza', 6], ['Bokken forms', 6], ['Tanto waza', 7]];
+  var FAC = {
+    technique: { key: 't', title: 'Technique', roman: 'IV.', sub: 'Ikkyo through Kokyuho', choose: 'Choose a technique' },
+    stance: { key: 's', title: 'Stance', roman: 'II.', sub: 'How nage and uke begin', choose: 'Choose a stance' },
+    attack: { key: 'a', title: 'Attack', roman: 'III.', sub: 'How uke attacks', choose: 'Choose an attack' },
+    variant: { key: 'v', title: 'Variant', roman: '', sub: '', choose: 'Choose a variant' },
+    rank: { key: 'r', title: 'Rank', roman: 'I.', sub: 'New at each rank', choose: 'Choose a rank' }
+  };
+  var PRIORITY = {
+    technique: ['stance', 'attack', 'variant', 'rank'], attack: ['stance', 'technique', 'variant', 'rank'],
+    stance: ['attack', 'technique', 'variant', 'rank'], rank: ['stance', 'attack', 'technique', 'variant']
+  };
+  var R = DATA.map(function (d, i) { return { id: i, r: d[0], s: d[1], a: d[2], t: d[3], v: d[4] }; });
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var state = { editing: false, view: 'entry', pins: [], waza: null, facet: null, omote: 'Omote', backTo: 'drill' };
+  var $view = document.getElementById('view');
+  var $crumbs = document.getElementById('crumbs');
+
+  function dn(facet, value) {
+    if (facet === 'technique') return TECH[value];
+    if (facet === 'stance') return ST[value];
+    if (facet === 'attack') return [ATK[value], ''];
+    if (facet === 'variant') return [value === 'std' ? 'Standard' : value.charAt(0).toUpperCase() + value.slice(1), ''];
+    return [RANKS[value], ''];
+  }
+  function val(w, f) { return f === 'variant' ? (w.v || 'std') : w[FAC[f].key]; }
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+  function lower(s) { return s.charAt(0).toLowerCase() + s.slice(1); }
+  function wazaName(w) { return ST[w.s][0] + ' ' + lower(ATK[w.a]) + (w.v ? ' ' + w.v : '') + ' ' + TECH[w.t][0]; }
+  function rows(pins) {
+    return R.filter(function (w) { return pins.every(function (p) { return val(w, p.facet) === p.value; }); });
+  }
+  function orderOf(facet) {
+    if (facet === 'technique') return TORDER;
+    if (facet === 'attack') return AORDER;
+    if (facet === 'stance') return SORDER;
+    if (facet === 'variant') return VORDER;
+    return [0, 1, 2, 3, 4, 5, 6, 7];
+  }
+  function values(facet, list) {
+    var map = {};
+    list.forEach(function (w) {
+      var v = val(w, facet);
+      if (!map[v]) map[v] = { value: v, count: 0, rank: 99 };
+      map[v].count++;
+      if (w.r < map[v].rank) map[v].rank = w.r;
+    });
+    var ord = orderOf(facet);
+    return Object.keys(map).map(function (k) { return map[k]; }).sort(function (a, b) { return ord.indexOf(a.value) - ord.indexOf(b.value); });
+  }
+  function resolve() {
+    var list = rows(state.pins);
+    if (list.length === 1) { state.view = 'waza'; state.waza = list[0]; state.backTo = 'drill'; return; }
+    var pinned = state.pins.map(function (p) { return p.facet; });
+    var first = state.pins[0].facet;
+    var cands = PRIORITY[first].filter(function (f) { return pinned.indexOf(f) < 0; });
+    for (var i = 0; i < cands.length; i++) {
+      if (values(cands[i], list).length > 1) { state.view = 'drill'; state.facet = cands[i]; return; }
+    }
+    state.view = 'flat';
+  }
+
+  function crumbs() {
+    var h = '<button type="button" class="label' + (state.view === 'entry' ? ' cur' : '') + '" data-act="entry">Entry points</button>';
+    state.pins.forEach(function (p, i) {
+      var last = i === state.pins.length - 1 && state.view !== 'waza' && state.view !== 'drill';
+      h += '<span class="sep">/</span><button type="button" class="label' + (last ? ' cur' : '') + '" data-act="crumb" data-i="' + i + '">' + FAC[p.facet] ? '' : '';
+      h = h.replace(/FALSE$/, '');
+    });
+    return h;
+  }
+  function pill(f, text, filled, editing) {
+    var cls = 'pill' + (filled ? ' on' : '') + (editing ? ' ed' : '');
+    return '<span class="' + cls + '"><button type="button" data-act="edit" data-facet="' + f + '"><b>' + FAC[f].title + '</b>' + (filled ? esc(text) : '') + '</button>' +
+      (filled ? '<button type="button" class="x" data-act="unpin" data-facet="' + f + '" aria-label="Remove ' + FAC[f].title + '">×</button>' : '') + '</span>';
+  }
+  function spec() {
+    var o = {};
+    if (state.view === 'waza' && state.waza && !state.waza.weapon) {
+      var w = state.waza; o.stance = w.s; o.attack = w.a; o.technique = w.t; if (w.v) o.variant = w.v;
+    } else state.pins.forEach(function (p) { if (p.facet !== 'weapon') o[p.facet] = p.value; });
+    return o;
+  }
+  function fromWaza() {
+    var w = state.waza, p = [{ facet: 'stance', value: w.s }, { facet: 'attack', value: w.a }, { facet: 'technique', value: w.t }];
+    if (w.v) p.push({ facet: 'variant', value: w.v });
+    state.pins = p; state.waza = null;
+  }
+  function buildCrumbs() {
+    var h = '<button type="button" class="label' + (state.view === 'entry' ? ' cur' : '') + '" data-act="entry">Entry points</button>';
+    var weapon = state.pins.length && state.pins[0].facet === 'weapon';
+    if (weapon) {
+      h += '<span class="sep">/</span><span class="label cur">' + esc(state.pins[0].value) + '</span>';
+    } else if (state.pins.length || state.view === 'waza') {
+      var o = spec(), isW = state.view === 'waza';
+      var list = isW ? [] : rows(state.pins);
+      h += '<span class="sep">/</span>';
+      HIER.forEach(function (f) {
+        var has = o[f] !== undefined;
+        if (!has && isW) return;
+        if (f === 'variant' && !has && !list.some(function (w) { return w.v; })) return;
+        h += pill(f, has ? dn(f, o[f])[0] : '', has, state.view === 'drill' && state.editing && state.facet === f);
+      });
+      if (state.view === 'flat') h += '<span class="sep">/</span><span class="label cur">All waza</span>';
+    }
+    $crumbs.innerHTML = h;
+  }
+
+  var E = { r: null, s: null, a: null, t: null, cum: false };
+  var ECOLS = ['rank', 'stance', 'attack', 'technique'];
+  var EKEY = { rank: 'r', stance: 's', attack: 'a', technique: 't' };
+  function emat(w, skip) {
+    if (skip !== 's' && E.s && w.s !== E.s) return false;
+    if (skip !== 'a' && E.a && w.a !== E.a) return false;
+    if (skip !== 't' && E.t && w.t !== E.t) return false;
+    if (skip !== 'r' && E.r !== null && (E.cum ? w.r > E.r : w.r !== E.r)) return false;
+    return true;
+  }
+  function eany(skip) {
+    return ECOLS.some(function (f) { var k = EKEY[f]; return k !== skip && E[k] !== null && E[k] !== undefined; });
+  }
+  function ecolumn(facet) {
+    var k = EKEY[facet], counts = {}, base = {};
+    R.forEach(function (w) {
+      base[w[k]] = (base[w[k]] || 0) + 1;
+      if (emat(w, k)) counts[w[k]] = (counts[w[k]] || 0) + 1;
+    });
+    return { counts: counts, base: base, listens: eany(k), selected: E[k] };
+  }
+  function lowerA(s0) { return s0.charAt(0).toLowerCase() + s0.slice(1); }
+  function edock() {
+    var el = document.querySelector('.dock');
+    if (!el) return;
+    var any = eany(null);
+    var m = R.filter(function (w) { return emat(w, null); });
+    var complete = !!(E.s && E.a && E.t);
+    var nm = [];
+    if (E.s) nm.push(ST[E.s][0]);
+    if (E.a) nm.push(lowerA(ATK[E.a]));
+    if (E.t) nm.push(TECH[E.t][0]);
+    var title = nm.length ? nm.join(' ') : (E.r !== null ? (E.cum ? 'Up to ' : 'New at ') + RANKS[E.r] : '');
+    var meta = m.length === 1 ? RANKS[m[0].r] + (m[0].v ? ' \u00b7 ' + m[0].v : '') : m.length + ' waza' + (E.r !== null && nm.length ? ' \u00b7 ' + (E.cum ? 'up to ' : '') + RANKS[E.r] : '');
+    var left = '<div class="dl"><span class="label">Chain</span><div class="big">' + esc(title) + '</div><div class="meta">' + esc(meta) + '</div><button type="button" class="link" data-act="eclear">Clear</button></div>';
+    var right;
+    if (m.length === 1) {
+      right = '<div class="dr"><div class="video"><button type="button" class="play" data-act="open" data-id="' + m[0].id + '">Play demonstration</button></div></div>';
+    } else if (complete && m.length > 1) {
+      right = '<div class="dr">' + m.map(function (w, ix) {
+        return '<button type="button" class="row" style="--i:' + ix + '" data-act="open" data-id="' + w.id + '"><span class="rl">' + esc(wazaName(w).replace(ST[w.s][0] + ' ', '')) + '</span><span class="rm">' + RANKS[w.r] + ' \u2192</span></button>';
+      }).join('') + '</div>';
+    } else {
+      right = '<div class="dr"><div class="hint">' + m.length + ' waza match. Keep choosing to reach one, or <button type="button" class="link" data-act="eresolve" style="display:inline">open the list</button>.</div></div>';
+    }
+    if (any && m.length) {
+      if (el.getAttribute('data-sig') !== title + '|' + meta + '|' + m.length) { el.innerHTML = left + right; el.setAttribute('data-sig', title + '|' + meta + '|' + m.length); }
+      el.classList.add('on');
+    } else el.classList.remove('on');
+  }
+  function epaint(animate) {
+    ECOLS.forEach(function (facet, ci) {
+      var info = ecolumn(facet), n = 0;
+      var els = document.querySelectorAll('.cols .item[data-ef="' + facet + '"]');
+      for (var q = 0; q < els.length; q++) {
+        var el = els[q], v = el.getAttribute('data-value');
+        if (facet === 'rank') v = Number(v);
+        var c = info.counts[v] || 0;
+        var sel = info.selected !== null && info.selected !== undefined;
+        var isSel = sel && String(info.selected) === String(v);
+        var cls = 'item';
+        if (isSel) cls += ' sel';
+        else if (info.listens && c === 0) cls += ' off';
+        else if (sel) cls += ' rest';
+        var base = el.className.replace(' first', '');
+        var changed = base !== cls;
+        el.className = cls;
+        var cnt = el.querySelector(':scope > small');
+        if (cnt) cnt.textContent = info.listens ? (c || '') : (info.base[v] || '');
+        if (animate && changed) { el.style.setProperty('--d', (n * 30) + 'ms'); n++; }
+        else el.style.setProperty('--d', '0ms');
+      }
+    });
+    var cb = document.querySelectorAll('.ecum button');
+    for (var z = 0; z < cb.length; z++) cb[z].classList.toggle('on', (cb[z].getAttribute('data-cum') === '1') === E.cum);
+    edock();
+  }
+  function eprune() {
+    if (!R.some(function (w) { return emat(w, null); })) { E.s = E.a = E.t = null; }
+  }
+  function entryView() {
+    var vals = { rank: values('rank', R), stance: values('stance', R), attack: values('attack', R), technique: values('technique', R) };
+    var subs = { rank: 'Start here, or anywhere', stance: 'How nage and uke begin', attack: 'How uke attacks', technique: 'Ikkyo through Kokyuho' };
+    function col(facet, ci, extra) {
+      var f = FAC[facet];
+      var items = vals[facet].map(function (v, ix) {
+        var d = dn(facet, v.value);
+        return '<button type="button" class="item" style="--c:' + ci + ';--n:' + ix + '" data-ef="' + facet + '" data-act="esel" data-facet="' + facet + '" data-value="' + v.value + '"><span>' + esc(d[0]) + (d[1] ? ' <small style="font-family:var(--display);font-size:15px">' + d[1] + '</small>' : '') + '</span><small>' + v.count + '</small></button>';
+      }).join('');
+      return '<div class="col" data-facet="' + facet + '"><div class="head"><span class="num">' + f.roman + '</span><h2>' + f.title + '</h2><div class="sub">' + subs[facet] + '</div>' + (extra || '') + '</div><div class="list">' + items + '</div></div>';
+    }
+    var weap = WEAP.map(function (w) {
+      return '<button type="button" class="item" style="--c:4;--n:0" data-act="weapon" data-name="' + w[0] + '" data-rank="' + w[1] + '"><span>' + w[0] + '</span><small>' + RANKS[w[1]] + '</small></button>';
+    }).join('');
+    var wcol = '<div class="col" data-facet="weapon"><div class="head"><span class="num">V.</span><h2>Weapons</h2><div class="sub">Buki-waza 武器技</div></div><div class="list">' + weap + '</div></div>';
+    var cum = '<div class="ecum"><button type="button" data-act="ecum" data-cum="0">New at rank</button><button type="button" data-act="ecum" data-cum="1">Up to rank</button><button type="button" data-act="eclear">Clear</button></div>';
+    $view.innerHTML = '<div class="ent"><div class="cols first">' + col('rank', 0, cum) + col('stance', 1) + col('attack', 2) + col('technique', 3) + wcol + '</div></div>';
+    epaint(false);
+    setTimeout(function () { var c = document.querySelector('.cols'); if (c) c.classList.remove('first'); }, 1400);
+  }
+
+  function leftPanel(pinsHtml, big, meta, label) {
+    return '<div class="left"><span class="label" style="color:var(--lilac)">' + label + '</span><div class="big">' + big + '</div><div class="meta">' + meta + '</div><div class="pins"></div><button type="button" class="link" data-act="entry">Start over</button></div>';
+  }
+  function pinsHtml() {
+    return '<div class="chips">' + state.pins.filter(function (p) { return p.facet !== 'weapon'; }).sort(function (x, y) { return HIER.indexOf(x.facet) - HIER.indexOf(y.facet); }).map(function (p) {
+      return pill(p.facet, dn(p.facet, p.value)[0], true, state.view === 'drill' && state.editing && state.facet === p.facet);
+    }).join('') + '</div>';
+  }
+  function bigOf() {
+    var p = state.pins[state.pins.length - 1];
+    var d = dn(p.facet, p.value);
+    return esc(d[0]) + (d[1] ? '<small>' + d[1] + '</small>' : '');
+  }
+
+  function meta(list) {
+    var sv = values('stance', list), pinnedS = state.pins.some(function (p) { return p.facet === 'stance'; });
+    return list.length + ' waza' + (!pinnedS && sv.length === 1 ? ' · ' + ST[sv[0].value][0] + ' only' : '');
+  }
+  function drillView() {
+    var f = state.facet, all = rows(state.pins);
+    var curPin = state.pins.filter(function (p) { return p.facet === f; })[0];
+    var list = state.editing ? rows(state.pins.filter(function (p) { return p.facet !== f; })) : all;
+    var vals = values(f, list);
+    var roman = ['I.', 'II.', 'III.', 'IV.', 'V.', 'VI.', 'VII.', 'VIII.', 'IX.', 'X.', 'XI.', 'XII.', 'XIII.', 'XIV.', 'XV.', 'XVI.', 'XVII.', 'XVIII.', 'XIX.', 'XX.', 'XXI.'];
+    var fs = f === 'stance' ? 40 : 28;
+    var body = vals.map(function (v, i) {
+      var d = dn(f, v.value);
+      var cur = curPin && String(curPin.value) === String(v.value);
+      return '<button type="button" class="row' + (cur ? ' cur' : '') + '" style="--i:' + Math.min(i, 9) + '" data-act="pin" data-facet="' + f + '" data-value="' + v.value + '"><span class="rn">' + roman[i] + '</span><span class="rl" style="font-size:' + fs + 'px">' + esc(d[0]) + (d[1] ? '<small>' + d[1] + '</small>' : '') + '</span><span class="rm">' + v.count + ' waza · ' + RANKS[v.rank] + '</span></button>';
+    }).join('');
+    if (state.editing && curPin) body = '<button type="button" class="row any" data-act="unpin" data-facet="' + f + '"><span></span><span class="rl" style="font-size:22px">Any ' + FAC[f].title.toLowerCase() + '</span><span class="rm">' + list.length + ' waza</span></button>' + body;
+    var lastF = state.pins[state.pins.length - 1].facet;
+    var left = leftPanel(pinsHtml(), bigOf(), meta(all), (FAC[lastF].roman + ' ' + FAC[lastF].title).trim());
+    var right = '<div class="right nos"><div class="rscroll"><div class="rhead"><h3>' + (state.editing ? 'Change ' + FAC[f].title.toLowerCase() : FAC[f].choose) + '</h3><span class="label">' + vals.length + ' ' + FAC[f].title.toLowerCase() + (vals.length === 1 ? '' : 's') + ' · ' + list.length + ' waza</span></div>' + body + '</div>' +
+      '<button type="button" class="row all" data-act="flat"><span></span><span class="rl" style="font-size:22px">All ' + all.length + ' waza</span><span class="rm">→</span></button></div>';
+    $view.innerHTML = '<div class="split">' + left + right + '</div>';
+  }
+
+  function flatView() {
+    var list = rows(state.pins).slice().sort(function (a, b) { return a.r - b.r; });
+    var h = '', last = -1, n = 0;
+    list.forEach(function (w) {
+      if (w.r !== last) { h += '<div class="group">' + RANKS[w.r] + '</div>'; last = w.r; }
+      h += '<button type="button" class="row" style="--i:' + Math.min(n++, 9) + '" data-act="open" data-id="' + w.id + '"><span></span><span class="rl" style="font-size:22px">' + esc(wazaName(w)) + '</span><span class="rm">→</span></button>';
+    });
+    var left = leftPanel(pinsHtml(), bigOf(), meta(list) + ', grouped by the rank where each first appears', 'All waza');
+    $view.innerHTML = '<div class="split">' + left + '<div class="right"><div class="rhead"><h3>All ' + list.length + ' waza</h3><span class="label">Grouped by rank</span></div>' + h + '</div></div>';
+  }
+
+  function wazaView() {
+    var w = state.waza;
+    if (w.weapon) {
+      var lp = '<div class="left"><span class="label" style="color:var(--lilac)">Weapon</span><div class="big">' + esc(w.name) + '</div><div class="meta">' + RANKS[w.rank] + '</div><div class="video"><button type="button" class="play">Play demonstration</button></div><button type="button" class="link" data-act="back">Back</button></div>';
+      $view.innerHTML = '<div class="split">' + lp + '<div class="right"><div class="rbody"><div class="seg"><span class="rk">Required at ' + RANKS[w.rank] + '</span></div></div></div></div>';
+      return;
+    }
+    var others = R.filter(function (x) { return x.t === w.t && x.s === w.s && x.id !== w.id; });
+    var oh = others.slice(0, 6).map(function (x, i) {
+      return '<button type="button" class="row" style="--i:' + i + '" data-act="open" data-id="' + x.id + '"><span class="rl">' + esc(ATK[x.a] + (x.v ? ' ' + x.v : '')) + '</span><span class="rm">' + RANKS[x.r] + ' →</span></button>';
+    }).join('');
+    var lp2 = '<div class="left"><span class="label" style="color:var(--lilac)">' + RANKS[w.r] + '</span><div class="big" style="font-size:clamp(30px,4.2vw,56px)">' + esc(wazaName(w)) + '<small>' + (TECH[w.t][1] || '') + '</small></div><div class="meta">' + state.omote + '</div><div class="video"><button type="button" class="play">Play demonstration</button></div><button type="button" class="link" data-act="back">Back to results</button></div>';
+    var rt = '<div class="right"><div class="rbody"><div class="seg"><button type="button" data-act="omote" data-v="Omote" class="' + (state.omote === 'Omote' ? 'on' : '') + '">Omote</button><button type="button" data-act="omote" data-v="Ura" class="' + (state.omote === 'Ura' ? 'on' : '') + '">Ura</button><span class="rk">First required at ' + RANKS[w.r] + '</span></div>' +
+      '' +
+      (others.length ? '<div class="others"><div class="otitle">Other attacks, ' + esc(TECH[w.t][0]) + ' from ' + esc(ST[w.s][0]) + '</div>' + oh + '</div>' : '') + '</div></div>';
+    $view.innerHTML = '<div class="split">' + lp2 + rt + '</div>';
+  }
+
+  function render() {
+    buildCrumbs();
+    if (state.view === 'entry') entryView();
+    else if (state.view === 'drill') drillView();
+    else if (state.view === 'flat') flatView();
+    else wazaView();
+  }
+
+  var DEPTH = { entry: 0, drill: 1, flat: 1, waza: 2 };
+  function go(update, fromEl, toSel) {
+    var before = DEPTH[state.view] || 0;
+    if (!fromEl && !toSel) { update(); render(); return; }
+    if (!document.startViewTransition || reduce) { update(); render(); return; }
+    var dir = 'fwd';
+    function nameAll(on) {
+      var els = document.querySelectorAll('.left, .right, .col');
+      for (var i = 0; i < els.length; i++) {
+        var n = els[i].classList.contains('left') ? 'pl' : els[i].classList.contains('right') ? 'pr' : 'c' + i;
+        els[i].style.viewTransitionName = on ? n : '';
+      }
+    }
+    nameAll(true);
+    var t = document.startViewTransition(function () {
+      nameAll(false);
+      update();
+      dir = (DEPTH[state.view] || 0) < before ? 'back' : 'fwd';
+      document.documentElement.setAttribute('data-dir', dir);
+      render();
+      nameAll(true);
+    });
+    t.finished.then(function () { nameAll(false); }, function () { nameAll(false); });
+    document.documentElement.setAttribute('data-dir', 'fwd');
+  }
+
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-act]');
+    if (!b) return;
+    var act = b.getAttribute('data-act');
+    var left = document.querySelector('.left');
+    if (act === 'esel') {
+      var ef2 = b.getAttribute('data-facet'), ev = b.getAttribute('data-value'), ek = EKEY[ef2];
+      if (ef2 === 'rank') ev = Number(ev);
+      E[ek] = E[ek] === ev ? null : ev;
+      epaint(true);
+      if (E.s && E.a && E.t) {
+        // End of the chain: let the last item light, then slide into the detail.
+        setTimeout(function () {
+          if (!(E.s && E.a && E.t) || state.view !== 'entry') return;
+          go(function () {
+            var pins = [{ facet: 'stance', value: E.s }, { facet: 'attack', value: E.a }, { facet: 'technique', value: E.t }];
+            if (E.r !== null && !E.cum) pins.push({ facet: 'rank', value: E.r });
+            state.editing = false; state.pins = pins; resolve();
+            if (state.view === 'waza') { state.pins = []; state.backTo = 'entry'; }
+          }, document.querySelector('.col[data-facet="technique"]'), '.left');
+        }, 320);
+      }
+      return;
+    } else if (act === 'ecum') {
+      E.cum = b.getAttribute('data-cum') === '1';
+      eprune();
+      epaint(true);
+      return;
+    } else if (act === 'eclear') {
+      E.r = E.s = E.a = E.t = null;
+      epaint(true);
+      return;
+    } else if (act === 'eresolve') {
+      go(function () {
+        var pins = [];
+        if (E.s) pins.push({ facet: 'stance', value: E.s });
+        if (E.a) pins.push({ facet: 'attack', value: E.a });
+        if (E.t) pins.push({ facet: 'technique', value: E.t });
+        if (E.r !== null && !E.cum) pins.push({ facet: 'rank', value: E.r });
+        if (!pins.length && E.r !== null) pins.push({ facet: 'rank', value: E.r });
+        state.editing = false; state.pins = pins; resolve();
+      }, document.querySelector('.dock'), '.left');
+      return;
+    }
+    if (act === 'pick') {
+      var facet = b.getAttribute('data-facet'), val = b.getAttribute('data-value');
+      if (facet === 'rank') val = Number(val);
+      go(function () { state.editing = false; state.pins = [{ facet: facet, value: val }]; resolve(); }, b.closest('.col'), '.left');
+    } else if (act === 'weapon') {
+      var nm = b.getAttribute('data-name'), rk = Number(b.getAttribute('data-rank'));
+      go(function () { state.pins = [{ facet: 'weapon', value: nm }]; state.view = 'waza'; state.waza = { weapon: true, name: nm, rank: rk }; state.backTo = 'entry'; }, b.closest('.col'), '.left');
+    } else if (act === 'pin') {
+      var f2 = b.getAttribute('data-facet'), v2 = b.getAttribute('data-value');
+      if (f2 === 'rank') v2 = Number(v2);
+      go(function () {
+        var ex = -1; state.pins.forEach(function (p, ix) { if (p.facet === f2) ex = ix; });
+        if (ex >= 0) state.pins[ex] = { facet: f2, value: v2 }; else state.pins.push({ facet: f2, value: v2 });
+        state.editing = false; resolve();
+      }, left, '.left');
+    } else if (act === 'flat') {
+      go(function () { state.view = 'flat'; }, left, '.left');
+    } else if (act === 'open') {
+      var id = Number(b.getAttribute('data-id'));
+      go(function () { state.backTo = state.view === 'waza' ? state.backTo : state.view; state.view = 'waza'; state.waza = R[id]; state.omote = 'Omote'; }, left, '.left');
+    } else if (act === 'back') {
+      go(function () {
+        if (state.backTo === 'entry') { state.view = 'entry'; state.pins = []; return; }
+        var list = rows(state.pins);
+        state.waza = null;
+        if (list.length > 1) { state.view = state.backTo === 'flat' ? 'flat' : 'drill'; if (state.view === 'drill') resolve(); if (state.view === 'drill' && state.facet == null) state.view = 'flat'; }
+        else { state.pins.pop(); if (state.pins.length) resolve(); else state.view = 'entry'; }
+      }, left, '.left');
+    } else if (act === 'edit') {
+      var ef = b.getAttribute('data-facet');
+      go(function () { if (state.view === 'waza' && state.waza && !state.waza.weapon) fromWaza(); state.view = 'drill'; state.facet = ef; state.editing = true; }, left, '.left');
+    } else if (act === 'unpin') {
+      var uf = b.getAttribute('data-facet');
+      go(function () {
+        if (state.view === 'waza' && state.waza && !state.waza.weapon) fromWaza();
+        state.pins = state.pins.filter(function (p) { return p.facet !== uf; });
+        state.editing = false;
+        if (!state.pins.length) { state.view = 'entry'; return; }
+        resolve();
+      }, left, '.left');
+    } else if (act === 'crumb') {
+      var i = Number(b.getAttribute('data-i'));
+      go(function () { state.pins = state.pins.slice(0, i + 1); if (state.pins[0].facet === 'weapon') { state.view = 'entry'; state.pins = []; } else { resolve(); } }, left, '.left');
+    } else if (act === 'entry') {
+      var first = state.pins.length ? state.pins[0].facet : null;
+      go(function () { state.view = 'entry'; state.pins = []; state.waza = null; state.editing = false; E.s = E.a = E.t = null; E.r = null; }, left, first ? '.col[data-facet="' + first + '"]' : null);
+    } else if (act === 'omote') {
+      var ov = b.getAttribute('data-v');
+      go(function () { state.omote = ov; }, null, null);
+    }
+  });
+
+  render();
+})();
+
+  (function () {
+    var vp = document.getElementById('vp'), st = document.getElementById('stage');
+    var W = 1280, H = 1012, sc = 1, tx = 0, ty = 0, fit = 1;
+    function apply() {
+      sc = Math.min(Math.max(sc, fit * 0.5), fit * 5);
+      var w = W * sc, h = H * sc, vw = vp.clientWidth, vh = vp.clientHeight;
+      tx = w <= vw ? (vw - w) / 2 : Math.min(0, Math.max(vw - w, tx));
+      ty = h <= vh ? (vh - h) / 2 : Math.min(0, Math.max(vh - h, ty));
+      st.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + sc + ')';
+    }
+    function reset() { fit = Math.min(vp.clientWidth / W, vp.clientHeight / H); sc = fit; tx = 0; ty = 0; apply(); }
+    function zoomAt(f, cx, cy) { var n = sc * f; var k = Math.min(Math.max(n, fit * 0.5), fit * 5) / sc; tx = cx - (cx - tx) * k; ty = cy - (cy - ty) * k; sc *= k; apply(); }
+    window.addEventListener('resize', reset); reset();
+    vp.addEventListener('wheel', function (e) { if (!e.ctrlKey && !e.metaKey) return; e.preventDefault(); zoomAt(Math.exp(-e.deltaY * 0.01), e.clientX, e.clientY); }, { passive: false });
+    document.getElementById('zin').onclick = function () { zoomAt(1.4, vp.clientWidth / 2, vp.clientHeight / 2); };
+    document.getElementById('zout').onclick = function () { zoomAt(1 / 1.4, vp.clientWidth / 2, vp.clientHeight / 2); };
+    document.getElementById('zfit').onclick = reset;
+    var ptr = {}, last = null, panning = false, sx = 0, sy = 0;
+    function two() { var k = Object.keys(ptr); if (k.length < 2) return null; var a = ptr[k[0]], b = ptr[k[1]]; return { d: Math.hypot(a.x - b.x, a.y - b.y), x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }; }
+    vp.addEventListener('pointerdown', function (e) { ptr[e.pointerId] = { x: e.clientX, y: e.clientY }; last = two(); sx = e.clientX; sy = e.clientY; panning = false; });
+    vp.addEventListener('pointermove', function (e) {
+      if (!ptr[e.pointerId]) return;
+      var prev = ptr[e.pointerId]; ptr[e.pointerId] = { x: e.clientX, y: e.clientY };
+      var t = two();
+      if (t && last) { tx += t.x - last.x; ty += t.y - last.y; zoomAt(t.d / last.d, t.x, t.y); last = t; return; }
+      if (e.pointerType === 'touch' && !e.target.closest('.list, .right, .left') && Math.hypot(e.clientX - sx, e.clientY - sy) > 8) {
+        panning = true; tx += e.clientX - prev.x; ty += e.clientY - prev.y; apply();
+      }
+    });
+    function up(e) { delete ptr[e.pointerId]; last = two(); }
+    vp.addEventListener('pointerup', up); vp.addEventListener('pointercancel', up);
+    vp.addEventListener('click', function (e) { if (panning) { e.stopPropagation(); e.preventDefault(); panning = false; } }, true);
+  })();
+</script>
+<script>
+(function(){
+var T={es:{n_about:'Acerca de',n_schedule:'Horario',n_join:'Unirse',n_kids:'Aikido infantil',n_members:'Miembros del dojo',donate:'Donar',lede:'Un dojo japonés tradicional en 408 Third Avenue, Brooklyn',ar:'Nuestro compromiso con el antirracismo',contact:'Contacto',access:'Accesibilidad',copy:'© 2026 Brooklyn Aikikai',legal:'Brooklyn Aikikai es una organización 501(c)(3) en el estado de Nueva York',p_about:'Acerca de',p_schedule:'Horario',p_join:'Unirse',p_kids:'Aikido infantil',p_members:'Miembros del dojo',p_donate:'Donar',p_contact:'Contacto',p_accessibility:'Accesibilidad',p_antiracism:'Nuestro compromiso con el antirracismo'},
+zh:{n_about:'关于',n_schedule:'课程表',n_join:'加入',n_kids:'儿童合气道',n_members:'道场会员',donate:'捐赠',lede:'一家传统日本道场，位于布鲁克林第三大道408号',ar:'我们对反种族主义的承诺',contact:'联系我们',access:'无障碍',copy:'© 2026 Brooklyn Aikikai',legal:'Brooklyn Aikikai 是纽约州的 501(c)(3) 非营利组织',p_about:'关于',p_schedule:'课程表',p_join:'加入',p_kids:'儿童合气道',p_members:'道场会员',p_donate:'捐赠',p_contact:'联系我们',p_accessibility:'无障碍',p_antiracism:'我们对反种族主义的承诺'}};
+var root=document.documentElement,NAT={D:'dark',E:'dark',F:'light'},FN={D:'Shippori Mincho + Zen Kaku Gothic New',E:'Archivo',F:'Fraunces + Karla'},K='D',theme=null;
+function eff(){return theme||NAT[K]}
+function apply(){root.setAttribute('data-k',K);root.setAttribute('data-eff',eff());[].forEach.call(document.querySelectorAll('#dsw button'),function(b){b.classList.toggle('on',b.getAttribute('data-k')===K)});document.getElementById('dfn').textContent=FN[K]}
+function setLang(l){[].forEach.call(document.querySelectorAll('.sh [data-t],.sf [data-t]'),function(el){var k=el.getAttribute('data-t');if(el._en===undefined)el._en=el.textContent;el.textContent=(l==='en'||!T[l]||!T[l][k])?el._en:T[l][k]});[].forEach.call(document.querySelectorAll('[data-sel]'),function(s){s.value=l});root.lang=l==='zh'?'zh-Hans':l}
+document.addEventListener('click',function(e){var t=e.target,b=t.closest&&t.closest('#dsw button');if(b){K=b.getAttribute('data-k');theme=null;apply();return}if(t.closest&&t.closest('[data-tg]')){theme=eff()==='light'?'dark':'light';apply()}});
+document.addEventListener('change',function(e){if(e.target.matches&&e.target.matches('[data-sel]'))setLang(e.target.value)});
+apply();
+})();
+</script>

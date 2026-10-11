@@ -1,0 +1,14 @@
+dist/
+__pycache__/
+.DS_Store
+.netlify/
+
+# the legacy page builders write their own copies next to the sources when imported
+src/desktop.html
+src/mobile.html
+src/events-desktop.html
+src/events-mobile.html
+src/rev16-desktop.html
+src/rev16-mobile.html
+src/sched-desktop.html
+src/sched-mobile.html

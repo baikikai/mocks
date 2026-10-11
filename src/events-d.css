@@ -1,0 +1,5 @@
+.lab-wrap .lab{position:sticky;top:32px}
+.mo{grid-template-columns:150px minmax(0,1fr);gap:24px}
+.mo h3{align-self:start}
+.ev{grid-template-columns:170px minmax(0,1fr);align-items:baseline}
+@media (max-width:900px){.mo{grid-template-columns:minmax(0,1fr)}.mo h3{position:static}.gal{grid-template-columns:repeat(3,minmax(0,1fr))}}

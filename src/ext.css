@@ -1,0 +1,6 @@
+/* Link system, three kinds. Prose links are always underlined in the accent and take the accent on hover. Navigation links (nav, sub-nav, footer, top bar) carry no underline until hover or the current page. Block links (rows, cards, buttons) change as a whole. External links look like their kind; the new-tab note is for screen readers. */
+p a.lk,li a.lk,blockquote a.lk,.bd a.lk{text-decoration-color:var(--gi);text-decoration-thickness:1.5px;text-underline-offset:4px}
+p a.lk:hover,li a.lk:hover,blockquote a.lk:hover,.bd a.lk:hover{color:var(--gi)}
+.ft a.lk,.sub a.lk,.ah a.lk,.slinks a.lk{text-decoration-color:transparent}
+.ft a.lk:hover,.sub a.lk:hover,.ah a.lk:hover,.slinks a.lk:hover{text-decoration-color:var(--gi);color:inherit}
+.ft .lg a.lk{white-space:nowrap}
