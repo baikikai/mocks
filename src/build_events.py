@@ -65,7 +65,9 @@ def year_body(blocks):
             m = DATE.match(t)
             if m:
                 cat, loc = classify(m.group(7))
-                rows += f'<li class="ev" data-cat="{cat}" data-loc="{loc}"><div class="dt">{date_block(m, mo)}</div><p>{esc(m.group(7))}</p></li>'
+                body = m.group(7).rstrip()
+                if body.endswith('.') and not re.search(r'\.\s', body): body = body[:-1]   # one short phrase, no full stop
+                rows += f'<li class="ev" data-cat="{cat}" data-loc="{loc}"><div class="dt">{date_block(m, mo)}</div><p>{esc(body)}</p></li>'
             else:
                 note = t.strip('*').strip()
                 rows += f'<li class="nt"><p>{esc(note)}</p></li>'

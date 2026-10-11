@@ -290,7 +290,47 @@
 
 /* the returning bar's black fades to transparent as the scroll reaches the top (--bar-a goes from 1 to 0) */
 .nv.fx{background:color-mix(in srgb,var(--bar) calc(var(--bar-a,1) * 100%),transparent);border-bottom-color:color-mix(in srgb,var(--barline,rgba(236,237,232,.12)) calc(var(--bar-a,1) * 100%),transparent)}
-/* the bar and everything stuck below it move together: no lagging offsets, no see-through frame while it fades in */
-.sub,.lab,.lab-wrap,.wkh{transition:none}
-.nv.fx{transition:none}
 html,body{overflow-anchor:none}
+
+/* ---- round: menu, header tween, sticky titles, hairlines, names ---- */
+/* header returns by sliding down from under the utility bar; what is stuck below it moves in step with it */
+.nv.fx{transform:translateY(-100%);opacity:1;pointer-events:none;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.nv.fx.in{transform:none;pointer-events:auto}
+.sheet-on .nv.fx{transform:translateY(-100%);pointer-events:none}
+.sub,.lab,.lab-wrap,.wkh{transition:top .35s cubic-bezier(.2,.7,.2,1)}
+@media (prefers-reduced-motion:reduce){.nv.fx,.sub,.lab,.lab-wrap,.wkh{transition:none}}
+
+/* section titles stick under the bars (the wrapper is the sticky box, so it can travel the whole section) */
+.sec:not(.cl):not(.ctr):not(.ns)>.lab-wrap{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--stick,0px) + var(--lab-top,0px));z-index:3;align-self:start}
+.sec:not(.cl):not(.ctr):not(.ns)>.lab-wrap .lab{position:static}
+
+/* an empty title leaves no rule behind; a list's first rule is not doubled by the title's rule */
+.sec.ctr>.lab-wrap{display:none}
+@media (max-width:900px){.sec>.bd>:is(dl,ul,ol,.reg,.rows):first-child>:first-child{border-top:0}}
+
+/* menu: pressed or hovered items lean toward the left arrow; items leave in a stagger */
+.si{position:relative;overflow:hidden}
+.si::before{content:"\2190";position:absolute;left:0;top:50%;margin-top:-.6em;line-height:1.2;color:var(--gold);opacity:0;transform:translateX(-18px);transition:opacity .25s cubic-bezier(.2,.7,.2,1),transform .35s cubic-bezier(.2,.7,.2,1)}
+.si span{display:block;transition:transform .35s cubic-bezier(.2,.7,.2,1),color .2s}
+.si:active span,.si:focus-visible span{transform:translateX(1.5em);color:var(--gold)}
+.si:active::before,.si:focus-visible::before{opacity:1;transform:none}
+@media (hover:hover){.si:hover span{transform:translateX(1.5em)}.si:hover::before{opacity:1;transform:none}}
+#sheet.closing .si{opacity:0;transform:translateY(-14px);transition-delay:calc(var(--i)*45ms)}
+
+/* testimonial tiles: the name waits for hover or press; on narrow screens first and last stack */
+@media (max-width:900px),(hover:none){
+.pc.v .pi{opacity:0;transition:opacity .3s cubic-bezier(.2,.7,.2,1)}
+.pc.v:hover .pi,.pc.v:focus-visible .pi,.pc.v:focus-within .pi,.pc.v:active .pi{opacity:1}
+}
+@media (hover:none){.pc.v .play{opacity:1}.pc.v:active .play,.pc.v:focus-visible .play{opacity:0}}
+@media (max-width:480px){.pc.v .pi b span{display:block}}
+
+/* glossary letters take the accent */
+.sec.cl .mo>h3{color:var(--gt)}
+
+/* events and calendar rows: the description starts on the first line of the date block */
+.ev p{grid-row:1 / span 2;align-self:start;margin-top:-8px}
+.ev:has(.dt b:only-child) p{grid-row:1;margin-top:0;align-self:baseline}
+@media (min-width:901px){.mo:has(.ev)>h3{align-self:first baseline;padding-top:0!important}.mo:has(.ev)>ul{align-self:first baseline}}
+.sec:not(.cl):not(.ctr):not(.ns)>.lab-wrap .lab::after{left:0;right:0}
+@media (max-width:900px){.sec.ctr>.bd{padding-top:var(--sp-4)}}

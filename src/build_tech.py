@@ -71,7 +71,7 @@ def chrome_keep(sel, at):
 
 def css16(mobile):
     s2 = open('system2.css').read()
-    tail = s2 + BA.HOMECSS
+    tail = s2 + BA.HOMECSS + BA.GLOSS
     if mobile:
         css = (B.CSS + open('ext.css').read() + open('mobile.css').read() + open('rev16.css').read() + open('rev16-m.css').read() + BA.FIX + B.SYS(True) + tail)
     else:

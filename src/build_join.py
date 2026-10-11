@@ -33,7 +33,7 @@ def join():
 def testimonials():
     """A grid of video placeholders; the details show on hover like the event posters. Names and ranks are placeholders."""
     play = '<svg class="play" width="56" height="56" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="27" fill="none" stroke="currentColor" stroke-width="2"/><path d="M23 18l15 10-15 10z" fill="currentColor"/></svg>'
-    tile = f'<div class="pc v" tabindex="0">{play}<div class="pi"><b>First Name Last Name</b><span>Shodan</span><span>Training since 2009</span></div></div>'
+    tile = f'<div class="pc v" tabindex="0">{play}<div class="pi"><b><span>First Name</span> <span>Last Name</span></b><span>Shodan</span><span>Training since 2009</span></div></div>'
     return f'<div class="vg">{tile * 12}</div>'
 
 # ---------- Etiquette and Glossary (two pages) ----------

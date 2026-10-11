@@ -98,10 +98,13 @@
     requestAnimationFrame(function () { sheet.classList.add('open'); var x = sheet.querySelector('.sx'); if (x) x.focus({ preventScroll: true }); });
   }
   function closeSheet() {
-    if (!sheet || sheet.hidden) return;
-    sheet.classList.remove('open'); root.style.overflow = ''; root.classList.remove('sheet-on');
-    setTimeout(function () { sheet.hidden = true; }, 650);
-    if (opener && opener.focus) opener.focus({ preventScroll: true });
+    if (!sheet || sheet.hidden || sheet.classList.contains('closing')) return;
+    sheet.classList.add('closing');
+    setTimeout(function () {
+      sheet.classList.remove('open', 'closing'); root.style.overflow = ''; root.classList.remove('sheet-on');
+      setTimeout(function () { sheet.hidden = true; }, 650);
+      if (opener && opener.focus) opener.focus({ preventScroll: true });
+    }, 380);
   }
   document.addEventListener('click', function (e) {
     var t = e.target;
@@ -186,6 +189,7 @@
   function toBar() {
     if (isBar()) return;
     nv.classList.add('fx'); nv.style.transform = '';
+    void nv.offsetWidth;
     if (site) site.insertBefore(nv, site.firstChild);
   }
   function tick() {
